@@ -1,0 +1,47 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e9ecef;
+  color: #333;
+  line-height: 1.6;
+ }
+ 
+ h1 {
+  font-size: 2rem;
+  color: #4caf50;
+ }
+ 
+ #header {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+ }
+ 
+ #content {
+  margin: 20px;
+ }
+ 
+ ul {
+  list-style-type: none;
+  padding: 0;
+ }
+ 
+ li {
+  padding: 5px 0;
+ }
+ 
+ #footer {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+ }

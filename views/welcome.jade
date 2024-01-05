@@ -1,0 +1,75 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title KasetFairVerse API
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    script.
+      function playEasterEgg() {
+        alert('Congratulations! Enjoy!');
+        window.location.reload(); // Reload the page after the alert
+        // Add your game logic or redirect to a game page here
+      }
+      function hideEasterEgg() {
+        document.getElementById('easterEgg').style.display = 'none';
+      }
+    style.
+      body {
+        background-color: #283618; /* Dark green background color */
+        color: #ffffff; /* Text color */
+        font-family: Arial, sans-serif; /* Default font */
+      }
+      .navbar {
+        background-color: #0b6623; /* Dark green navbar color */
+        padding: 15px 0;
+      }
+      .navbar-brand {
+        color: #ffffff; /* Navbar text color */
+        font-weight: bold;
+        font-size: 1.5rem;
+        cursor: pointer; /* Change cursor to pointer */
+      }
+      .card {
+        background-color: #32533d; /* Dark green card background color */
+        color: #ffffff; /* Card text color */
+        margin-top: 50px;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .card-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+      .card-text {
+        font-size: 1.2rem;
+      }
+      .section {
+        margin-top: 50px;
+      }
+      #easterEgg {
+        display: block; /* Initially visible */
+      }
+
+  body(onclick="hideEasterEgg();")
+    nav.navbar.navbar-expand-md.navbar-dark
+      .container
+        a.navbar-brand(href="javascript:void(0);", onclick="playEasterEgg();") KasetFairVerse API
+
+    .container
+      .row.justify-content-center
+        .col-md-6
+          #easterEgg
+            .card
+              .card-title Welcome to KasetFairVerse API
+              .card-text This is just a landing page for an API domain. To use the API, please contact the backend team.
+              hr.section
+
+              h2.section How to Use
+              p.section In order to use the API, follow the documentation provided by the backend team. They will provide you with access details and usage guidelines.
+
+              hr.section
+
+              h2.section Additional Information
+              p.section For any further inquiries or details about the API, contact the backend team.

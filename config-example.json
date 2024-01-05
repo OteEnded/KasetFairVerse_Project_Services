@@ -1,0 +1,60 @@
+{
+
+    "port": "8080",
+
+    "database_listing":{
+        "sql":{
+            "local":{
+                "host": "",
+                "user": "",
+                "password": "",
+                "name": {
+                    "test": "",
+                    "prod": ""
+                }
+            },
+            "server":{
+                "host": "",
+                "user": "",
+                "password": "",
+                "name": {
+                    "test": "",
+                    "prod": ""
+                }
+            }
+        },
+        "mongo":{
+            "local":{
+                "host": ""
+            },
+            "server":{}
+        }
+    },
+    "database_in_use": ["sql", "server", "test"],
+
+    "api_permission_group": {
+        "g1": {
+            "keys": [""],
+            "permission": {
+                "*":{
+                    "read": true,
+                    "write": true
+                }
+            }
+        },
+        "g2": {
+            "keys": [""],
+            "permission": {
+                "p1":{
+                    "read": true,
+                    "write": false
+                },
+                "p2":{
+                    "read": true,
+                    "write": true
+                }
+            }
+        }
+        
+    }
+}
