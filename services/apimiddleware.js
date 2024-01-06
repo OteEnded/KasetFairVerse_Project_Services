@@ -56,8 +56,8 @@ function is_allowed(req){
     if (permission_group == ""){
         return false
     }
-    console.log("api_permission_group", api_permission_group)
-    console.log("permission_group", permission_group)
+    // console.log("api_permission_group", api_permission_group)
+    // console.log("permission_group", permission_group)
     if (Object.keys(api_permission_group[permission_group]["permission"]).includes("*")){
         return true
     }
@@ -101,8 +101,10 @@ function authenticate(req, res, next) {
 }
 
 function logRequest(req, res, next) {
-    // Logging logic here
-    console.log(`Request URL: ${req.originalUrl}`);
+    // Logging logic here+
+    console.log(`Request IP: ${req.ip}`);
+    console.log(`Request Header: ${req.headers}`);
+    console.log(`Request Body: ${req.body}`);
     next();
 }
 

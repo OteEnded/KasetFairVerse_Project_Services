@@ -62,7 +62,8 @@ router.get('/testget', apiMiddleware.authenticate, async (req, res) => {
             message: "Method GET invoked",
             status: 200,
             content: {
-                incoming_req: req
+                req_headers: req.headers,
+                req_body: req.body
             }
         });
     } catch (error) {
@@ -87,7 +88,8 @@ router.post('/testpost', apiMiddleware.authenticate, async (req, res) => {
             message: "Method POST invoked",
             status: 200,
             content: {
-                incoming_req: req
+                req_headers: req.headers,
+                req_body: req.body
             }
         });
     } catch (error) {
@@ -111,7 +113,8 @@ router.put('/testput', apiMiddleware.authenticate, async (req, res) => {
             message: "Method PUT invoked",
             status: 200,
             content: {
-                incoming_req: req
+                req_headers: req.headers,
+                req_body: req.body
             }
         });
     } catch (error) {
@@ -136,7 +139,8 @@ router.delete('/testdelete', apiMiddleware.authenticate, async (req, res) => {
             message: "Method DELETE invoked",
             status: 200,
             content: {
-                incoming_req: req
+                req_headers: req.headers,
+                req_body: req.body
             }
         });
     } catch (error) {
