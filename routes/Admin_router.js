@@ -54,8 +54,8 @@ router.get('/seed', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// GET /Admin/testget1
-router.get('/test1', apiMiddleware.authenticate, async (req, res) => {
+// GET /Admin/testget
+router.get('/testget', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
@@ -77,8 +77,8 @@ router.get('/test1', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// POST /Admin/testpost1
-router.post('/test1', apiMiddleware.authenticate, async (req, res) => {
+// POST /Admin/testpost
+router.post('/testpost', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
@@ -100,8 +100,8 @@ router.post('/test1', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// PUT /Admin/testput1
-router.put('/test1', apiMiddleware.authenticate, async (req, res) => {
+// PUT /Admin/testput
+router.put('/testput', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
@@ -123,8 +123,8 @@ router.put('/test1', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// DELETE /Admin/testdelete1
-router.delete('/test1', apiMiddleware.authenticate, async (req, res) => {
+// DELETE /Admin/testdelete
+router.delete('/testdelete', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,

@@ -70,8 +70,8 @@ router.get('/get/round_id/:round_id', apiMiddleware.authenticate, async (req, re
     }
 });
 
-// GET /KubKaoKabKang/get/score/{user_id} - Get sum of scores by user_id
-router.get('/get/score/:user_id', apiMiddleware.authenticate, async (req, res) => {
+// GET /KubKaoKabKang/get_score/user_id/{user_id} - Get sum of scores by user_id
+router.get('/get_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getSumOfScoresByUserId(req.params.user_id);
         console.log(result);
@@ -91,55 +91,6 @@ router.get('/get/score/:user_id', apiMiddleware.authenticate, async (req, res) =
         });
     }
 });
-
-// // PUT /users/save - Create a new user or update an existing user
-// router.put('/save', async (req, res) => {
-//     try {
-
-//         // check if user_id is provided
-//         if (!req.body.user_id){
-//             // check if body is correct
-//             if (!req.body.user_name) {
-//                 return res.status(400).json({ message: 'user_name is required' });
-//             }   
-//             // if (!req.body.user_email) {
-//             //     return res.status(400).json({ message: 'user_email is required' });
-//             // }
-//             const newUser = await user.createUser(req.body);
-//             res.json({
-//                 is_success: true,
-//                 message: "New user created",
-//                 status: 200,
-//                 content: newUser
-//             });
-//         }
-//         else {
-//             // check if user exists
-//             const isExist = await user.getUser(req.body.user_id);
-//             // if user not exists, return error
-//             if (!isExist) {
-//                 return res.status(400).json({ message: 'user with user_id: ' + req.body.user_id + ' not exists' });
-//             }
-//             // if user exists, update        
-//             const updatedUser = await user.updateUser(req.body);
-//             res.json({
-//                 is_success: true,
-//                 message: "User with user_id: " + req.body.user_id + " updated",
-//                 status: 200,
-//                 content: updatedUser
-//             });
-//         }
-
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({
-//             is_success: false,
-//             message: "Error creating or updating user",
-//             status: 500,
-//             content: error.message
-//         });
-//     }
-// }); 
 
 // PUT /KubKaoKabKang/save - Create a KubKaoKabKang_PlayRecord Create a new user or update an existing KubKaoKabKang_PlayRecord
 router.put('/save', apiMiddleware.authenticate, async (req, res) => {

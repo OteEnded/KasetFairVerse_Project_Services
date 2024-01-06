@@ -2,7 +2,6 @@
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
-const Users = require('./Users'); // Import the Users model
 
 const KubKaoKabKang_PlayRecords = connection.define('KubKaoKabKang_PlayRecords', {
   round_id: {
