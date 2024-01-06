@@ -59,9 +59,11 @@ router.get('/testget', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
-            message: "testget1",
+            message: "Method GET invoked",
             status: 200,
-            content: req.method
+            content: {
+                incoming_req: req
+            }
         });
     } catch (error) {
         console.error(error);
@@ -82,9 +84,11 @@ router.post('/testpost', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
-            message: "testpost1",
+            message: "Method POST invoked",
             status: 200,
-            content: req.method
+            content: {
+                incoming_req: req
+            }
         });
     } catch (error) {
         console.error(error);
@@ -95,7 +99,6 @@ router.post('/testpost', apiMiddleware.authenticate, async (req, res) => {
             content: {
                 error: error.message
             }
-        
         })
     }
 });
@@ -105,9 +108,11 @@ router.put('/testput', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
-            message: "testput1",
+            message: "Method PUT invoked",
             status: 200,
-            content: req.method
+            content: {
+                incoming_req: req
+            }
         });
     } catch (error) {
         console.error(error);
@@ -128,9 +133,11 @@ router.delete('/testdelete', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
-            message: "testdelete1",
+            message: "Method DELETE invoked",
             status: 200,
-            content: req.method
+            content: {
+                incoming_req: req
+            }
         });
     } catch (error) {
         console.error(error);
