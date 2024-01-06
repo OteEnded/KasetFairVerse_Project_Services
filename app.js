@@ -22,6 +22,7 @@ console.log("app[main]: imported every primary module, starting the app...")
 dbrelationdefiner.defineRelationships();
 
 // import routes
+var apiMiddleware = require('./services/apimiddleware');
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/Admin_router');
 var usersRouter = require('./routes/Users_router');
@@ -39,7 +40,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // config routes
+app.use(apiMiddleware.logRequest);
 app.use('/', indexRouter);
 app.use('/Admin', adminRouter);
 app.use('/Users', usersRouter);

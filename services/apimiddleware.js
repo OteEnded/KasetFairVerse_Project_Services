@@ -102,9 +102,9 @@ function authenticate(req, res, next) {
 
 function logRequest(req, res, next) {
     // Logging logic here+
-    console.log(`Request IP: ${req.ip}`);
-    console.log(`Request Header: ${req.headers}`);
-    console.log(`Request Body: ${req.body}`);
+    console.log("Request IP:", req.ip);
+    console.log("Request Header:", req.headers);
+    console.log("Request Body:", req.body);
     next();
 }
 

@@ -21,8 +21,8 @@ function readJSONFile(filePath){
 function getConfig(){
     console.log("projectutility[getConfig]: Getting config data:")
     configData = readJSONFile('./config.json')
-    console.log("projectutility[getConfig]: Config data getted:")
-    console.log(configData)
+    console.log("projectutility[getConfig]: ☆★ CONFIG DATA IS GOTTEN! ★☆.")
+    // console.log(configData)
     return configData
 }
 
