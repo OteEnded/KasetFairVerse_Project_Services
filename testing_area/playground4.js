@@ -1,7 +1,7 @@
 const users = require('../entities/Users');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
-const user = require('../models/user');
+// const user = require('../models/user');
 
 async function fetchUsers() {
     try {

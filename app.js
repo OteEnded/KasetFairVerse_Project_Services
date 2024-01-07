@@ -25,6 +25,7 @@ dbrelationdefiner.defineRelationships();
 var apiMiddleware = require('./services/apimiddleware');
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/Admin_router');
+var testingRouter = require('./routes/Testing_router');
 var usersRouter = require('./routes/Users_router');
 var kubkaokabkangRouter = require('./routes/KubKaoKabKang_router');
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(apiMiddleware.logRequest);
 app.use('/', indexRouter);
 app.use('/Admin', adminRouter);
+app.use('/Testing', testingRouter);
 app.use('/Users', usersRouter);
 app.use('/KubKaoKabKang', kubkaokabkangRouter);
 

@@ -101,7 +101,7 @@ function authenticate(req, res, next) {
 }
 
 function logRequest(req, res, next) {
-    // Logging logic here+
+    // Logging logic here
     console.log("Request IP:", req.ip);
     console.log("Request Header:", req.headers);
     console.log("Request Body:", req.body);
@@ -110,5 +110,5 @@ function logRequest(req, res, next) {
 
 module.exports = {
     authenticate,
-    logRequest,
+    logRequest
 };

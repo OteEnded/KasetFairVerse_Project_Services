@@ -20,12 +20,6 @@ const KubKaoKabKang_PlayRecords = connection.define('KubKaoKabKang_PlayRecords',
     type: DataTypes.INTEGER,
     allowNull: false,
     unique: false,
-  },
-  is_shared: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-    unique: false,
   }
 });
 
