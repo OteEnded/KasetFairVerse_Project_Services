@@ -3,7 +3,7 @@ var router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 
 // GET /Testing/test
-router.get('/testget', apiMiddleware.authenticate, async (req, res) => {
+router.get('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
@@ -29,7 +29,7 @@ router.get('/testget', apiMiddleware.authenticate, async (req, res) => {
 });
 
 // POST /Testing/test
-router.post('/testpost', apiMiddleware.authenticate, async (req, res) => {
+router.post('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
@@ -54,7 +54,7 @@ router.post('/testpost', apiMiddleware.authenticate, async (req, res) => {
 });
 
 // PUT /Testing/test
-router.put('/testput', apiMiddleware.authenticate, async (req, res) => {
+router.put('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
@@ -80,7 +80,7 @@ router.put('/testput', apiMiddleware.authenticate, async (req, res) => {
 });
 
 // DELETE /Testing/test
-router.delete('/testdelete', apiMiddleware.authenticate, async (req, res) => {
+router.delete('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
             is_success: true,
