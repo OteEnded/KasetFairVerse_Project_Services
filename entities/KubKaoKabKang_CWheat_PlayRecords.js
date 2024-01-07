@@ -1,9 +1,9 @@
-// entities/Hemp_PlayRecords.js
+// entities/KubKaoKabKang_CWheat_PlayRecords.js
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
-const Hemp_PlayRecords = connection.define('Hemp_PlayRecords', {
+const KubKaoKabKang_CWheat_PlayRecords = connection.define('KubKaoKabKang_CWheat_PlayRecords', {
     round_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -16,11 +16,11 @@ const Hemp_PlayRecords = connection.define('Hemp_PlayRecords', {
         allowNull: false,
         unique: false,
     },
-    ending: {
-        type: DataTypes.STRING,
+    score: {
+        type: DataTypes.DOUBLE,
         allowNull: false,
         unique: false,
     }
 });
 
-module.exports = Hemp_PlayRecords;
+module.exports = KubKaoKabKang_CWheat_PlayRecords;

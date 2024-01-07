@@ -1,4 +1,5 @@
 const putil = require('../utilities/projectutility');
+const RequestLog = require('../models/RequestLog');
 
 api_permission_group = null
 
@@ -100,11 +101,27 @@ function authenticate(req, res, next) {
     
 }
 
-function logRequest(req, res, next) {
+async function logRequest(req, res, next) {
     // Logging logic here
-    console.log("Request IP:", req.ip);
-    console.log("Request Header:", req.headers);
-    console.log("Request Body:", req.body);
+
+    // {PK} [int] request_id #autoincrement
+    // [String] requester_ip (req.ip)
+    // [String] request_to (req.hostname + req.originalUrl)
+    // [String] request_method (req.method)
+    // [Text] request_header (req.header)
+    // [Text] request_body (req.body)
+
+    log = {
+        requester_ip: req.ip,
+        request_to: req.hostname + req.originalUrl,
+        request_method: req.method,
+        request_header: req.headers,
+        request_body: req.body
+    }
+    console.log("ApiMiddleware[logRequest]: Logging request ->", log)
+    await RequestLog.createRequestLogs(log)
+
+
     next();
 }
 

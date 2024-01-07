@@ -1,9 +1,8 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-// const mongoose = require('mongoose');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const mysql = require('mysql2');
 
 const putil = require('./utilities/projectutility')
@@ -12,24 +11,18 @@ const dbrelationdefiner = require('./services/dbrelationdefiner')
 
 console.log("app[main]: imported every primary module, starting the app...")
 
-// mongoose.Promise = global.Promise;
-
-// mongoose.connect("mongodb://127.0.0.1:27017")
-// .then(()=> console.log("app[mongoose]: Database connected."))
-// .catch((err)=> console.error(err))
-
 // dbconnector.connect()
 dbrelationdefiner.defineRelationships();
 
 // import routes
-var apiMiddleware = require('./services/apimiddleware');
-var indexRouter = require('./routes/index');
-var adminRouter = require('./routes/Admin_router');
-var testingRouter = require('./routes/Testing_router');
-var usersRouter = require('./routes/Users_router');
-var kubkaokabkangRouter = require('./routes/KubKaoKabKang_router');
+const apiMiddleware = require('./services/apimiddleware');
+const indexRouter = require('./routes/index');
+const adminRouter = require('./routes/Admin_router');
+const testingRouter = require('./routes/Testing_router');
+const usersRouter = require('./routes/Users_router');
+const kubkaokabkangRouter = require('./routes/KubKaoKabKang_router');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

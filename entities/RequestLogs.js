@@ -32,11 +32,11 @@ const RequestLogs = connection.define('RequestLogs', {
         allowNull: false,
     },
     request_header: {
-        type: DataTypes.TEXT,
+        type: DataTypes.JSON,
         allowNull: false,
     },
     request_body: {
-        type: DataTypes.TEXT,
+        type: DataTypes.JSON,
         allowNull: false,
     }
 });
