@@ -7,12 +7,12 @@ connection = null;
 function varidateConfig(configData){
 
     let next_condition = false
-    console.log("sqlconnector[varidateConfig]: varidating database_in_use config->", configData['database_in_use'])
+    console.log("dbconnector[varidateConfig]: varidating database_in_use config->", configData['database_in_use'])
 
     next_condition = (configData['database_in_use'][0] != "sql")
     if (next_condition){
         console.log(
-            "sqlconnector[varidateConfig]: ABORT, database_in_use is not set to 'sql' in config file."
+            "dbconnector[varidateConfig]: ABORT, database_in_use is not set to 'sql' in config file."
         )
         return false
     }
@@ -20,7 +20,7 @@ function varidateConfig(configData){
     next_condition = (putil.listLen(configData['database_in_use']) != 3)
     if (next_condition){
         console.log(
-            "sqlconnector[varidateConfig]: ABORT, database_in_use in config file is not in a right sql config format.\n" +
+            "dbconnector[varidateConfig]: ABORT, database_in_use in config file is not in a right sql config format.\n" +
             "(require length 3, given " + putil.listLen(database_in_use) + ")."
         )
         return false
@@ -29,7 +29,7 @@ function varidateConfig(configData){
     next_condition = !(configData['database_in_use'][1] in configData['database_listing']['sql'])
     if (next_condition){
         console.log(
-            "sqlconnector[varidateConfig]: ABORT, cannot find database_host_type-> '" +
+            "dbconnector[varidateConfig]: ABORT, cannot find database_host_type-> '" +
             configData['database_in_use'][1] +
             "' in database_listing config"
         )
@@ -39,7 +39,7 @@ function varidateConfig(configData){
     next_condition = !(configData['database_listing'][configData['database_in_use'][0]][configData['database_in_use'][1]]['name'].hasOwnProperty(configData['database_in_use'][2]))
     if (next_condition){
         console.log(
-            "sqlconnector[varidateConfig]: ABORT, cannot find database_name-> '" +
+            "dbconnector[varidateConfig]: ABORT, cannot find database_name-> '" +
             configData['database_in_use'][2] +
             "' in database_listing config"
         )
@@ -52,7 +52,7 @@ function varidateConfig(configData){
 
 function connect(){
 
-    console.log("sqlconnector[connect]: Connecting...")
+    console.log("dbconnector[connect]: Connecting...")
 
     configData = putil.getConfig()
     database_in_use = configData['database_in_use']
@@ -79,18 +79,18 @@ function connect(){
     connection
     .authenticate()
     .then(() => {
-        console.log('sqlconnector[connect]: Database connected successfully!'); //->', connection.connectionManager.sequelize);
+        console.log('dbconnector[connect]: Database connected successfully!'); //->', connection.connectionManager.sequelize);
     })
     .catch((err) => {
-        console.error('sqlconnector[connect]: Unable to connect to the database:', err);
+        console.error('dbconnector[connect]: Unable to connect to the database:', err);
         process.exit(1);
     });
 }
 
 function getConnection(){
-    console.log("sqlconnector[getConnection]: Getting connection...")
+    console.log("dbconnector[getConnection]: Getting connection...")
     if (connection == null){
-        console.log("sqlconnector[getConnection]: connection is null, invoking connect()...")
+        console.log("dbconnector[getConnection]: connection is null, invoking connect()...")
         connect()
     }
     return connection

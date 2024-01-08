@@ -113,11 +113,19 @@ async function updateHoldYourBasketPlayRecord(req) {
 }
 
 // Function to delete a HoldYourBasket play record
-async function deleteHoldYourBasketPlayRecord(req) {
+async function deleteHoldYourBasketPlayRecord(round_id) {
     try {
-        const play_record = await Cosmetic_HoldYourBasket_PlayRecords.destroy({
+        const play_record = await Cosmetic_HoldYourBasket_PlayRecords.findOne({
             where: {
-                round_id: req.body.round_id
+                round_id: round_id
+            }
+        });
+        if (!play_record){
+            return "Cannot delete play record wtih round_id: " + round_id + " because it does not exist.";
+        }
+        await Cosmetic_HoldYourBasket_PlayRecords.destroy({
+            where: {
+                round_id: round_id
             }
         });
         return play_record;

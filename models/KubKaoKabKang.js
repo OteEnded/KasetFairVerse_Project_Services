@@ -115,14 +115,22 @@ async function updatePasteScrumblePlayRecord(req) {
 }
 
 // Function to delete a PasteScrumble play record
-async function deletePasteScrumblePlayRecord(req) {
+async function deletePasteScrumblePlayRecord(round_id) {
     try {
-        const play_record = await KubKaoKabKang_PasteScrumble_PlayRecords.destroy({
+        const play_record = await KubKaoKabKang_PasteScrumble_PlayRecords.findOne({
             where: {
-                round_id: req.body.round_id
+                round_id: round_id
             }
         });
-        return req;
+        if (!play_record){
+            return "Cannot delete play record wtih round_id: " + round_id + " because it does not exist.";
+        }
+        await KubKaoKabKang_PasteScrumble_PlayRecords.destroy({
+                where: {
+                    round_id: round_id
+                }
+        });
+        return play_record;
     } catch (error) {
         throw error;
     }
@@ -242,14 +250,22 @@ async function updateCWheatPlayRecord(req) {
 }
 
 // Function to delete a CWheat play record
-async function deleteCWheatPlayRecord(req) {
+async function deleteCWheatPlayRecord(round_id) {
     try {
-        const play_record = await KubKaoKabKang_CWheat_PlayRecords.destroy({
+        const play_record = await KubKaoKabKang_CWheat_PlayRecords.findOne({
             where: {
-                round_id: req.body.round_id
+                round_id: round_id
             }
         });
-        return req;
+        if (!play_record){
+            return "Cannot delete play record wtih round_id: " + round_id + " because it does not exist.";
+        }
+        await KubKaoKabKang_CWheat_PlayRecords.destroy({
+            where: {
+                round_id: round_id
+            }
+        });
+        return play_record;
     } catch (error) {
         throw error;
     }

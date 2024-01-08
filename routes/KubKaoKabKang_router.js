@@ -174,14 +174,14 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// DELETE /KubKaoKabKang/PasteScrumble/delete/{round_id} - Delete a KubKaoKabKang_PasteScrumble_PlayRecords
+// DELETE /KubKaoKabKang/PasteScrumble/delete/{round_id} - Delete a KubKaoKabKang_PasteScrumble_PlayRecord
 router.delete('/PasteScrumble/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.deletePasteScrumblePlayRecord(req.params.round_id);
         console.log(result);
         res.json({
             is_success: true,
-            message: "KubKaoKabKang_PasteScrumble_PlayRecord deleted",
+            message: "Tried to delete KubKaoKabKang_PasteScrumble_PlayRecord",
             status: 200,
             content: result
         });
@@ -374,11 +374,12 @@ router.delete('/CWheat/delete/:round_id', apiMiddleware.authenticate, async (req
         console.log(result);
         res.json({
             is_success: true,
-            message: "KubKaoKabKang_CWheat_PlayRecord deleted",
+            message: "Tried to delete KubKaoKabKang_CWheat_PlayRecord",
             status: 200,
             content: result
         });
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         res.status(500).json({
             is_success: false,

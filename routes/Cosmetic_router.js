@@ -179,11 +179,12 @@ router.delete('/HoldYourBasket/delete/:round_id', apiMiddleware.authenticate, as
         console.log(result);
         res.json({
             is_success: true,
-            message: "Cosmetic_HoldYourBasket_PlayRecord deleted",
+            message: "Tried to delete Cosmetic_HoldYourBasket_PlayRecord",
             status: 200,
             content: result
         });
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
         res.status(500).json({
             is_success: false,
