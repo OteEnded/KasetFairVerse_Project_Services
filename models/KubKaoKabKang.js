@@ -61,7 +61,7 @@ async function getSumOfPasteScrumbleScoresByUserId(user_id) {
 }
 
 // Function to get PasteScrumble high scores of a user by user_id
-async function getHighScoresByUserId(user_id) {
+async function getPasteScrumbleHighScoresByUserId(user_id) {
     try {
         const high_scores = await KubKaoKabKang_PasteScrumble_PlayRecords.max('score', {
             where: {
@@ -69,6 +69,21 @@ async function getHighScoresByUserId(user_id) {
             }
         });
         return high_scores;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to find PasteScrumble play records
+async function findPasteScrumblePlayRecords(column, value) {
+    try {
+        const play_record = await KubKaoKabKang_PasteScrumble_PlayRecords.findAll({
+            where: {
+                [column]: value
+            }
+        });
+        return play_record;
     }
     catch (error) {
         throw error;
@@ -173,7 +188,7 @@ async function getSumOfCWheatScoresByUserId(user_id) {
 }
 
 // Function to get CWheat high scores of a user by user_id
-async function getHighScoresByUserId(user_id) {
+async function getCWheatHighScoresByUserId(user_id) {
     try {
         const high_scores = await KubKaoKabKang_CWheat_PlayRecords.max('score', {
             where: {
@@ -181,6 +196,21 @@ async function getHighScoresByUserId(user_id) {
             }
         });
         return high_scores;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to find CWheat play records
+async function findCWheatPlayRecords(column, value) {
+    try {
+        const play_record = await KubKaoKabKang_CWheat_PlayRecords.findAll({
+            where: {
+                [column]: value
+            }
+        });
+        return play_record;
     }
     catch (error) {
         throw error;
@@ -225,14 +255,24 @@ async function deleteCWheatPlayRecord(req) {
     }
 }
 
-
 // Exporting functions
 module.exports = {
     getAllPasteScrumblePlayRecords,
     getPasteScrumblePlayRecordsByUserId,
     getPasteScrumblePlayRecordsByRoundId,
     getSumOfPasteScrumbleScoresByUserId,
+    getPasteScrumbleHighScoresByUserId,
+    findPasteScrumblePlayRecords,
     createPasteScrumblePlayRecord,
     updatePasteScrumblePlayRecord,
-    deletePasteScrumblePlayRecord
+    deletePasteScrumblePlayRecord,
+    getAllCWheatPlayRecords,
+    getCWheatPlayRecordsByUserId,
+    getCWheatPlayRecordsByRoundId,
+    getSumOfCWheatScoresByUserId,
+    getCWheatHighScoresByUserId,
+    findCWheatPlayRecords,
+    createCWheatPlayRecord,
+    updateCWheatPlayRecord,
+    deleteCWheatPlayRecord
 };

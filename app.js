@@ -26,6 +26,8 @@ const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile); // Set the HTML rendering engine
+app.set('view engine', 'html'); // Set the view engine to render HTML
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));

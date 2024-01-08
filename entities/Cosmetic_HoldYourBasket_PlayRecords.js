@@ -17,7 +17,7 @@ const Cosmetic_HoldYourBasket_PlayRecords = connection.define('Cosmetic_HoldYour
         unique: false,
     },
     score: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.DOUBLE,
         allowNull: false,
         unique: false,
     }
