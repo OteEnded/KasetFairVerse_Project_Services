@@ -4,7 +4,7 @@ const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 const Hemp = require('../models/Hemp');
 
-const ending_list = Hemp.getTheDrinkEndingList();
+const ending_list = ["Chocolate", "Coffee", "Plain", "Skim", "Strawberry", "Sweet"];
 
 const Hemp_TheDrink_PlayRecords = connection.define('Hemp_TheDrink_PlayRecords', {
     round_id: {

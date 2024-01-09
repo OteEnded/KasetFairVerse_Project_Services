@@ -161,6 +161,7 @@ async function deleteTheDrinkPlayRecord(round_id) {
 }
 
 // Exporting functions
+module.exports.getAllTheDrinkPlayRecords = getAllTheDrinkPlayRecords
 module.exports = {
     getAllTheDrinkPlayRecords,
     getTheDrinkPlayRecordsByUserId,
@@ -170,6 +171,5 @@ module.exports = {
     findTheDrinkPlayRecords,
     createTheDrinkPlayRecord,
     updateTheDrinkPlayRecord,
-    deleteTheDrinkPlayRecord,
-    getTheDrinkEndingList
+    deleteTheDrinkPlayRecord
 };
