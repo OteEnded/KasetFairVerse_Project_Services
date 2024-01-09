@@ -2,6 +2,7 @@
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
+// const Hemp = require('../models/Hemp');
 
 const ending_list = ["Chocolate", "Coffee", "Plain", "Skim", "Strawberry", "Sweet"];
 
