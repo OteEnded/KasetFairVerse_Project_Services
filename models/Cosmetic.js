@@ -74,6 +74,17 @@ async function getHoldYourBasketHighScoresByUserId(user_id) {
     }
 }
 
+// Function to get HoldYourBasket the highest scores record of all records
+async function getHoldYourBasketHighestScoresRecord() {
+    try {
+        const high_scores = await Cosmetic_HoldYourBasket_PlayRecords.max('score');
+        return high_scores;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 // Function to find HoldYourBasket play records
 async function findHoldYourBasketPlayRecords(column, value) {
     try {
@@ -142,6 +153,7 @@ module.exports = {
     getHoldYourBasketPlayRecordsByRoundId,
     getSumOfHoldYourBasketScoresByUserId,
     getHoldYourBasketHighScoresByUserId,
+    getHoldYourBasketHighestScoresRecord,
     findHoldYourBasketPlayRecords,
     createHoldYourBasketPlayRecord,
     updateHoldYourBasketPlayRecord,

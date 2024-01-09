@@ -123,6 +123,56 @@ router.get('/HoldYourBasket/get_high_score/user_id/:user_id', apiMiddleware.auth
     }
 });
 
+// GET /Cosmetic/HoldYourBasket/get_highest_score - Get the highest score record of Cosmetic_HoldYourBasket_PlayRecords
+router.get('/HoldYourBasket/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Cosmetic.getHoldYourBasketHighestScoresRecord();
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Highest score record of Cosmetic_HoldYourBasket_PlayRecords",
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching highest score of Cosmetic_HoldYourBasket_PlayRecords",
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// GET /Cosmetic/HoldYourBasket/get_find/{column}/{value} - Get Cosmetic_HoldYourBasket_PlayRecords by column and value
+router.get('/HoldYourBasket/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Cosmetic.findHoldYourBasketPlayRecords(req.params.column, req.params.value);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Cosmetic_HoldYourBasket_PlayRecords with " + req.params.column + ": " + req.params.value,
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching Cosmetic_HoldYourBasket_PlayRecords with " + req.params.column + ": " + req.params.value,
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
 // PUT /Cosmetic/HoldYourBasket/save - Create a Cosmetic_HoldYourBasket_PlayRecords Create a new user or update an existing Cosmetic_HoldYourBasket_PlayRecords
 router.put('/HoldYourBasket/save', apiMiddleware.authenticate, async (req, res) => {
     try {
@@ -130,10 +180,20 @@ router.put('/HoldYourBasket/save', apiMiddleware.authenticate, async (req, res) 
         if (!req.body.round_id) { // round_id is not provided, create new play record
             // check if body is correct
             if (!req.body.user_id) {
-                return res.status(400).json({ message: 'user_id is required' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'user_id is required',
+                    status: 400,
+                    content: null
+                });
             }
             if (!req.body.score) {
-                return res.status(400).json({ message: 'score is required' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'score is required',
+                    status: 400,
+                    content: null
+                });
             }
             const newPlayRecord = await Cosmetic.createHoldYourBasketPlayRecord(req.body);
             res.json({
@@ -148,7 +208,12 @@ router.put('/HoldYourBasket/save', apiMiddleware.authenticate, async (req, res) 
             const isExist = await Cosmetic.getHoldYourBasketPlayRecordsByRoundId(req.body.round_id);
             // if Cosmetic_HoldYourBasket_PlayRecords not exists, return error
             if (!isExist) {
-                return res.status(400).json({ message: 'Cosmetic_HoldYourBasket_PlayRecords with round_id: ' + req.body.round_id + ' not exists' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'Cosmetic_HoldYourBasket_PlayRecords with round_id: ' + req.body.round_id + ' not exists',
+                    status: 400,
+                    content: null
+                });
             }
             // if Cosmetic_HoldYourBasket_PlayRecord exists, update
             const updatedPlayRecord = await Cosmetic.updateHoldYourBasketPlayRecord(req.body);

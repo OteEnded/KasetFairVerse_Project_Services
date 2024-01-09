@@ -6,7 +6,7 @@ const Hemp = require('../models/Hemp');
 // GET /Hemp/TheDrink/get - Get all Hemp TheDrink play records
 router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await Hemp.getAllHempTheDrinkPlayRecords();
+        const result = await Hemp.getAllTheDrinkPlayRecords();
         console.log(result);
         res.json({
             is_success: true,
@@ -30,7 +30,7 @@ router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {
 // GET /Hemp/TheDrink/get/user_id/{user_id} - Get Hemp_TheDrink_PlayRecords by user_id
 router.get('/TheDrink/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await Hemp.getHempTheDrinkPlayRecordsByUserId(req.params.user_id);
+        const result = await Hemp.getTheDrinkPlayRecordsByUserId(req.params.user_id);
         console.log(result);
         res.json({
             is_success: true,
@@ -54,7 +54,7 @@ router.get('/TheDrink/get/user_id/:user_id', apiMiddleware.authenticate, async (
 // GET /Hemp/TheDrink/get/round_id/{round_id} - Get Hemp_TheDrink_PlayRecords by round_id
 router.get('/TheDrink/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await Hemp.getHempTheDrinkPlayRecordsByRoundId(req.params.round_id);
+        const result = await Hemp.getTheDrinkPlayRecordsByRoundId(req.params.round_id);
         console.log(result);
         res.json({
             is_success: true,
@@ -102,7 +102,7 @@ router.get('/TheDrink/number_of_ending/user_id/:user_id', apiMiddleware.authenti
 // GET /Hemp/TheDrink/progress/user_id/{user_id} - Get Hemp TheDrink progress a user has played
 router.get('/TheDrink/progress/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await Hemp.getHempTheDrinkProgressByUserId(req.params.user_id);
+        const result = await Hemp.getTheDrinkProgressByUserId(req.params.user_id);
         console.log(result);
         res.json({
             is_success: true,
@@ -126,7 +126,7 @@ router.get('/TheDrink/progress/user_id/:user_id', apiMiddleware.authenticate, as
 // GET /Hemp/TheDrink/get_find/{column}/{value} - Find Hemp_TheDrink_PlayRecords
 router.get('/TheDrink/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await Hemp.findHempTheDrinkPlayRecords(req.params.column, req.params.value);
+        const result = await Hemp.findTheDrinkPlayRecords(req.params.column, req.params.value);
         console.log(result);
         res.json({
             is_success: true,
@@ -169,7 +169,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
                     content: null
                 });
             }
-            const newPlayRecord = await Hemp.createHempTheDrinkPlayRecord(req.body);
+            const newPlayRecord = await Hemp.createTheDrinkPlayRecord(req.body);
             res.json({
                 is_success: true,
                 message: "New Hemp_TheDrink_PlayRecord created",
@@ -179,7 +179,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
         }
         else { // round_id is provided, update play record
             // check if Hemp_TheDrink_PlayRecords exists
-            const isExist = await Hemp.getHempTheDrinkPlayRecordsByRoundId(req.body.round_id);
+            const isExist = await Hemp.getTheDrinkPlayRecordsByRoundId(req.body.round_id);
             // if Hemp_TheDrink_PlayRecords not exists, return error
             if (!isExist) {
                 return res.status(400).json({
@@ -190,7 +190,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
                 });
             }
             // if Hemp_TheDrink_PlayRecord exists, update
-            const updatedPlayRecord = await Hemp.updateHempTheDrinkPlayRecord(req.body);
+            const updatedPlayRecord = await Hemp.updateTheDrinkPlayRecord(req.body);
             res.json({
                 is_success: true,
                 message: "Hemp_TheDrink_PlayRecord with round_id: " + req.body.round_id + " updated",
@@ -214,7 +214,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
 // DELETE /Hemp/TheDrink/delete/{round_id} - Delete a Hemp_TheDrink_PlayRecords
 router.delete('/TheDrink/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await Hemp.deleteHempTheDrinkPlayRecord(req.params.round_id);
+        const result = await Hemp.deleteTheDrinkPlayRecord(req.params.round_id);
         console.log(result);
         res.json({
             is_success: true,

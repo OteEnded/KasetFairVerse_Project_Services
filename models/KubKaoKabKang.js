@@ -75,6 +75,17 @@ async function getPasteScrumbleHighScoresByUserId(user_id) {
     }
 }
 
+// Function to get PasteScrumble the highest scores record of all records
+async function getPasteScrumbleHighestScoresRecord() {
+    try {
+        const high_scores = await KubKaoKabKang_PasteScrumble_PlayRecords.max('score');
+        return high_scores;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 // Function to find PasteScrumble play records
 async function findPasteScrumblePlayRecords(column, value) {
     try {
@@ -210,6 +221,17 @@ async function getCWheatHighScoresByUserId(user_id) {
     }
 }
 
+// Function to get CWheat the highest scores record of all records
+async function getCWheatHighestScoresRecord() {
+    try {
+        const high_scores = await KubKaoKabKang_CWheat_PlayRecords.max('score');
+        return high_scores;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 // Function to find CWheat play records
 async function findCWheatPlayRecords(column, value) {
     try {
@@ -278,6 +300,7 @@ module.exports = {
     getPasteScrumblePlayRecordsByRoundId,
     getSumOfPasteScrumbleScoresByUserId,
     getPasteScrumbleHighScoresByUserId,
+    getPasteScrumbleHighestScoresRecord,
     findPasteScrumblePlayRecords,
     createPasteScrumblePlayRecord,
     updatePasteScrumblePlayRecord,
@@ -287,6 +310,7 @@ module.exports = {
     getCWheatPlayRecordsByRoundId,
     getSumOfCWheatScoresByUserId,
     getCWheatHighScoresByUserId,
+    getCWheatHighestScoresRecord,
     findCWheatPlayRecords,
     createCWheatPlayRecord,
     updateCWheatPlayRecord,

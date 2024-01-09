@@ -124,6 +124,56 @@ router.get('/PasteScrumble/get_high_score/user_id/:user_id', apiMiddleware.authe
     }
 });
 
+// GET /KubKaoKabKang/PasteScrumble/get_highest_score - Get the highest score record of KubKaoKabKang_PasteScrumble_PlayRecords
+router.get('/PasteScrumble/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await KubKaoKabKang.getPasteScrumbleHighestScoresRecord();
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Highest score record of KubKaoKabKang_PasteScrumble_PlayRecords",
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching highest score of KubKaoKabKang_PasteScrumble_PlayRecords",
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// GET /KubKaoKabKang/PasteScrumble/get_find/{column}/{value} - Find KubKaoKabKang_PasteScrumble_PlayRecords by column and value
+router.get('/PasteScrumble/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await KubKaoKabKang.findPasteScrumblePlayRecords(req.params.column, req.params.value);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "KubKaoKabKang_PasteScrumble_PlayRecords with " + req.params.column + ": " + req.params.value,
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error finding KubKaoKabKang_PasteScrumble_PlayRecords with " + req.params.column + ": " + req.params.value,
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
 // PUT /KubKaoKabKang/PasteScrumble/save - Create a KubKaoKabKang_PasteScrumble_PlayRecords Create a new user or update an existing KubKaoKabKang_PasteScrumble_PlayRecords
 router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) => {
     try {
@@ -324,6 +374,56 @@ router.get('/CWheat/get_high_score/user_id/:user_id', apiMiddleware.authenticate
         res.status(500).json({
             is_success: false,
             message: "Error fetching high scores of KubKaoKabKang_CWheat_PlayRecords with user_id: " + req.params.user_id,
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// GET /KubKaoKabKang/CWheat/get_highest_score - Get the highest score record of KubKaoKabKang_CWheat_PlayRecords
+router.get('/CWheat/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await KubKaoKabKang.getCWheatHighestScoresRecord();
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Highest score record of KubKaoKabKang_CWheat_PlayRecords",
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching highest score of KubKaoKabKang_CWheat_PlayRecords",
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// GET /KubKaoKabKang/CWheat/get_find/{column}/{value} - Find KubKaoKabKang_CWheat_PlayRecords by column and value
+router.get('/CWheat/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await KubKaoKabKang.findCWheatPlayRecords(req.params.column, req.params.value);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "KubKaoKabKang_CWheat_PlayRecords with " + req.params.column + ": " + req.params.value,
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error finding KubKaoKabKang_CWheat_PlayRecords with " + req.params.column + ": " + req.params.value,
             status: 500,
             content: {
                 error: error.message

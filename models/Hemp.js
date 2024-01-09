@@ -1,9 +1,12 @@
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
 
-const ending_list = ["Chocolate", "Coffee", "Plain", "Skim", "Strawberry", "Sweet"];
+// Function to get all Hemp TheDrink play records
+function getTheDrinkEndingList() {
+    return ["Chocolate", "Coffee", "Plain", "Skim", "Strawberry", "Sweet"];
+}
 
 // Function to get all Hemp TheDrink play records
-async function getAllHempTheDrinkPlayRecords() {
+async function getAllTheDrinkPlayRecords() {
     try {
         const all_play_records = await Hemp_TheDrink_PlayRecords.findAll();
         var play_record_list = [];
@@ -17,7 +20,7 @@ async function getAllHempTheDrinkPlayRecords() {
 }
 
 // Function to get Hemp TheDrink play records by user_id
-async function getHempTheDrinkPlayRecordsByUserId(user_id) {
+async function getTheDrinkPlayRecordsByUserId(user_id) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.findAll({
             where: {
@@ -32,7 +35,7 @@ async function getHempTheDrinkPlayRecordsByUserId(user_id) {
 }
 
 // Function to get Hemp TheDrink play record by round_id
-async function getHempTheDrinkPlayRecordsByRoundId(round_id) {
+async function getTheDrinkPlayRecordsByRoundId(round_id) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.findOne({
             where: {
@@ -51,8 +54,8 @@ async function getNumberOfDifferentTheDrinkEndingsPlayed(user_id) {
     try {
         let player_progress = await getHempProgressByUserId(user_id);
         let number_of_endings = 0;
-        for (i in ending_list) {
-            if (player_progress[ending_list[i]] > 0) {
+        for (i in getTheDrinkEndingList()) {
+            if (player_progress[getTheDrinkEndingList()[i]] > 0) {
                 number_of_endings += 1;
             }
         }
@@ -72,7 +75,7 @@ async function getNumberOfDifferentTheDrinkEndingsPlayed(user_id) {
 //     Strawberry: 2,
 //     Sweet: 4
 // }
-async function getHempTheDrinkProgressByUserId(user_id) {
+async function getTheDrinkProgressByUserId(user_id) {
     try {
         const progress = {
             Chocolate: 0,
@@ -98,7 +101,7 @@ async function getHempTheDrinkProgressByUserId(user_id) {
 }
 
 // Function to find Hemp TheDrink play records
-async function findHempTheDrinkPlayRecords(column, value) {
+async function findTheDrinkPlayRecords(column, value) {
     try {
         const play_records = await Hemp_TheDrink_PlayRecords.findAll({
             where: {
@@ -112,7 +115,7 @@ async function findHempTheDrinkPlayRecords(column, value) {
 }
 
 // Function to create a Hemp TheDrink play record
-async function createHempTheDrinkPlayRecord(req) {
+async function createTheDrinkPlayRecord(req) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.create(req);
         return play_record;
@@ -122,7 +125,7 @@ async function createHempTheDrinkPlayRecord(req) {
 }
 
 // Function to update a Hemp TheDrink play record
-async function updateHempTheDrinkPlayRecord(req) {
+async function updateTheDrinkPlayRecord(req) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.update(req, {
             where: {
@@ -136,7 +139,7 @@ async function updateHempTheDrinkPlayRecord(req) {
 }
 
 // Function to delete a Hemp TheDrink play record
-async function deleteHempTheDrinkPlayRecord(round_id) {
+async function deleteTheDrinkPlayRecord(round_id) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.findOne({
             where: {
@@ -159,14 +162,14 @@ async function deleteHempTheDrinkPlayRecord(round_id) {
 
 // Exporting functions
 module.exports = {
-    getAllHempTheDrinkPlayRecords,
-    getHempTheDrinkPlayRecordsByUserId,
-    getHempTheDrinkPlayRecordsByRoundId,
+    getAllTheDrinkPlayRecords,
+    getTheDrinkPlayRecordsByUserId,
+    getTheDrinkPlayRecordsByRoundId,
     getNumberOfDifferentTheDrinkEndingsPlayed,
-    getHempTheDrinkProgressByUserId,
-    findHempTheDrinkPlayRecords,
-    createHempTheDrinkPlayRecord,
-    updateHempTheDrinkPlayRecord,
-    deleteHempTheDrinkPlayRecord
-
+    getTheDrinkProgressByUserId,
+    findTheDrinkPlayRecords,
+    createTheDrinkPlayRecord,
+    updateTheDrinkPlayRecord,
+    deleteTheDrinkPlayRecord,
+    getTheDrinkEndingList
 };
