@@ -124,7 +124,6 @@ router.get('/PasteScrumble/get_high_score/user_id/:user_id', apiMiddleware.authe
     }
 });
 
-
 // PUT /KubKaoKabKang/PasteScrumble/save - Create a KubKaoKabKang_PasteScrumble_PlayRecords Create a new user or update an existing KubKaoKabKang_PasteScrumble_PlayRecords
 router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) => {
     try {
@@ -132,10 +131,20 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
         if (!req.body.round_id) {
             // check if body is correct
             if (!req.body.user_id) {
-                return res.status(400).json({ message: 'user_id is required' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'user_id is required',
+                    status: 400,
+                    content: null
+                });
             }
             if (!req.body.score) {
-                return res.status(400).json({ message: 'score is required' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'score is required',
+                    status: 400,
+                    content: null
+                });
             }
             const newPlayRecord = await KubKaoKabKang.createPasteScrumblePlayRecord(req.body);
             res.json({
@@ -150,7 +159,12 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
             const isExist = await KubKaoKabKang.getPasteScrumblePlayRecordsByRoundId(req.body.round_id);
             // if KubKaoKabKang_PasteScrumble_PlayRecords not exists, return error
             if (!isExist) {
-                return res.status(400).json({ message: 'KubKaoKabKang_PasteScrumble_PlayRecords with round_id: ' + req.body.round_id + ' not exists' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'KubKaoKabKang_PasteScrumble_PlayRecords with round_id: ' + req.body.round_id + ' not exists',
+                    status: 400,
+                    content: null
+                });
             }
             // if KubKaoKabKang_PlayRecord exists, update        
             const updatedPlayRecord = await KubKaoKabKang.updatePasteScrumblePlayRecord(req.body);
@@ -325,10 +339,20 @@ router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
         if (!req.body.round_id) {
             // check if body is correct
             if (!req.body.user_id) {
-                return res.status(400).json({ message: 'user_id is required' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'user_id is required',
+                    status: 400,
+                    content: null
+                });
             }
             if (!req.body.score) {
-                return res.status(400).json({ message: 'score is required' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'score is required',
+                    status: 400,
+                    content: null
+                });
             }
             const newPlayRecord = await KubKaoKabKang.createCWheatPlayRecord(req.body);
             res.json({
@@ -343,7 +367,12 @@ router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
             const isExist = await KubKaoKabKang.getCWheatPlayRecordsByRoundId(req.body.round_id);
             // if KubKaoKabKang_CWheat_PlayRecords not exists, return error
             if (!isExist) {
-                return res.status(400).json({ message: 'KubKaoKabKang_CWheat_PlayRecords with round_id: ' + req.body.round_id + ' not exists' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'KubKaoKabKang_CWheat_PlayRecords with round_id: ' + req.body.round_id + ' not exists',
+                    status: 400,
+                    content: null
+                });
             }
             // if KubKaoKabKang_PlayRecord exists, update
             const updatedPlayRecord = await KubKaoKabKang.updateCWheatPlayRecord(req.body);

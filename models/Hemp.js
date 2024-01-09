@@ -2,8 +2,8 @@ const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords
 
 const ending_list = ["Chocolate", "Coffee", "Plain", "Skim", "Strawberry", "Sweet"];
 
-// Function to get all Hemp play records
-async function getAllHempPlayRecords() {
+// Function to get all Hemp TheDrink play records
+async function getAllHempTheDrinkPlayRecords() {
     try {
         const all_play_records = await Hemp_TheDrink_PlayRecords.findAll();
         var play_record_list = [];
@@ -16,8 +16,8 @@ async function getAllHempPlayRecords() {
     }
 }
 
-// Function to get Hemp play records by user_id
-async function getHempPlayRecordsByUserId(user_id) {
+// Function to get Hemp TheDrink play records by user_id
+async function getHempTheDrinkPlayRecordsByUserId(user_id) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.findAll({
             where: {
@@ -31,8 +31,8 @@ async function getHempPlayRecordsByUserId(user_id) {
     }
 }
 
-// Function to get Hemp play record by round_id
-async function getHempPlayRecordsByRoundId(round_id) {
+// Function to get Hemp TheDrink play record by round_id
+async function getHempTheDrinkPlayRecordsByRoundId(round_id) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.findOne({
             where: {
@@ -46,22 +46,24 @@ async function getHempPlayRecordsByRoundId(round_id) {
     }
 }
 
-// Function to get how many different endings a user has played
-// async function getSumOfHempScoresByUserId(user_id) {
-//     try {
-//         const number_of_endings = await Hemp_TheDrink_PlayRecords.count({
-//             where: {
-//                 user_id: user_id
-//             }
-//         });
-//         return number_of_endings;
-//     }
-//     catch (error) {
-//         throw error;
-//     }
-// }
+// Function to get how many different TheDrink endings a user has played
+async function getNumberOfDifferentTheDrinkEndingsPlayed(user_id) {
+    try {
+        let player_progress = await getHempProgressByUserId(user_id);
+        let number_of_endings = 0;
+        for (i in ending_list) {
+            if (player_progress[ending_list[i]] > 0) {
+                number_of_endings += 1;
+            }
+        }
+        return number_of_endings;
+    }
+    catch (error) {
+        throw error;
+    }
+}
 
-// Function to get progress a user has played
+// Function to get TheDrink progress a user has played
 // {
 //     Chocolate: 1,
 //     Coffee: 7,
@@ -70,7 +72,7 @@ async function getHempPlayRecordsByRoundId(round_id) {
 //     Strawberry: 2,
 //     Sweet: 4
 // }
-async function getHempProgressByUserId(user_id) {
+async function getHempTheDrinkProgressByUserId(user_id) {
     try {
         const progress = {
             Chocolate: 0,
@@ -95,8 +97,8 @@ async function getHempProgressByUserId(user_id) {
     }
 }
 
-// Function to find Hemp play records
-async function findHempPlayRecords(column, value) {
+// Function to find Hemp TheDrink play records
+async function findHempTheDrinkPlayRecords(column, value) {
     try {
         const play_records = await Hemp_TheDrink_PlayRecords.findAll({
             where: {
@@ -109,8 +111,8 @@ async function findHempPlayRecords(column, value) {
     }
 }
 
-// Function to create a Hemp play record
-async function createHempPlayRecord(req) {
+// Function to create a Hemp TheDrink play record
+async function createHempTheDrinkPlayRecord(req) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.create(req);
         return play_record;
@@ -119,8 +121,8 @@ async function createHempPlayRecord(req) {
     }
 }
 
-// Function to update a Hemp play record
-async function updateHempPlayRecord(req) {
+// Function to update a Hemp TheDrink play record
+async function updateHempTheDrinkPlayRecord(req) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.update(req, {
             where: {
@@ -133,8 +135,8 @@ async function updateHempPlayRecord(req) {
     }
 }
 
-// Function to delete a Hemp play record
-async function deleteHempPlayRecord(round_id) {
+// Function to delete a Hemp TheDrink play record
+async function deleteHempTheDrinkPlayRecord(round_id) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.findOne({
             where: {
@@ -157,4 +159,14 @@ async function deleteHempPlayRecord(round_id) {
 
 // Exporting functions
 module.exports = {
+    getAllHempTheDrinkPlayRecords,
+    getHempTheDrinkPlayRecordsByUserId,
+    getHempTheDrinkPlayRecordsByRoundId,
+    getNumberOfDifferentTheDrinkEndingsPlayed,
+    getHempTheDrinkProgressByUserId,
+    findHempTheDrinkPlayRecords,
+    createHempTheDrinkPlayRecord,
+    updateHempTheDrinkPlayRecord,
+    deleteHempTheDrinkPlayRecord
+
 };

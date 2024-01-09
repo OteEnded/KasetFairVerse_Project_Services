@@ -21,6 +21,7 @@ const adminRouter = require('./routes/Admin_router');
 const testingRouter = require('./routes/Testing_router');
 const usersRouter = require('./routes/Users_router');
 const kubkaokabkangRouter = require('./routes/KubKaoKabKang_router');
+const hempRouter = require('./routes/Hemp_router');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/Admin', adminRouter);
 app.use('/Testing', testingRouter);
 app.use('/Users', usersRouter);
 app.use('/KubKaoKabKang', kubkaokabkangRouter);
+app.use('/Hemp', hempRouter);
 
 
 // catch 404 and forward to error handler
@@ -62,4 +64,4 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-module.exports = app; //test push
+module.exports = app;
