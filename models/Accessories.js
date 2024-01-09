@@ -1,3 +1,4 @@
+const sequelize = require('sequelize');
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
 
 // Function to get all ColorMatching play records
@@ -44,9 +45,31 @@ async function getColorMatchingPlayRecordsByRoundId(round_id) {
     }
 }
 
-// Function to get win stat
+// Function to get players win stat and sort from most win amount
 // {
-//     u
+//     user1: 5,
+//     user2: 2,
+//     user3: 1,
+//     ...
+// }
+async function getWinStat(){
+    try{
+        const win_stat = await Accessories_ColorMatching_PlayRecords.findAll({
+            attributes: ['user_id', [sequelize.fn('COUNT', sequelize.col('is_win')), 'win_count']],
+            group: ['user_id'],
+            raw: true
+        });
+
+        return win_stat;
+    }
+    catch(error){
+        throw error;
+    }
+}
+
+// Function to get win amount by user_id
+// async functon getWinAmount(user_id){
+//
 // }
 
 // Function to find ColorMatching play records
