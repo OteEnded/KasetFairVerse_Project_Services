@@ -1,5 +1,6 @@
 const putil = require('../utilities/projectutility');
 const RequestLog = require('../models/RequestLog');
+const dbconnector = require('../services/dbconnector');
 
 api_permission_group = null
 
@@ -119,8 +120,20 @@ async function logRequest(req, res, next) {
         request_body: req.body
     }
     console.log("ApiMiddleware[logRequest]: Logging request ->", log)
+    let dbconnection = dbconnector.getConnection();
+    let [results, metadata]  = await dbconnection.query('show tables')
+    let existing_tables = results.map((result) => {
+        return result[Object.keys(result)[0]]
+    });
+    // check if there is table RequestLogs in database
+    console.log("ApiMiddleware[logRequest]: Checking if RequestLogs table exists...")
+    console.log(existing_tables)
+    if (!existing_tables.includes('requestlogs')) {
+        console.log("ApiMiddleware[logRequest]: Cannot log request, RequestLogs table does not exist.")
+        next();
+        return
+    }
     await RequestLog.createRequestLogs(log)
-
 
     next();
 }
