@@ -99,8 +99,8 @@ router.get('/TheDrink/number_of_ending/user_id/:user_id', apiMiddleware.authenti
     }
 });
 
-// GET /Hemp/TheDrink/progress/user_id/round_id/{user_id} - Get Hemp TheDrink progress a user has played
-router.get('/TheDrink/progress/user_id/round_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
+// GET /Hemp/TheDrink/progress/user_id/{user_id} - Get Hemp TheDrink progress a user has played
+router.get('/TheDrink/progress/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkProgressByUserId(req.params.user_id);
         console.log(result);

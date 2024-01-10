@@ -1,5 +1,4 @@
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
-// Hemp_TheDrink_PlayRecords.defineDB();
 
 // Function to get all Hemp TheDrink play records
 function getTheDrinkEndingList() {
@@ -9,13 +8,13 @@ function getTheDrinkEndingList() {
 // Function to get all Hemp TheDrink play records
 async function getAllTheDrinkPlayRecords() {
     try {
-        // const test = await Hemp_TheDrink_PlayRecords;
-        // const all_play_records = await Hemp_TheDrink_PlayRecords.findAll();
-        // var play_record_list = [];
-        // for (i in all_play_records) {
-        //     play_record_list.push(all_play_records[i].dataValues);
-        // }
-        // return play_record_list;
+        const test = await Hemp_TheDrink_PlayRecords;
+        const all_play_records = await Hemp_TheDrink_PlayRecords.findAll();
+        var play_record_list = [];
+        for (i in all_play_records) {
+            play_record_list.push(all_play_records[i].dataValues);
+        }
+        return play_record_list;
     } catch (error) {
         throw error;
     }
@@ -54,7 +53,7 @@ async function getTheDrinkPlayRecordsByRoundId(round_id) {
 // Function to get how many different TheDrink endings a user has played
 async function getNumberOfDifferentTheDrinkEndingsPlayed(user_id) {
     try {
-        let player_progress = await getHempProgressByUserId(user_id);
+        let player_progress = await getTheDrinkProgressByUserId(user_id);
         let number_of_endings = 0;
         for (i in getTheDrinkEndingList()) {
             if (player_progress[getTheDrinkEndingList()[i]] > 0) {
