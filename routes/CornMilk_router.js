@@ -177,12 +177,12 @@ router.get('/RaisuwanCrush/get_find/:column/:value', apiMiddleware.authenticate,
 router.put('/RaisuwanCrush/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
-        if (!req.body.round_id) { // round_id is not provided, create new play record
+        if (!Object.keys(req.body).includes("round_id")) { // round_id is not provided, create new play record
             // check if body is correct
-            if (!req.body.user_id) {
+            if (!Object.keys(req.body).includes("user_id")) {
                 return res.status(400).json({ message: 'user_id is required' });
             }
-            if (!req.body.score) {
+            if (!Object.keys(req.body).includes("score")) {
                 return res.status(400).json({ message: 'score is required' });
             }
             const newPlayRecord = await CornMilk.createRaisuwanCrushPlayRecord(req.body);
@@ -227,8 +227,8 @@ router.put('/RaisuwanCrush/save', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// DELETE /CornMilk/RaisuwanCrush/delete/{round_id} - Delete a CornMilk_RaisuwanCrush_PlayRecords
-router.delete('/RaisuwanCrush/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
+// DELETE /CornMilk/RaisuwanCrush/delete/round_id/{round_id} - Delete a CornMilk_RaisuwanCrush_PlayRecords
+router.delete('/RaisuwanCrush/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.deleteRaisuwanCrushPlayRecord(req.params.round_id);
         console.log(result);

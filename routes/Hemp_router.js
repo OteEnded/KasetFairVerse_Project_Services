@@ -99,8 +99,8 @@ router.get('/TheDrink/number_of_ending/user_id/:user_id', apiMiddleware.authenti
     }
 });
 
-// GET /Hemp/TheDrink/progress/user_id/{user_id} - Get Hemp TheDrink progress a user has played
-router.get('/TheDrink/progress/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
+// GET /Hemp/TheDrink/progress/user_id/round_id/{user_id} - Get Hemp TheDrink progress a user has played
+router.get('/TheDrink/progress/user_id/round_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkProgressByUserId(req.params.user_id);
         console.log(result);
@@ -151,9 +151,9 @@ router.get('/TheDrink/get_find/:column/:value', apiMiddleware.authenticate, asyn
 router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
-        if (!req.body.round_id) { // round_id is not provided, create new play record
+        if (!Object.keys(req.body).includes("round_id")) { // round_id is not provided, create new play record
             // check if body is correct
-            if (!req.body.user_id) {
+            if (!Object.keys(req.body).includes("user_id")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'user_id is required',
@@ -161,7 +161,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
                     content: null
                 });
             }
-            if (!req.body.ending) {
+            if (!Object.keys(req.body).includes("ending")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'ending is required',

@@ -20,8 +20,11 @@ const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/Admin_router');
 const testingRouter = require('./routes/Testing_router');
 const usersRouter = require('./routes/Users_router');
-const kubkaokabkangRouter = require('./routes/KubKaoKabKang_router');
+const accessoriesRouter = require('./routes/Accessories_router');
+const cornmilkRouter = require('./routes/Cornmilk_router');
+const cosmeticRouter = require('./routes/Cosmetic_router');
 const hempRouter = require('./routes/Hemp_router');
+const kubkaokabkangRouter = require('./routes/KubKaoKabKang_router');
 
 const app = express();
 
@@ -44,6 +47,9 @@ app.use('/', indexRouter);
 app.use('/Admin', adminRouter);
 app.use('/Testing', testingRouter);
 app.use('/Users', usersRouter);
+app.use('/Accessories', accessoriesRouter);
+app.use('/Cornmilk', cornmilkRouter);
+app.use('/Cosmetic', cosmeticRouter);
 app.use('/KubKaoKabKang', kubkaokabkangRouter);
 app.use('/Hemp', hempRouter);
 

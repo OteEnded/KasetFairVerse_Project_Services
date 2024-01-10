@@ -178,9 +178,9 @@ router.get('/PasteScrumble/get_find/:column/:value', apiMiddleware.authenticate,
 router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
-        if (!req.body.round_id) {
+        if (!Object.keys(req.body).includes("round_id")) {
             // check if body is correct
-            if (!req.body.user_id) {
+            if (!Object.keys(req.body).includes("user_id")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'user_id is required',
@@ -188,7 +188,7 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
                     content: null
                 });
             }
-            if (!req.body.score) {
+            if (!Object.keys(req.body).includes("score")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'score is required',
@@ -238,8 +238,8 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// DELETE /KubKaoKabKang/PasteScrumble/delete/{round_id} - Delete a KubKaoKabKang_PasteScrumble_PlayRecord
-router.delete('/PasteScrumble/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
+// DELETE /KubKaoKabKang/PasteScrumble/delete/round_id/{round_id} - Delete a KubKaoKabKang_PasteScrumble_PlayRecord
+router.delete('/PasteScrumble/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.deletePasteScrumblePlayRecord(req.params.round_id);
         console.log(result);
@@ -436,9 +436,9 @@ router.get('/CWheat/get_find/:column/:value', apiMiddleware.authenticate, async 
 router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
-        if (!req.body.round_id) {
+        if (!Object.keys(req.body).includes("round_id")) {
             // check if body is correct
-            if (!req.body.user_id) {
+            if (!Object.keys(req.body).includes("user_id")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'user_id is required',
@@ -446,7 +446,7 @@ router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
                     content: null
                 });
             }
-            if (!req.body.score) {
+            if (!Object.keys(req.body).includes("score")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'score is required',
@@ -496,8 +496,8 @@ router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// DELETE /KubKaoKabKang/CWheat/delete/{round_id} - Delete a KubKaoKabKang_CWheat_PlayRecords
-router.delete('/CWheat/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
+// DELETE /KubKaoKabKang/CWheat/delete/round_id/{round_id} - Delete a KubKaoKabKang_CWheat_PlayRecords
+router.delete('/CWheat/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.deleteCWheatPlayRecord(req.params.round_id);
         console.log(result);

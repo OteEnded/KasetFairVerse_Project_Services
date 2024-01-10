@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 const Accessories = require('../models/Accessories');
 
@@ -76,6 +76,81 @@ router.get('/ColorMatching/get/round_id/:round_id', apiMiddleware.authenticate, 
     }
 });
 
+// GET /Accessories/ColorMatching/get_leaderboard - Get Accessories_ColorMatching_PlayRecords leaderboard
+router.get('/ColorMatching/get_leaderboard', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Accessories.getLeaderBoard();
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Accessories_ColorMatching_PlayRecords leaderboard",
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching Accessories_ColorMatching_PlayRecords leaderboard",
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// GET /Accessories/ColorMatching/get_leaderboard/range/{range} - Get Accessories_ColorMatching_PlayRecords leaderboard with range
+router.get('/ColorMatching/get_leaderboard/range/:range', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Accessories.getLeaderBoard(req.params.range);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Accessories_ColorMatching_PlayRecords leaderboard with range: " + req.params.range,
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching Accessories_ColorMatching_PlayRecords leaderboard with range: " + req.params.range,
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// GET /Accessories/ColorMatching/get_win_amount/user_id/{user_id} - Get Accessories_ColorMatching_PlayRecords win amount by user_id
+router.get('/ColorMatching/get_win_amount/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Accessories.getUserWinAmount(req.params.user_id);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Accessories_ColorMatching_PlayRecords win amount with user_id: " + req.params.user_id,
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching Accessories_ColorMatching_PlayRecords win amount with user_id: " + req.params.user_id,
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
 // GET /Accessories/ColorMatching/get_find/{column}/{value} - Get Accessories_ColorMatching_PlayRecords by column and value
 router.get('/ColorMatching/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
@@ -101,13 +176,13 @@ router.get('/ColorMatching/get_find/:column/:value', apiMiddleware.authenticate,
     }
 });
 
-// PUT /Accessories/ColorMatching/save - Create a Accessories_ColorMatching_PlayRecords Create a new user or update an existing Accessories_ColorMatching_PlayRecords
+// PUT /Accessories/ColorMatching/save - Create an Accessories_ColorMatching_PlayRecords Create a new user or update an existing Accessories_ColorMatching_PlayRecords
 router.put('/ColorMatching/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
-        if (!req.body.round_id) { // round_id is not provided, create new play record
+        if (!Object.keys(req.body).includes("round_id")) { // round_id is not provided, create new play record
             // check if body is correct
-            if (!req.body.user_id) {
+            if (!Object.keys(req.body).includes("user_id")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'user_id is required',
@@ -115,7 +190,7 @@ router.put('/ColorMatching/save', apiMiddleware.authenticate, async (req, res) =
                     content: null
                 });
             }
-            if (!req.body.is_win) {
+            if (!Object.keys(req.body).includes("is_win")) {
                 return res.status(400).json({
                     is_success: false,
                     message: 'is_win is required',
@@ -165,8 +240,8 @@ router.put('/ColorMatching/save', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// DELETE /Accessories/ColorMatching/delete/{round_id} - Delete a Accessories_ColorMatching_PlayRecords
-router.delete('/ColorMatching/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
+// DELETE /Accessories/ColorMatching/delete/round_id/{round_id} - Delete an Accessories_ColorMatching_PlayRecords
+router.delete('/ColorMatching/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.deleteColorMatchingPlayRecord(req.params.round_id);
         console.log(result);

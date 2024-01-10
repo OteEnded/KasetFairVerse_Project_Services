@@ -45,34 +45,46 @@ async function getColorMatchingPlayRecordsByRoundId(round_id) {
     }
 }
 
-// // Function to get players win stat and sort from most win amount
-// // {
-// //     user1: 5,
-// //     user2: 2,
-// //     user3: 1,
-// //     ...
-// // }
-// async function getWinStat(){
-//     try{
-//         const win_stat = await Accessories_ColorMatching_PlayRecords.findAll({
-//             attributes: ['user_id', [sequelize.fn('COUNT', sequelize.col('is_win')), 'win_count']],
-//             group: ['user_id'],
-//             raw: true
-//         });
-//         // Sort win_stat from most win amount
-//         // win_stat.sort((a, b) => {
-//         //     return b.win_count - a.win_count;
-//         // });
-//         return win_stat;
-//     }
-//     catch(error){
-//         throw error;
-//     }
+// Function to get players win stat and sort from most win amount
+// {
+//     user1: 5,
+//     user2: 2,
+//     user3: 1,
+//     ...
 // }
-//
-// // Function to get win amount by user_id
-// async function getWinAmount(user_id){
-// }
+async function getLeaderBoard(range = -1){
+    try {
+        let leader_board = await Accessories_ColorMatching_PlayRecords.findAll({
+            attributes: ['user_id', [sequelize.fn('COUNT', sequelize.col('is_win')), 'win_count']],
+            group: ['user_id'],
+            raw: true
+        });
+
+        // Sort win_stat from most win amount
+        leader_board.sort((a, b) => {
+            return b.win_count - a.win_count;
+        });
+
+        // Reduce leader_board to range
+        if (range > 0) {
+            leader_board = leader_board.slice(0, range);
+        }
+
+        return leader_board;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to get win amount by user_id
+async function getUserWinAmount(user_id){
+    try {
+        const leader_board = await getLeaderBoard();
+        return leader_board[user_id];
+    } catch (error) {
+        throw error;
+    }
+}
 
 // Function to find ColorMatching play records
 async function findColorMatchingPlayRecords(column, value) {
@@ -139,6 +151,8 @@ module.exports = {
     getAllColorMatchingPlayRecords,
     getColorMatchingPlayRecordsByUserId,
     getColorMatchingPlayRecordsByRoundId,
+    getLeaderBoard,
+    getUserWinAmount,
     findColorMatchingPlayRecords,
     createColorMatchingPlayRecord,
     updateColorMatchingPlayRecord,
