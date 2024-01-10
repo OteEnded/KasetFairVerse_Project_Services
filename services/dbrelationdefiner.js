@@ -8,8 +8,8 @@ const CoffeeBean_FindMyMeow_PlayRecords = require('../entities/CoffeeBean_FindMy
 const CornMilk_RaisuwanCrush_PlayRecords = require('../entities/CornMilk_RaisuwanCrush_PlayRecords');
 const Cosmetic_HoldYourBasket_PlayRecords = require('../entities/Cosmetic_HoldYourBasket_PlayRecords');
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
-const KubKaoKabKang_PasteScrumble_PlayRecords = require('../entities/KubKaoKabKang_PasteScrumble_PlayRecords');
-const KubKaoKabKang_CWheat_PlayRecords = require('../entities/KubKaoKabKang_CWheat_PlayRecords');
+const KubKaoKabKang_PasteScrumble_PlayRecords = require('../entities/KubKaoKabGang_PasteScrumble_PlayRecords');
+const KubKaoKabKang_CWheat_PlayRecords = require('../entities/KubKaoKabGang_CWheat_PlayRecords');
 
 function defineRelationships() {
   // Define associations between entities

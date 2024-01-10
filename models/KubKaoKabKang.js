@@ -1,5 +1,5 @@
-const KubKaoKabKang_PasteScrumble_PlayRecords = require('../entities/KubKaoKabKang_PasteScrumble_PlayRecords');
-const KubKaoKabKang_CWheat_PlayRecords = require('../entities/KubKaoKabKang_CWheat_PlayRecords');
+const KubKaoKabKang_PasteScrumble_PlayRecords = require('../entities/KubKaoKabGang_PasteScrumble_PlayRecords');
+const KubKaoKabKang_CWheat_PlayRecords = require('../entities/KubKaoKabGang_CWheat_PlayRecords');
 
 // Function to get all PasteScrumble play records
 async function getAllPasteScrumblePlayRecords() {

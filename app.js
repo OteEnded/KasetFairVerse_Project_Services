@@ -24,7 +24,7 @@ const accessoriesRouter = require('./routes/Accessories_router');
 const cornmilkRouter = require('./routes/Cornmilk_router');
 const cosmeticRouter = require('./routes/Cosmetic_router');
 const hempRouter = require('./routes/Hemp_router');
-const kubkaokabkangRouter = require('./routes/KubKaoKabKang_router');
+const kubkaokabgangRouter = require('./routes/KubKaoKabGang_router');
 
 const app = express();
 
@@ -50,7 +50,7 @@ app.use('/Users', usersRouter);
 app.use('/Accessories', accessoriesRouter);
 app.use('/Cornmilk', cornmilkRouter);
 app.use('/Cosmetic', cosmeticRouter);
-app.use('/KubKaoKabKang', kubkaokabkangRouter);
+app.use('/KubKaoKabGang', kubkaokabgangRouter);
 app.use('/Hemp', hempRouter);
 
 

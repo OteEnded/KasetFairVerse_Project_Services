@@ -1,9 +1,9 @@
-// entities/KubKaoKabKang_PasteScrumble_PlayRecords.js
+// entities/KubKaoKabGang_PasteScrumble_PlayRecords.js
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
-const KubKaoKabKang_PasteScrumble_PlayRecords = connection.define('KubKaoKabKang_PasteScrumble_PlayRecords', {
+const KubKaoKabGang_PasteScrumble_PlayRecords = connection.define('KubKaoKabKang_PasteScrumble_PlayRecords', {
     round_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -23,4 +23,4 @@ const KubKaoKabKang_PasteScrumble_PlayRecords = connection.define('KubKaoKabKang
     }
 });
 
-module.exports = KubKaoKabKang_PasteScrumble_PlayRecords;
+module.exports = KubKaoKabGang_PasteScrumble_PlayRecords;
