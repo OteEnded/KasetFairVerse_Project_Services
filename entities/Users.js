@@ -16,7 +16,7 @@ const Users = connection.define('Users', {
         allowNull: false,
         unique: true,
     },
-    user_email: {
+    bigbang_uuid: {
         type: DataTypes.STRING,
         allowNull: true,
         unique: true,

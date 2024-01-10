@@ -6,6 +6,7 @@ const dbconnector = require('../services/dbconnector');
 api_permission_group = null
 
 function validate_api_permission_group_config_structure(checking_api_permission_group){
+    console.log("apimiddleware[validate_api_permission_group_config_structure]: Checking api_permission_group config structure...")
     if (checking_api_permission_group == null) { return false }
     if (Object.keys(checking_api_permission_group).length === 0) { return false }
     for (let i in checking_api_permission_group){
@@ -23,9 +24,9 @@ function validate_api_permission_group_config_structure(checking_api_permission_
 function load_api_permission_group(){
     checking_api_permission_group = putil.getConfig()["api_permission_group"]
     if (!validate_api_permission_group_config_structure(checking_api_permission_group)) {
-        throw new Error("ApiMiddleware[load_api_permission_group]: ERROR, api_permission_group config is not valid.")
-        // console.error("ApiMiddleware[load_api_permission_group]: ERROR, api_permission_group config is not valid.")
-        // process.exit(1)
+        // throw new Error("ApiMiddleware[load_api_permission_group]: ERROR, api_permission_group config is not valid.")
+        console.error("ApiMiddleware[load_api_permission_group]: ERROR, api_permission_group config is not valid.")
+        process.exit(1)
     }
     api_permission_group = checking_api_permission_group
 }

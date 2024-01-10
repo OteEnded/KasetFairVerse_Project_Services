@@ -1,4 +1,5 @@
 const users = require('../entities/Users');
+const {response} = require("express");
 
 // Function to get all users
 async function getAllUsers() {
@@ -44,12 +45,12 @@ async function getUsersByUserName(user_name) {
     }
 }
 
-// Function to get users by user_email
-async function getUsersByUserEmail(user_email) {
+// Function to get users by bigbang_uuid
+async function getUsersByBigBangUUID(bigbang_uuid) {
     try {
         const all_users = await users.findOne({
             where: {
-                user_email: user_email
+                bigbang_uuid: bigbang_uuid
             }
         });
         return all_users;
@@ -97,13 +98,116 @@ async function deleteUser(user_id) {
     }
 }
 
+// Function to request user from big bang theory using access token
+async function requestUserFromBigBangTheory(access_token) {
+    try {
+
+        // return await getUsersByUserName()
+
+        const request = require('request');
+        const options = {
+            'method': 'POST',
+            'url': 'https://apisix-gateway-beta.bigbangtheory.work/graphql/portal',
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer' + access_token
+            },
+            body: JSON.stringify({
+                query: `query {
+                      user {
+                        id
+                        uuid
+                        username
+                      }
+                    }`,
+                variables: {}
+            })
+        };
+        return new Promise((resolve, reject) => {
+            request(options, function (error, response) {
+                if (error) {
+                    reject(error);
+                } else {
+                    try {
+                        const responseData = JSON.parse(response.body);
+                        resolve(responseData);
+                    } catch (parseError) {
+                        reject(parseError);
+                    }
+                }
+            });
+        });
+    }
+    catch (error) {
+        throw new Error(`Error fetching user: ${error.message}`);
+    }
+}
+
+// Function to get user from big bang theory using access token
+async function getUserFromBigBangTheory(access_token) {
+    try {
+
+        return await users.findOne({
+            where: {
+                user_id: 1
+            }
+        });
+
+        // const res = await requestUserFromBigBangTheory(access_token);
+        // if (res.data == null) {
+        //     return null;
+        // }
+        // let user_in_db = await users.findOne({
+        //     where: {
+        //         bigbang_uuid: res.data.user.uuid
+        //     }
+        // });
+        // if (user_in_db == null) {
+        //     return  await users.create({
+        //         user_name: res.data.user.username,
+        //         bigbang_uuid: res.data.user.uuid
+        //     });
+        // }
+        //
+        // // check if username have changed
+        // let saved_username = await users.findOne({
+        //     where: {
+        //         bigbang_uuid: res.data.user.uuid
+        //     }
+        // });
+        //
+        // // update username if changed
+        // if (saved_username.user_name !== res.data.user.username){
+        //     return await users.update({
+        //         user_name: res.data.user.username
+        //     }, {
+        //         where: {
+        //             bigbang_uuid: res.data.user.uuid
+        //         }
+        //     });
+        // }
+        //
+        // return await users.findOne({
+        //     where: {
+        //         bigbang_uuid: res.data.user.uuid
+        //     }
+        // });
+
+
+    }
+    catch (error) {
+        throw new Error(`Error fetching user: ${error.message}`);
+    }
+}
+
 // Exporting functions
 module.exports = {
     getAllUsers,
     getUser,
     getUsersByUserName,
-    getUsersByUserEmail,
+    getUsersByBigBangUUID,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserFromBigBangTheory
 };

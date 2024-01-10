@@ -24,7 +24,7 @@ const RequestLogs = connection.define('RequestLogs', {
         allowNull: false,
     },
     request_to: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     request_method: {

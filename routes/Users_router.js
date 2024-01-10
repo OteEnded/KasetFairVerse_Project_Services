@@ -69,26 +69,26 @@ router.get('/get/user_name/:user_name', apiMiddleware.authenticate, async (req, 
     }
 });
 
-// GET /Users/get/user_email/{user_email} - Get users by user_email
-router.get('/get/user_email/:user_email', apiMiddleware.authenticate, async (req, res) => {
-    try {
-        const result = await user.getUsersByUserEmail(req.params.user_email);
-        res.json({
-            is_success: true,
-            message: "User with user_email: " + req.params.user_email,
-            status: 200,
-            content: result
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            is_success: false,
-            message: "Error fetching user with user_email: " + req.params.user_email,
-            status: 500,
-            content: error.message
-        });
-    }
-});
+// // GET /Users/get/user_email/{user_email} - Get users by user_email
+// router.get('/get/user_email/:user_email', apiMiddleware.authenticate, async (req, res) => {
+//     try {
+//         const result = await user.getUsersByUserEmail(req.params.user_email);
+//         res.json({
+//             is_success: true,
+//             message: "User with user_email: " + req.params.user_email,
+//             status: 200,
+//             content: result
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({
+//             is_success: false,
+//             message: "Error fetching user with user_email: " + req.params.user_email,
+//             status: 500,
+//             content: error.message
+//         });
+//     }
+// });
 
 
 // PUT /Users/save - Create a new user or update an existing user
@@ -100,10 +100,7 @@ router.put('/save', apiMiddleware.authenticate, async (req, res) => {
             // check if body is correct
             if (!req.body.user_name) {
                 return res.status(400).json({ message: 'user_name is required' });
-            }   
-            // if (!req.body.user_email) {
-            //     return res.status(400).json({ message: 'user_email is required' });
-            // }
+            }
             const newUser = await user.createUser(req.body);
             res.json({
                 is_success: true,
@@ -155,6 +152,29 @@ router.delete('/delete/:user_id', apiMiddleware.authenticate, async (req, res) =
         res.status(500).json({
             is_success: false,
             message: "Error deleting user with user_id: " + req.params.user_id,
+            status: 500,
+            content: error.message
+        });
+    }
+});
+
+// GET /Users/get_bbt_user - Get users from BBT by token
+router.get('/get_bbt_user/token/:token', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await user.getUserFromBigBangTheory(req.params.token);
+        // const result = await user.getUserFromBigBangTheory(req.body.token);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "User with token: " + req.params.token,
+            status: 200,
+            content: result
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching user with token: " + req.params.token,
             status: 500,
             content: error.message
         });
