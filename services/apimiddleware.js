@@ -33,7 +33,9 @@ function load_api_permission_group(){
 
 function find_matching_group(key){
     for (let i in api_permission_group){
-        if (api_permission_group[i]['keys'] == key){
+        console.log(i)
+        console.log("apimiddleware[find_matching_group]: Checking if key ->", key, "matches with ->", api_permission_group[i]['keys'])
+        if (api_permission_group[i]['keys'].includes(key)){
             return i
         }
     }
