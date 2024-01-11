@@ -14,11 +14,13 @@ const Accessories_ColorMatching_PlayLifes = connection.define('Accessories_Color
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: false,
+        defaultValue: 10,
     },
     color_matching: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: false,
+        defaultValue: 5,
     }
 });
 

@@ -12,9 +12,8 @@ const Token_2_User_Buffer = connection.define('Token_2_User_Buffer', {
     },
     user_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
         allowNull: false,
-        unique: true,
+        unique: false,
     }
 });
 

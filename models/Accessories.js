@@ -1,5 +1,6 @@
 const sequelize = require('sequelize');
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
+const Accessories_ColorMatching_PlayLifes = require('../entities/Accessories_ColorMatching_PlayLifes');
 
 // Function to get all ColorMatching play records
 async function getAllColorMatchingPlayRecords() {
@@ -145,6 +146,80 @@ async function deleteColorMatchingPlayRecord(round_id) {
         throw error;
     }
 }
+
+// Function to get all ColorMatching play lifes
+async function getAllColorMatchingPlayLifes() {
+    try {
+        const all_play_lifes = await Accessories_ColorMatching_PlayLifes.findAll();
+        var play_life_list = [];
+        for (i in all_play_lifes) {
+            play_life_list.push(all_play_lifes[i].dataValues);
+        }
+        return play_life_list;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to get ColorMatching play lifes by user_id
+async function getColorMatchingPlayLifesByUserId(user_id) {
+    try {
+        const play_life = await Accessories_ColorMatching_PlayLifes.findOne({
+            where: {
+                user_id: user_id
+            }
+        });
+        // if dosenot exist, create new one
+        if (!play_life) {
+            const play_life = await Accessories_ColorMatching_PlayLifes.create({
+                user_id: user_id
+            });
+        }
+        return play_life;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to update ColorMatching play lifes
+async function updateColorMatchingPlayLifes(user_id, offset) {
+    try {
+        let current_play_lifes = await getColorMatchingPlayLifesByUserId(user_id);
+        let new_play_lifes = {
+            color_matching: current_play_lifes.color_matching + offset.color_matching
+        };
+        const play_lifes = await Accessories_ColorMatching_PlayLifes.update(new_play_lifes, {
+            where: {
+                user_id: user_id
+            }
+        });
+        return play_lifes;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to update a SpinWheel play lifes
+async function updateSpinWheelPlayLifes(user_id, offset) {
+    try {
+        let current_play_lifes = await getColorMatchingPlayLifesByUserId(user_id);
+        let new_play_lifes = {
+            spin_wheel: current_play_lifes.spin_wheel + offset.spin_wheel
+        };
+        const play_lifes = await Accessories_ColorMatching_PlayLifes.update(new_play_lifes, {
+            where: {
+                user_id: user_id
+            }
+        });
+        return play_lifes;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 
 // Exporting functions
 module.exports = {
