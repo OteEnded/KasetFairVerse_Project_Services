@@ -9,7 +9,7 @@ function varidateConfig(configData){
     let next_condition = false
     console.log("dbconnector[varidateConfig]: varidating database_in_use config->", configData['database_in_use'])
 
-    next_condition = (configData['database_in_use'][0] != "sql")
+    next_condition = (configData['database_in_use'][0] !== "sql")
     if (next_condition){
         console.log(
             "dbconnector[varidateConfig]: ABORT, database_in_use is not set to 'sql' in config file."
@@ -17,7 +17,7 @@ function varidateConfig(configData){
         return false
     }
 
-    next_condition = (putil.listLen(configData['database_in_use']) != 3)
+    next_condition = (putil.listLen(configData['database_in_use']) !== 3)
     if (next_condition){
         console.log(
             "dbconnector[varidateConfig]: ABORT, database_in_use in config file is not in a right sql config format.\n" +
@@ -72,7 +72,8 @@ function connect(){
     connection = new Sequelize(db_connectinfo.database, db_connectinfo.user, db_connectinfo.password,
         {
         host: db_connectinfo.host,
-        dialect: 'mysql'
+        dialect: 'mysql',
+        timezone: '+07:00'
         }
     )
     

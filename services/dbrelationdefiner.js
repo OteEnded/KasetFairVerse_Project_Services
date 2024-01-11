@@ -6,15 +6,16 @@ const RequestLogs = require('../entities/RequestLogs');
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
 const CoffeeBean_FindMyMeow_PlayRecords = require('../entities/CoffeeBean_FindMyMeow_PlayRecords');
 const CornMilk_RaisuwanCrush_PlayRecords = require('../entities/CornMilk_RaisuwanCrush_PlayRecords');
+const Cosmetic_HoldYourBasket_PlayLifes = require('../entities/Cosmetic_HoldYourBasket_PlayLifes');
 const Cosmetic_HoldYourBasket_PlayRecords = require('../entities/Cosmetic_HoldYourBasket_PlayRecords');
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
 const KubKaoKabKang_PasteScrumble_PlayRecords = require('../entities/KubKaoKabGang_PasteScrumble_PlayRecords');
 const KubKaoKabKang_CWheat_PlayRecords = require('../entities/KubKaoKabGang_CWheat_PlayRecords');
 
 function defineRelationships() {
-  // Define associations between entities
-  KubKaoKabKang_PasteScrumble_PlayRecords.belongsTo(Users, { foreignKey: 'user_id' });
-  Users.hasMany(KubKaoKabKang_PasteScrumble_PlayRecords, { foreignKey: 'user_id' });
+    // Define associations between entities
+    KubKaoKabKang_PasteScrumble_PlayRecords.belongsTo(Users, { foreignKey: 'user_id' });
+    Users.hasMany(KubKaoKabKang_PasteScrumble_PlayRecords, { foreignKey: 'user_id' });
 
     KubKaoKabKang_CWheat_PlayRecords.belongsTo(Users, { foreignKey: 'user_id' });
     Users.hasMany(KubKaoKabKang_CWheat_PlayRecords, { foreignKey: 'user_id' });
@@ -34,7 +35,10 @@ function defineRelationships() {
     CoffeeBean_FindMyMeow_PlayRecords.belongsTo(Users, { foreignKey: 'user_id' });
     Users.hasMany(CoffeeBean_FindMyMeow_PlayRecords, { foreignKey: 'user_id' });
 
-  // ... other associations
+    Cosmetic_HoldYourBasket_PlayLifes.belongsTo(Users, { foreignKey: 'user_id' });
+    Users.hasOne(Cosmetic_HoldYourBasket_PlayLifes, { foreignKey: 'user_id' });
+
+
 }
 
 module.exports.defineRelationships = defineRelationships;

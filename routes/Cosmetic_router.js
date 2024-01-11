@@ -262,4 +262,130 @@ router.delete('/HoldYourBasket/delete/round_id/:round_id', apiMiddleware.authent
     }
 });
 
+// GET /Cosmetic/HoldYourBasket/get_playlife - Get all ColorMatching play records
+router.get('/HoldYourBasket/get_playlife', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Cosmetic.getAllHoldYourBasketPlayLifes();
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "List of all Cosmetic_ColorMatching_PlayLifes",
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching Cosmetic_ColorMatching_PlayLifes",
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+
+// GET /Cosmetic/HoldYourBasket/get_playlife/user_id/{user_id} - Get play life by user_id
+router.get('/HoldYourBasket/get_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Cosmetic.getHoldYourBasketPlayLifesByUserId(req.params.user_id);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Cosmetic_ColorMatching_PlayLifes with user_id: " + req.params.user_id,
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching Cosmetic_ColorMatching_PlayLifes with user_id: " + req.params.user_id,
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// GET /Cosmetic/SpinWheel/get_playlife/user_id/{user_id} - Get play life by user_id
+router.get('/SpinWheel/get_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await Cosmetic.getSpinWheelPlayLifesByUserId(req.params.user_id);
+        console.log(result);
+        res.json({
+            is_success: true,
+            message: "Cosmetic_ColorMatching_PlayLifes with user_id: " + req.params.user_id,
+            status: 200,
+            content: result
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error fetching Cosmetic_ColorMatching_PlayLifes with user_id: " + req.params.user_id,
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// PUT /Cosmetic/HoldYourBasket/save_playlife - Create a Cosmetic_ColorMatching_PlayLifes Create a new user or update an existing Cosmetic_ColorMatching_PlayLifes
+router.put('/HoldYourBasket/save_playlife', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        // check if user_id is provided
+        if (!Object.keys(req.body).includes("user_id")) { // user_id is not provided, return error
+            return res.status(400).json({
+                is_success: false,
+                message: 'user_id is required',
+                status: 400,
+                content: null
+            });
+        }
+        // check if Cosmetic_ColorMatching_PlayLifes exists
+        const isExist = await Cosmetic.getHoldYourBasketPlayLifesByUserId(req.body.user_id);
+        // if Cosmetic_ColorMatching_PlayLifes not exists, create new
+        if (!isExist) {
+            const newPlayLife = await Cosmetic.createHoldYourBasketPlayLifes(req.body);
+            res.json({
+                is_success: true,
+                message: "New Cosmetic_ColorMatching_PlayLifes created",
+                status: 200,
+                content: newPlayLife
+            });
+        }
+        // if Cosmetic_ColorMatching_PlayLifes exists, update
+        else {
+            const updatedPlayLife = await Cosmetic.updateHoldYourBasketPlayLifes(req.body);
+            res.json({
+                is_success: true,
+                message: "Cosmetic_ColorMatching_PlayLifes with user_id: " + req.body.user_id + " updated",
+                status: 200,
+                content: updatedPlayLife
+            });
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({
+            is_success: false,
+            message: "Error creating or updating Cosmetic_ColorMatching_PlayLifes",
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+
+
 module.exports = router;

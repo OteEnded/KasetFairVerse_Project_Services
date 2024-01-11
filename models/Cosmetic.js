@@ -1,4 +1,5 @@
 const Cosmetic_HoldYourBasket_PlayRecords = require('../entities/Cosmetic_HoldYourBasket_PlayRecords');
+const Cosmetic_HoldYourBasket_PlayLifes = require("../entities/Cosmetic_HoldYourBasket_PlayLifes");
 
 // Function to get all HoldYourBasket play records
 async function getAllHoldYourBasketPlayRecords() {
@@ -146,6 +147,124 @@ async function deleteHoldYourBasketPlayRecord(round_id) {
 }
 
 
+
+// Function to get all HoldYourBasket play lifes
+async function getAllHoldYourBasketPlayLifes() {
+    try {
+        const all_play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.findAll();
+        var play_life_list = [];
+        for (i in all_play_lifes) {
+            play_life_list.push(all_play_lifes[i].dataValues);
+        }
+        return play_life_list;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to get HoldYourBasket play lifes by user_id
+async function getHoldYourBasketPlayLifesByUserId(user_id) {
+    try {
+        const play_life = await Cosmetic_HoldYourBasket_PlayLifes.findOne({
+            where: {
+                user_id: user_id
+            }
+        });
+        // if dosenot exist, create new one
+        if (!play_life) {
+            const play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
+                user_id: user_id
+            });
+        }
+        return play_life;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+
+// Function to get SpinWheel play lifes by user_id
+async function getSpinWheelPlayLifesByUserId(user_id) {
+    try {
+        const play_life = await Cosmetic_HoldYourBasket_PlayLifes.findOne({
+            where: {
+                user_id: user_id
+            }
+        });
+        // if dosenot exist, create new one
+        if (!play_life) {
+            const play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
+                user_id: user_id
+            });
+        }
+        return play_life;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to create a HoldYourBasket play lifes
+async function createHoldYourBasketPlayLifes(req) {
+    try {
+        const play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.create(req);
+        return play_lifes;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to create a SpinWheel play lifes
+async function createSpinWheelPlayLifes(req) {
+    try {
+        const play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.create(req);
+        return play_lifes;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+// Function to update HoldYourBasket play lifes
+async function updateHoldYourBasketPlayLifes(user_id, offset) {
+    try {
+        let current_play_lifes = await getHoldYourBasketPlayLifesByUserId(user_id);
+        let new_play_lifes = {
+            hold_your_basket: current_play_lifes.hold_your_basket + offset.hold_your_basket
+        };
+        const play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
+            where: {
+                user_id: user_id
+            }
+        });
+        return play_lifes;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to update a SpinWheel play lifes
+async function updateSpinWheelPlayLifes(user_id, offset) {
+    try {
+        let current_play_lifes = await getHoldYourBasketPlayLifesByUserId(user_id);
+        let new_play_lifes = {
+            spin_wheel: current_play_lifes.spin_wheel + offset.spin_wheel
+        };
+        const play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
+            where: {
+                user_id: user_id
+            }
+        });
+        return play_lifes;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+
 // Exporting functions
 module.exports = {
     getAllHoldYourBasketPlayRecords,
@@ -157,5 +276,10 @@ module.exports = {
     findHoldYourBasketPlayRecords,
     createHoldYourBasketPlayRecord,
     updateHoldYourBasketPlayRecord,
-    deleteHoldYourBasketPlayRecord
+    deleteHoldYourBasketPlayRecord,
+    getAllHoldYourBasketPlayLifes,
+    getHoldYourBasketPlayLifesByUserId,
+    getSpinWheelPlayLifesByUserId,
+    updateHoldYourBasketPlayLifes,
+    updateSpinWheelPlayLifes
 };

@@ -25,6 +25,7 @@ const CoffeeBean_FindMyMeow_PlayRecords = connection.define('CoffeeBean_FindMyMe
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: false,
+        defaultValue: 0,
     },
 });
 
