@@ -76,7 +76,7 @@ router.get('/TheDrink/get/round_id/:round_id', apiMiddleware.authenticate, async
 });
 
 // GET /Hemp/TheDrink/number_of_ending/user_id/{user_id} - Get how many different TheDrink endings a user has played
-router.get('/TheDrink/number_of_ending/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
+router.get('/TheDrink/get_number_of_ending/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getNumberOfDifferentTheDrinkEndingsPlayed(req.params.user_id);
         console.log(result);
@@ -100,7 +100,7 @@ router.get('/TheDrink/number_of_ending/user_id/:user_id', apiMiddleware.authenti
 });
 
 // GET /Hemp/TheDrink/progress/user_id/{user_id} - Get Hemp TheDrink progress a user has played
-router.get('/TheDrink/progress/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
+router.get('/TheDrink/get_progress/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkProgressByUserId(req.params.user_id);
         console.log(result);

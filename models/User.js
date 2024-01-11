@@ -193,7 +193,6 @@ async function getUserFromBigBangTheory(access_token) {
         //     }
         // });
 
-
     }
     catch (error) {
         throw new Error(`Error fetching user: ${error.message}`);
