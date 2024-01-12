@@ -80,7 +80,15 @@ async function getLeaderBoard(range = -1){
 async function getUserWinAmount(user_id){
     try {
         const leader_board = await getLeaderBoard();
-        return leader_board[user_id];
+        let win_amount = 0;
+        for (i in leader_board) {
+            if (leader_board[i].user_id == user_id) {
+                win_amount = leader_board[i].win_count;
+                break;
+            }
+        }
+        console.log("Here", leader_board);
+        return win_amount;
     } catch (error) {
         throw error;
     }

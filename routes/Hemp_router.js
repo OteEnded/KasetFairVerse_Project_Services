@@ -148,7 +148,7 @@ router.get('/TheDrink/get_find/:column/:value', apiMiddleware.authenticate, asyn
 });
 
 // PUT /Hemp/TheDrink/save - Create a Hemp_TheDrink_PlayRecords Create a new user or update an existing Hemp_TheDrink_PlayRecords
-router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
+router.post('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
         if (!Object.keys(req.body).includes("round_id")) { // round_id is not provided, create new play record
