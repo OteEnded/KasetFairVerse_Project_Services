@@ -165,18 +165,18 @@ async function getAllHoldYourBasketPlayLifes() {
 // Function to get HoldYourBasket play lifes by user_id
 async function getHoldYourBasketPlayLifesByUserId(user_id) {
     try {
-        const play_life = await Cosmetic_HoldYourBasket_PlayLifes.findOne({
+        let play_life = await Cosmetic_HoldYourBasket_PlayLifes.findOne({
             where: {
                 user_id: user_id
             }
         });
         // if dosenot exist, create new one
         if (!play_life) {
-            const play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
+            play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
                 user_id: user_id
             });
         }
-        return play_life;
+        return play_life["hold_your_basket"];
     }
     catch (error) {
         throw error;
@@ -187,18 +187,19 @@ async function getHoldYourBasketPlayLifesByUserId(user_id) {
 // Function to get SpinWheel play lifes by user_id
 async function getSpinWheelPlayLifesByUserId(user_id) {
     try {
-        const play_life = await Cosmetic_HoldYourBasket_PlayLifes.findOne({
+        let play_life = await Cosmetic_HoldYourBasket_PlayLifes.findOne({
             where: {
                 user_id: user_id
             }
         });
         // if dosenot exist, create new one
         if (!play_life) {
-            const play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
+            play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
                 user_id: user_id
             });
         }
-        return play_life;
+
+        return play_life["spin_wheel"];
     }
     catch (error) {
         throw error;
@@ -229,16 +230,20 @@ async function createSpinWheelPlayLifes(req) {
 // Function to update HoldYourBasket play lifes
 async function updateHoldYourBasketPlayLifes(user_id, offset) {
     try {
+        console.log(user_id, offset)
         let current_play_lifes = await getHoldYourBasketPlayLifesByUserId(user_id);
+        console.log(current_play_lifes)
+
         let new_play_lifes = {
-            hold_your_basket: current_play_lifes.hold_your_basket + offset.hold_your_basket
+            hold_your_basket: current_play_lifes + offset
         };
-        const play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
+        console.log(new_play_lifes)
+        await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
             where: {
                 user_id: user_id
             }
         });
-        return play_lifes;
+        return await getHoldYourBasketPlayLifesByUserId(user_id);
     }
     catch (error) {
         throw error;
@@ -248,16 +253,18 @@ async function updateHoldYourBasketPlayLifes(user_id, offset) {
 // Function to update a SpinWheel play lifes
 async function updateSpinWheelPlayLifes(user_id, offset) {
     try {
-        let current_play_lifes = await getHoldYourBasketPlayLifesByUserId(user_id);
+        let current_play_lifes = await getSpinWheelPlayLifesByUserId(user_id);
         let new_play_lifes = {
-            spin_wheel: current_play_lifes.spin_wheel + offset.spin_wheel
+            spin_wheel: current_play_lifes + offset
         };
-        const play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
+
+        await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
             where: {
                 user_id: user_id
             }
         });
-        return play_lifes;
+
+        return await getSpinWheelPlayLifesByUserId(user_id);
     }
     catch (error) {
         throw error;

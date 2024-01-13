@@ -66,7 +66,7 @@ async function createUser(req) {
         const new_user = await users.create(req);
         return new_user;
     } catch (error) {
-        throw new Error(`Error adding user: ${error.message}`);
+        throw error;
     }
 }
 
@@ -80,7 +80,7 @@ async function updateUser(req) {
         });
         return updated_user;
     } catch (error) {
-        throw new Error(`Error updating user: ${error.message}`);
+        throw error;
     }
 }
 
@@ -94,7 +94,7 @@ async function deleteUser(user_id) {
         });
         return deleted_user;
     } catch (error) {
-        throw new Error(`Error deleting user: ${error.message}`);
+        throw error;
     }
 }
 
@@ -139,7 +139,7 @@ async function requestUserFromBigBangTheory(access_token) {
         });
     }
     catch (error) {
-        throw new Error(`Error fetching user: ${error.message}`);
+        throw error;
     }
 }
 
@@ -195,7 +195,7 @@ async function getUserFromBigBangTheory(access_token) {
 
     }
     catch (error) {
-        throw new Error(`Error fetching user: ${error.message}`);
+        throw error;
     }
 }
 

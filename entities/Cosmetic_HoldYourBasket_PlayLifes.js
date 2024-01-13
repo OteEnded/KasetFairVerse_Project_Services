@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
-const Cosmetic_HoldYourBasket_PlayLifes = connection.define('Accessories_ColorMatching_PlayLifes', {
+const Cosmetic_HoldYourBasket_PlayLifes = connection.define('Cosmetic_HoldYourBasket_PlayLifes', {
     user_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,9 +14,9 @@ const Cosmetic_HoldYourBasket_PlayLifes = connection.define('Accessories_ColorMa
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: false,
-        defaultValue: 10,
+        defaultValue: 5,
     },
-    color_matching: {
+    hold_your_basket: {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: false,
