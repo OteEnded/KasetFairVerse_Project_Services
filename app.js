@@ -41,9 +41,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // config routes
 app.use(apiMiddleware.logRequest);
+app.use('/.well-known/acme-challenge', express.static(path.join(__dirname, 'public', '.well-known', 'acme-challenge')));
 app.use('/', indexRouter);
 app.use('/Admin', adminRouter);
 app.use('/Testing', testingRouter);
@@ -54,7 +54,6 @@ app.use('/Cornmilk', cornmilkRouter);
 app.use('/Cosmetic', cosmeticRouter);
 app.use('/KubKaoKabGang', kubkaokabgangRouter);
 app.use('/Hemp', hempRouter);
-app.use('/.well-known/acme-challenge', express.static(path.join(__dirname, 'public/.well-known/acme-challenge')));
 
 
 

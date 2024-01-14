@@ -7,28 +7,51 @@
 var app = require('../app');
 var debug = require('debug')('expressjs:server');
 var http = require('http');
-var putil = require('../utilities/projectutility.js')
+var https = require('https');
+var fs = require('fs');
+var path = require('path');
+var putil = require('../utilities/projectutility.js');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || putil.getPort());
-app.set('port', port);
+var httpPort = normalizePort(process.env.HTTP_PORT || putil.getPort());
+var httpsPort = normalizePort(process.env.HTTPS_PORT || 443);
+app.set('httpPort', httpPort);
+app.set('httpsPort', httpsPort);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var httpServer = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Create HTTPS server.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+var privateKeyPath = './cert/private-key.pem';
+var certificatePath = './cert/certificate.pem';
+
+var privateKey = fs.readFileSync(privateKeyPath, 'utf8');
+var certificate = fs.readFileSync(certificatePath, 'utf8');
+
+var credentials = { key: privateKey, cert: certificate };
+
+var httpsServer = https.createServer(credentials, app);
+
+/**
+ * Listen on provided ports, on all network interfaces.
+ */
+
+httpServer.listen(httpPort);
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);
+
+httpsServer.listen(httpsPort);
+httpsServer.on('error', onError);
+httpsServer.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -51,7 +74,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Event listener for HTTP/HTTPS server "error" event.
  */
 
 function onError(error) {
@@ -79,7 +102,7 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTP/HTTPS server "listening" event.
  */
 
 function onListening() {
@@ -87,5 +110,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }
