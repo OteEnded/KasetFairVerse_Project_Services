@@ -1,10 +1,10 @@
-// entities/Token_2_User_Buffer.js
+// entities/Token_Buffers.js
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
-const Token_2_User_Buffer = connection.define('Token_2_User_Buffer', {
-    token: {
+const Token_Buffer = connection.define('Token_Buffers', {
+    bbt_token: {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
@@ -17,4 +17,4 @@ const Token_2_User_Buffer = connection.define('Token_2_User_Buffer', {
     }
 });
 
-module.exports = Token_2_User_Buffer;
+module.exports = Token_Buffer;

@@ -3,6 +3,8 @@ const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 const Users = require('../entities/Users');
 const RequestLogs = require('../entities/RequestLogs');
+const Token_Buffers = require('../entities/Token_Buffers');
+const Star_Buffers = require('../entities/Star_Buffers');
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
 const CoffeeBean_FindMyMeow_PlayRecords = require('../entities/CoffeeBean_FindMyMeow_PlayRecords');
 const CornMilk_RaisuwanCrush_PlayRecords = require('../entities/CornMilk_RaisuwanCrush_PlayRecords');
@@ -38,6 +40,11 @@ function defineRelationships() {
     Cosmetic_HoldYourBasket_PlayLifes.belongsTo(Users, { foreignKey: 'user_id' });
     Users.hasOne(Cosmetic_HoldYourBasket_PlayLifes, { foreignKey: 'user_id' });
 
+    Token_Buffers.belongsTo(Users, { foreignKey: 'user_id' });
+    Users.hasMany(Token_Buffers, { foreignKey: 'user_id' });
+
+    Star_Buffers.belongsTo(Users, { foreignKey: 'user_id' });
+    Users.hasMany(Star_Buffers, { foreignKey: 'user_id' });
 
 }
 

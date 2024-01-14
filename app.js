@@ -54,6 +54,8 @@ app.use('/Cornmilk', cornmilkRouter);
 app.use('/Cosmetic', cosmeticRouter);
 app.use('/KubKaoKabGang', kubkaokabgangRouter);
 app.use('/Hemp', hempRouter);
+app.use('/.well-known/acme-challenge', express.static(path.join(__dirname, 'public/.well-known/acme-challenge')));
+
 
 
 // catch 404 and forward to error handler
