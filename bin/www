@@ -3,43 +3,39 @@
 /**
  * Module dependencies.
  */
-
-var app = require('../app');
-var debug = require('debug')('expressjs:server');
-var http = require('http');
-var https = require('https');
-var fs = require('fs');
-var path = require('path');
-var putil = require('../utilities/projectutility.js');
+const app = require('../app');
+const debug = require('debug')('expressjs:server');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+const putil = require('../utilities/projectutility.js');
 
 /**
  * Get port from environment and store in Express.
  */
-
-var httpPort = normalizePort(process.env.HTTP_PORT || putil.getPort());
-var httpsPort = normalizePort(process.env.HTTPS_PORT || 443);
+const httpPort = normalizePort(process.env.HTTP_PORT || putil.getPort());
+const httpsPort = normalizePort(process.env.HTTPS_PORT || 443);
 app.set('httpPort', httpPort);
 app.set('httpsPort', httpsPort);
 
 /**
  * Create HTTP server.
  */
-
-var httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 
 /**
  * Create HTTPS server.
  */
+const privateKeyPath = './cert/private-key.pem';
+const certificatePath = './cert/certificate.pem';
 
-var privateKeyPath = './cert/private-key.pem';
-var certificatePath = './cert/certificate.pem';
+const privateKey = fs.readFileSync(privateKeyPath, 'utf8');
+const certificate = fs.readFileSync(certificatePath, 'utf8');
 
-var privateKey = fs.readFileSync(privateKeyPath, 'utf8');
-var certificate = fs.readFileSync(certificatePath, 'utf8');
+const credentials = {key: privateKey, cert: certificate};
 
-var credentials = { key: privateKey, cert: certificate };
-
-var httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
 /**
  * Listen on provided ports, on all network interfaces.
@@ -58,7 +54,7 @@ httpsServer.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  const port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
@@ -106,9 +102,9 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = this.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  const addr = this.address();
+  const bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
   console.log('Listening on ' + bind);
 }
