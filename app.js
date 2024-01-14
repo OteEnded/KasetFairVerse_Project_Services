@@ -15,6 +15,7 @@ console.log("app[main]: imported every primary module, starting the app...")
 dbrelationdefiner.defineRelationships();
 
 // import routes
+const cors = require('cors');
 const apiMiddleware = require('./services/apimiddleware');
 const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/Admin_router');
@@ -28,21 +29,22 @@ const hempRouter = require('./routes/Hemp_router');
 const kubkaokabgangRouter = require('./routes/KubKaoKabGang_router');
 
 const app = express();
+app.use(cors());
 
-const allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-        res.send(200);
-    } else {
-        next();
-    }
-};
-
-app.use(allowCrossDomain);
+// const allowCrossDomain = function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+//
+//     // intercept OPTIONS method
+//     if ('OPTIONS' == req.method) {
+//         res.send(200);
+//     } else {
+//         next();
+//     }
+// };
+//
+// app.use(allowCrossDomain);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

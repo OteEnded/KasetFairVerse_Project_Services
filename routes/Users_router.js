@@ -158,28 +158,6 @@ router.delete('/delete/:user_id', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// OPTION /Users/get_bbt_user - Get users from BBT by token (in case of calling https from webGL)
-router.options('/get_bbt_user', apiMiddleware.authenticate, async (req, res) => {
-    try {
-        const result = await user.getUserFromBigBangTheory(req.body.token);
-        console.log(result);
-        res.json({
-            is_success: true,
-            message: "User with token: " + req.body.token,
-            status: 200,
-            content: result
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            is_success: false,
-            message: "Error fetching user with token: " + req.body.token,
-            status: 500,
-            content: error.message
-        });
-    }
-});
-
 
 // GET /Users/get_bbt_user - Get users from BBT by token
 router.get('/get_bbt_user/token/:token', apiMiddleware.authenticate, async (req, res) => {
