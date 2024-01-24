@@ -48,13 +48,13 @@ router.get('/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res)
     }
 });
 
-// GET /Users/get/user_name/{user_name} - Get users by user_name
-router.get('/get/user_name/:user_name', apiMiddleware.authenticate, async (req, res) => {
+// GET /Users/get/username/{username} - Get users by username
+router.get('/get/username/:username', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await user.getUsersByUserName(req.params.user_name);
+        const result = await user.getUsersByUserName(req.params.username);
         res.json({
             is_success: true,
-            message: "User with user_name: " + req.params.user_name,
+            message: "User with username: " + req.params.username,
             status: 200,
             content: result
         });
@@ -62,34 +62,12 @@ router.get('/get/user_name/:user_name', apiMiddleware.authenticate, async (req, 
         console.error(error);
         res.status(500).json({
             is_success: false,
-            message: "Error fetching user with user_name: " + req.params.user_name,
+            message: "Error fetching user with username: " + req.params.username,
             status: 500,
             content: error.message
         });
     }
 });
-
-// // GET /Users/get/user_email/{user_email} - Get users by user_email
-// router.get('/get/user_email/:user_email', apiMiddleware.authenticate, async (req, res) => {
-//     try {
-//         const result = await user.getUsersByUserEmail(req.params.user_email);
-//         res.json({
-//             is_success: true,
-//             message: "User with user_email: " + req.params.user_email,
-//             status: 200,
-//             content: result
-//         });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({
-//             is_success: false,
-//             message: "Error fetching user with user_email: " + req.params.user_email,
-//             status: 500,
-//             content: error.message
-//         });
-//     }
-// });
-
 
 // PUT /Users/save - Create a new user or update an existing user
 router.put('/save', apiMiddleware.authenticate, async (req, res) => {
@@ -98,10 +76,19 @@ router.put('/save', apiMiddleware.authenticate, async (req, res) => {
         // check if user_id is provided
         if (!req.body.user_id){
             // check if body is correct
-            if (!req.body.user_name) {
-                return res.status(400).json({ message: 'user_name is required' });
+            if (!req.body.username) {
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'username is required',
+                    status: 400,
+                    content: null
+                });
             }
-            const newUser = await user.createUser(req.body);
+            const createReq = {};
+            for (let i in req.body){
+                if (["username"].includes(i)) createReq[i] = req.body[i];
+            }
+            const newUser = await user.createUser(createReq);
             res.json({
                 is_success: true,
                 message: "New user created",
@@ -114,10 +101,19 @@ router.put('/save', apiMiddleware.authenticate, async (req, res) => {
             const isExist = await user.getUser(req.body.user_id);
             // if user not exists, return error
             if (!isExist) {
-                return res.status(400).json({ message: 'user with user_id: ' + req.body.user_id + ' not exists' });
+                return res.status(400).json({
+                    is_success: false,
+                    message: 'user with user_id: ' + req.body.user_id + ' not exists',
+                    status: 400,
+                    content: null
+                });
             }
-            // if user exists, update        
-            const updatedUser = await user.updateUser(req.body);
+            // if user exists, update
+            const updateReq = {};
+            for (let i in req.body){
+                if (["user_id", "username"].includes(i)) updateReq[i] = req.body[i];
+            }
+            const updatedUser = await user.updateUser(updateReq);
             res.json({
                 is_success: true,
                 message: "User with user_id: " + req.body.user_id + " updated",

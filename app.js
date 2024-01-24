@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mysql = require('mysql2');
+const favicon = require('serve-favicon');
 
 const putil = require('./utilities/projectutility')
 const dbconnector = require('./services/dbconnector')
@@ -30,21 +31,7 @@ const kubkaokabgangRouter = require('./routes/KubKaoKabGang_router');
 
 const app = express();
 app.use(cors());
-
-// const allowCrossDomain = function (req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-//
-//     // intercept OPTIONS method
-//     if ('OPTIONS' == req.method) {
-//         res.send(200);
-//     } else {
-//         next();
-//     }
-// };
-//
-// app.use(allowCrossDomain);
+app.use(favicon('./public/images/tab-icon.ico'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

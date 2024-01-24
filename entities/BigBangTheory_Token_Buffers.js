@@ -1,9 +1,9 @@
-// entities/Token_Buffers.js
+// entities/BigBangTheory_Token_Buffers.js
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
-const Token_Buffer = connection.define('Token_Buffers', {
+const BigBangTheory_Token_Buffers = connection.define('BigBangTheory_Token_Buffers', {
     bbt_token: {
         type: DataTypes.STRING,
         primaryKey: true,
@@ -17,4 +17,4 @@ const Token_Buffer = connection.define('Token_Buffers', {
     }
 });
 
-module.exports = Token_Buffer;
+module.exports = BigBangTheory_Token_Buffers;

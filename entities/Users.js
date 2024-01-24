@@ -11,14 +11,9 @@ const Users = connection.define('Users', {
         autoIncrement: true,
         unique: true,
     },
-    user_name: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-    },
-    bigbang_uuid: {
-        type: DataTypes.STRING,
-        allowNull: true,
         unique: true,
     }
 });

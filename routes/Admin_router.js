@@ -6,7 +6,7 @@ const dbmigrateandseed = require('../services/dbmigrateandseed');
 // GET /Admin/migrate
 router.get('/migrate', apiMiddleware.authenticate, async (req, res) => {
     try {
-        dbmigrateandseed.migrate();
+        await dbmigrateandseed.migrate();
         res.json({
             is_success: true,
             message: "Migrate",
@@ -30,7 +30,7 @@ router.get('/migrate', apiMiddleware.authenticate, async (req, res) => {
 // GET /Admin/seed
 router.get('/seed', apiMiddleware.authenticate, async (req, res) => {
     try {
-        dbmigrateandseed.seed();
+        await dbmigrateandseed.seed();
         res.json({
             is_success: true,
             message: "Seed",

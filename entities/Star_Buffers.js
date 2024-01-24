@@ -16,11 +16,6 @@ const Star_Buffers = connection.define('Star_Buffers', {
         allowNull: false,
         unique: false,
     },
-    message: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        unique: false,
-    },
     from_game: {
         type: DataTypes.STRING,
         allowNull: false,
