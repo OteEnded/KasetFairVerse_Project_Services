@@ -2,7 +2,7 @@
 /.history
 /config.json
 db_backup
-cert
+cert/
 
 node_modules
 package-lock.json
