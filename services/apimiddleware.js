@@ -59,11 +59,11 @@ function is_allowed(req){
             return true
         }
     }
-    if (Object.keys(api_permission_group[permission_group]["permissions"]).includes(req.originalUrl.split("/")[1])){
-        if (req.method === "GET" && api_permission_group[permission_group]["permissions"][req.originalUrl.split("/")[1]]["read"]){
+    if (Object.keys(api_permission_group[permission_group]["permissions"]).includes(req.originalUrl.split("/")[2])){
+        if (req.method === "GET" && api_permission_group[permission_group]["permissions"][req.originalUrl.split("/")[2]]["read"]){
             return true
         }
-        if (api_permission_group[permission_group]["permissions"][req.originalUrl.split("/")[1]]["write"]){
+        if (api_permission_group[permission_group]["permissions"][req.originalUrl.split("/")[2]]["write"]){
             return true
         }
     }
