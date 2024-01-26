@@ -1,10 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 const dbmigrateandseed = require('../services/dbmigrateandseed');
 
+const star = require('../models/Star');
+const user = require('../models/User')
+
 // GET /Admin/migrate
-router.get('/migrate', apiMiddleware.authenticate, async (req, res) => {
+router.post('/migrate', apiMiddleware.authenticate, async (req, res) => {
     try {
         await dbmigrateandseed.migrate();
         res.json({
@@ -28,7 +31,7 @@ router.get('/migrate', apiMiddleware.authenticate, async (req, res) => {
 });
 
 // GET /Admin/seed
-router.get('/seed', apiMiddleware.authenticate, async (req, res) => {
+router.post('/seed', apiMiddleware.authenticate, async (req, res) => {
     try {
         await dbmigrateandseed.seed();
         res.json({
@@ -40,6 +43,26 @@ router.get('/seed', apiMiddleware.authenticate, async (req, res) => {
             }
         });
     } catch (error) {
+        res.status(500).json({
+            is_success: false,
+            message: "Error",
+            status: 500,
+            content: {
+                error: error.message
+            }
+        });
+    }
+});
+
+// POST /Admin/starUp/user_id/:user_id
+router.post('/star_up/user_id/:user_id/which_game/:which_game', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        await star.starUp(parseInt(req.params.user_id), "Hemp/TheDrink");
+        res.json({
+            message: "done"
+        })
+    } catch (error) {
+        console.error(error);
         res.status(500).json({
             is_success: false,
             message: "Error",

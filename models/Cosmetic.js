@@ -5,8 +5,8 @@ const Cosmetic_HoldYourBasket_PlayLifes = require("../entities/Cosmetic_HoldYour
 async function getAllHoldYourBasketPlayRecords() {
     try {
         const all_play_records = await Cosmetic_HoldYourBasket_PlayRecords.findAll();
-        var play_record_list = [];
-        for (i in all_play_records) {
+        const play_record_list = [];
+        for (let i in all_play_records) {
             play_record_list.push(all_play_records[i].dataValues);
         }
         return play_record_list;
@@ -152,8 +152,8 @@ async function deleteHoldYourBasketPlayRecord(round_id) {
 async function getAllHoldYourBasketPlayLifes() {
     try {
         const all_play_lifes = await Cosmetic_HoldYourBasket_PlayLifes.findAll();
-        var play_life_list = [];
-        for (i in all_play_lifes) {
+        const play_life_list = [];
+        for (let i in all_play_lifes) {
             play_life_list.push(all_play_lifes[i].dataValues);
         }
         return play_life_list;
@@ -170,7 +170,7 @@ async function getHoldYourBasketPlayLifesByUserId(user_id) {
                 user_id: user_id
             }
         });
-        // if dosenot exist, create new one
+        // if it does not exist, create new one
         if (!play_life) {
             play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
                 user_id: user_id
@@ -192,7 +192,7 @@ async function getSpinWheelPlayLifesByUserId(user_id) {
                 user_id: user_id
             }
         });
-        // if dosenot exist, create new one
+        // if it does not exist, create new one
         if (!play_life) {
             play_life = await Cosmetic_HoldYourBasket_PlayLifes.create({
                 user_id: user_id

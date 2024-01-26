@@ -4,8 +4,8 @@ const CoffeeBean_FindMyMeow_PlayRecords = require('../entities/CoffeeBean_FindMy
 async function getAllFindMyMeowPlayRecords() {
     try {
         const all_play_records = await CoffeeBean_FindMyMeow_PlayRecords.findAll();
-        var play_record_list = [];
-        for (i in all_play_records) {
+        const play_record_list = [];
+        for (let i in all_play_records) {
             play_record_list.push(all_play_records[i].dataValues);
         }
         return play_record_list;

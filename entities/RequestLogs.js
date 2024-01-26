@@ -13,11 +13,11 @@ const connection = dbconnector.getConnection();
 
 const RequestLogs = connection.define('RequestLogs', {
     request_id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true,
-    unique: true,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+        unique: true,
     },
     requester_ip: {
         type: DataTypes.STRING,

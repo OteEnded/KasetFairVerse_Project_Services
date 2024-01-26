@@ -3,6 +3,15 @@ const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
+const game_list = [
+    "Accessories/ColorMatching",
+    "CoffeeBean/FindMyMeow",
+    "CornMilk/RaisuwanCrush",
+    "Cosmetic/HoldYourBasket",
+    "Hemp/TheDrink",
+    "KubKaoKabGang/CWheat",
+    "KubKaoKabGang/PasteScrumble"
+];
 const Star_Buffers = connection.define('Star_Buffers', {
     star_id: {
         type: DataTypes.INTEGER,
@@ -18,11 +27,6 @@ const Star_Buffers = connection.define('Star_Buffers', {
     },
     from_game: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: false,
-    },
-    sent_to_bbt: {
-        type: DataTypes.BOOLEAN,
         allowNull: false,
         unique: false,
     }

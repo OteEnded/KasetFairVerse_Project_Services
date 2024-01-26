@@ -1,7 +1,8 @@
 const users = require('../entities/Users');
 const BigBangTheory_User_Profiles = require('../entities/BigBangTheory_User_Profiles')
 const BigBangTheory_Token_Buffer = require('../entities/BigBangTheory_Token_Buffers')
-const {response} = require("express");
+const dbmigrateandseed = require('../services/dbmigrateandseed');
+const apirequester = require('../services/apirequester');
 
 // Function to get all users
 async function getAllUsers() {
@@ -106,51 +107,27 @@ async function requestUserFromBigBangTheory(access_token) {
 
         console.log("User[requestUserFromBigBangTheory]: Getting user from big bang theory with token -> " + access_token);
 
-        // return await getUsersByUserName()
-        const request = require('request');
-        const options = {
-            'method': 'POST',
-            'url': 'https://apisix-gateway-beta.bigbangtheory.work/graphql/portal',
-            'headers': {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + access_token
-            },
-            body: JSON.stringify({
-                query: `query {
-                            user {
-                            id
-                            uuid
-                            username
-                            email
-                            phone_number
-                                profile{
-                                    user_id
-                                    image_profile
-                                    date_of_birth
-                                    display_name
-                                    gender
-                                    location_base
-                                    caption
-                                }
-                            }
-                        }`,
-                variables: {}
-            })
-        };
-        return new Promise((resolve, reject) => {
-            request(options, function (error, response) {
-                if (error) {
-                    reject(error);
-                } else {
-                    try {
-                        const responseData = JSON.parse(response.body);
-                        resolve(responseData);
-                    } catch (parseError) {
-                        reject(parseError);
-                    }
+        let query =
+        `query {
+            user {
+                id
+                uuid
+                username
+                email
+                phone_number
+                profile{
+                    user_id
+                    image_profile
+                    date_of_birth
+                    display_name
+                    gender
+                    location_base
+                    caption
                 }
-            });
-        });
+            }
+        }`;
+
+        return await apirequester.requestToBBT(access_token, query);
     }
     catch (error) {
         throw error;
@@ -158,20 +135,48 @@ async function requestUserFromBigBangTheory(access_token) {
 }
 
 async function getDefaultUser(which_type = "tester") {
-    if (which_type === "tester") {
-        return await users.findOne({
-            where: {
-                user_id: 1
-            }
-        });
+
+    console.log("User[getDefaultUser]: Getting default user ->", which_type);
+
+    // check if default user is already in database
+    const user_in_db = await users.findAll();
+    if (user_in_db.length > 0) {
+        await dbmigrateandseed.seed();
     }
-    // if (which_type === "error") {
-    return await users.findOne({
-        where: {
-            user_id: 2
-        }
-    });
-    // }
+
+    let user_to_return = null;
+    switch (which_type) {
+        case "tester":
+            user_to_return = await users.findOne({
+                where: {
+                    user_id: 1
+                }
+            });
+            break;
+        case "error":
+            user_to_return = await users.findOne({
+                where: {
+                    user_id: 2
+                }
+            });
+            break;
+        case "guest":
+            user_to_return = await users.findOne({
+                where: {
+                    user_id: 3
+                }
+            });
+            break;
+        default:
+            user_to_return = await users.findOne({
+                where: {
+                    user_id: 2
+                }
+            });
+            break;
+    }
+    if (user_to_return != null) return user_to_return;
+    else throw new Error("User[getDefaultUser]: cannot get user from database");
 }
 
 // Function to get user from big bang theory using access token
@@ -181,14 +186,20 @@ async function getUserFromBigBangTheory(access_token) {
 
         console.log("User[getUserFromBigBangTheory]: Getting user from big bang theory with token -> " + access_token);
 
+
+        if (access_token == null) {
+            console.log("User[getUserFromBigBangTheory]: access_token is null, return error user");
+            return await getDefaultUser("error");
+        }
+
         if (access_token === "1") {
             console.log("User[getUserFromBigBangTheory]: access_token is 1, return tester user");
             return await getDefaultUser("tester");
         }
 
-        if (access_token == null) {
-            console.log("User[getUserFromBigBangTheory]: access_token is null, return error user");
-            return await getDefaultUser("error");
+        if (access_token.toUpperCase().startsWith("guest".toUpperCase())) {
+            console.log("User[getUserFromBigBangTheory]: access_token is guest, return guest user");
+            return await getDefaultUser("guest");
         }
 
         const data_from_buffer = await BigBangTheory_Token_Buffer.findOne({
@@ -227,19 +238,7 @@ async function getUserFromBigBangTheory(access_token) {
                 username: res_from_bbt.data.user.username
             });
 
-            await BigBangTheory_User_Profiles.create({
-                bbt_user_uuid: res_from_bbt.data.user.uuid,
-                user_id: target_user.user_id,
-                bbt_user_id: res_from_bbt.data.user.id,
-                email: res_from_bbt.data.user.email,
-                phone_number: res_from_bbt.data.user.phone_number,
-                image_profile: res_from_bbt.data.user.profile.image_profile,
-                date_of_birth: res_from_bbt.data.user.profile.date_of_birth,
-                display_name: res_from_bbt.data.user.profile.display_name,
-                gender: res_from_bbt.data.user.profile.gender,
-                location_base: res_from_bbt.data.user.profile.location_base,
-                caption: res_from_bbt.data.user.profile.caption
-            });
+            await saveBBTUserProfile("create", res_from_bbt, target_user.user_id);
 
         }
         else {
@@ -263,26 +262,9 @@ async function getUserFromBigBangTheory(access_token) {
                 target_user.username = res_from_bbt.data.user.username;
             }
 
-            await BigBangTheory_User_Profiles.update({
-                user_id: target_user.user_id,
-                bbt_user_id: res_from_bbt.data.user.id,
-                email: res_from_bbt.data.user.email,
-                phone_number: res_from_bbt.data.user.phone_number,
-                image_profile: res_from_bbt.data.user.profile.image_profile,
-                date_of_birth: res_from_bbt.data.user.profile.date_of_birth,
-                display_name: res_from_bbt.data.user.profile.display_name,
-                gender: res_from_bbt.data.user.profile.gender,
-                location_base: res_from_bbt.data.user.profile.location_base,
-                caption: res_from_bbt.data.user.profile.caption
-            },
-            {
-                where: {
-                    bbt_user_uuid: res_from_bbt.data.user.uuid
-                }
-            });
+            await saveBBTUserProfile("update", res_from_bbt, target_user.user_id);
 
         }
-
         // save token buffer to database
         await saveUserTokenBufferToDatabase(access_token, target_user.user_id);
 
@@ -293,15 +275,44 @@ async function getUserFromBigBangTheory(access_token) {
     }
 }
 
+// Function to save big bang theory user profile to database
+async function saveBBTUserProfile(mode = "update", res_from_bbt, user_id){
+    console.log("User[saveBBTUserProfile]: Saving user profile to database");
+    let save_data_body = {
+        user_id: user_id,
+        bbt_user_id: res_from_bbt.data.user.id,
+        email: res_from_bbt.data.user.email,
+        phone_number: res_from_bbt.data.user.phone_number,
+        image_profile: res_from_bbt.data.user.profile.image_profile,
+        date_of_birth: res_from_bbt.data.user.profile.date_of_birth,
+        display_name: res_from_bbt.data.user.profile.display_name,
+        gender: res_from_bbt.data.user.profile.gender,
+        location_base: res_from_bbt.data.user.profile.location_base,
+        caption: res_from_bbt.data.user.profile.caption
+    }
+    if (mode === "create") {
+        save_data_body.bbt_user_uuid = res_from_bbt.data.user.uuid;
+        await BigBangTheory_User_Profiles.create(save_data_body);
+        console.log("User[saveBBTUserProfile]: saved in create mode ->", save_data_body);
+    }
+    else if (mode === "update") {
+        await BigBangTheory_User_Profiles.update(save_data_body, {
+            where: {
+                bbt_user_uuid: res_from_bbt.data.user.uuid
+            }
+        });
+        console.log("User[saveBBTUserProfile]: saved in update mode ->", save_data_body, "\nwhere bbt_user_uuid ->", res_from_bbt.data.user.uuid);
+    }
+    else {
+        throw new Error("User[saveBBTUserProfile]: mode is not defined");
+    }
+}
+
 // Function to save user token buffer to database
 async function saveUserTokenBufferToDatabase(access_token, user_id) {
     try {
 
-        let token_buffer = await BigBangTheory_Token_Buffer.findOne({
-            where: {
-                bbt_token: access_token
-            }
-        });
+        let token_buffer = await getUserTokenBufferByBBTToken(access_token);
 
         if (token_buffer != null) {
             return token_buffer;
@@ -318,6 +329,54 @@ async function saveUserTokenBufferToDatabase(access_token, user_id) {
     }
 }
 
+// Function to get all user token buffer
+async function getAllUserTokenBuffer() {
+    try {
+        const all_token_buffer = await BigBangTheory_Token_Buffer.findAll();
+        const token_buffer_list = [];
+        for (let i in all_token_buffer) {
+            token_buffer_list.push(all_token_buffer[i].dataValues);
+        }
+        return token_buffer_list;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to get user token buffer by bbt_token
+async function getUserTokenBufferByBBTToken(bbt_token) {
+    try {
+        const token_buffer = await BigBangTheory_Token_Buffer.findOne({
+            where: {
+                bbt_token: bbt_token
+            }
+        });
+        return token_buffer;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to get user token buffer by user_id
+async function getUserTokenBufferByUserId(user_id) {
+    try {
+        const token_buffer = await BigBangTheory_Token_Buffer.findOne({
+            where: {
+                user_id: user_id
+            },
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        });
+        console.log(token_buffer)
+        return token_buffer;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 // Exporting functions
 module.exports = {
     getAllUsers,
@@ -327,5 +386,8 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
-    getUserFromBigBangTheory
+    getUserFromBigBangTheory,
+    getAllUserTokenBuffer,
+    getUserTokenBufferByBBTToken,
+    getUserTokenBufferByUserId
 };

@@ -4,8 +4,8 @@ const CornMilk_RaisuwanCrush_PlayRecords = require('../entities/CornMilk_Raisuwa
 async function getAllRaisuwanCrushPlayRecords() {
     try {
         const all_play_records = await CornMilk_RaisuwanCrush_PlayRecords.findAll();
-        var play_record_list = [];
-        for (i in all_play_records) {
+        const play_record_list = [];
+        for (let i in all_play_records) {
             play_record_list.push(all_play_records[i].dataValues);
         }
         return play_record_list;

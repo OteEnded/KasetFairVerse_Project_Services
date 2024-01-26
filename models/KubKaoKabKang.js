@@ -5,8 +5,8 @@ const KubKaoKabKang_CWheat_PlayRecords = require('../entities/KubKaoKabGang_CWhe
 async function getAllPasteScrumblePlayRecords() {
     try {
         const all_play_records = await KubKaoKabKang_PasteScrumble_PlayRecords.findAll();
-        var play_record_list = [];
-        for (i in all_play_records) {
+        const play_record_list = [];
+        for (let i in all_play_records) {
             play_record_list.push(all_play_records[i].dataValues);
         }
         return play_record_list;
@@ -151,8 +151,8 @@ async function deletePasteScrumblePlayRecord(round_id) {
 async function getAllCWheatPlayRecords() {
     try {
         const all_play_records = await KubKaoKabKang_CWheat_PlayRecords.findAll();
-        var play_record_list = [];
-        for (i in all_play_records) {
+        const play_record_list = [];
+        for (let i in all_play_records) {
             play_record_list.push(all_play_records[i].dataValues);
         }
         return play_record_list;

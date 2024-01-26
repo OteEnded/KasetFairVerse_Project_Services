@@ -4,8 +4,8 @@ const RequestLogs = require('../entities/RequestLogs');
 async function getAllRequestLogs() {
     try {
         const all_request_logs = await RequestLogs.findAll();
-        var request_log_list = [];
-        for (i in all_request_logs) {
+        const request_log_list = [];
+        for (let i in all_request_logs) {
             request_log_list.push(all_request_logs[i].dataValues);
         }
         return request_log_list;

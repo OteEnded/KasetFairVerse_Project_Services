@@ -1,12 +1,12 @@
-const sequelize = require('sequelize');
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
+const sequelize = require('sequelize');
 
 // Function to get all ColorMatching play records
 async function getAllColorMatchingPlayRecords() {
     try {
         const all_play_records = await Accessories_ColorMatching_PlayRecords.findAll();
-        var play_record_list = [];
-        for (i in all_play_records) {
+        const play_record_list = [];
+        for (let i in all_play_records) {
             play_record_list.push(all_play_records[i].dataValues);
         }
         return play_record_list;

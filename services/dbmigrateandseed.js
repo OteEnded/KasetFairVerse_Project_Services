@@ -13,7 +13,12 @@ async function migrate(is_force = true) {
 
 async function seed() {
     const User = require('../models/User');
-    let username_list = ["Tester", "Error cannot load user info"];
+    const user_in_db = await User.getAllUsers();
+    if (user_in_db.length > 0) {
+        console.log("User table is not empty, skipping seed...");
+        return;
+    }
+    let username_list = ["Tester", "Error cannot load user info", "Guest"];
     let user_id = 1;
     for (let i in username_list) {
         console.log(username_list[i]);

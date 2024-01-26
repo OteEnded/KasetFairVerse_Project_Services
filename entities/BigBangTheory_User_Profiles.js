@@ -6,18 +6,18 @@ const connection = dbconnector.getConnection();
 const BigBangTheory_User_Profiles = connection.define('BigBangTheory_User_Profiles', {
     bbt_user_uuid: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         primaryKey: true,
         unique: true,
     },
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: false,
+        unique: true,
     },
     bbt_user_id: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: true,
     },
     email: {
