@@ -86,11 +86,7 @@ async function getTheDrinkProgressByUserId(user_id) {
             Strawberry: 0,
             Sweet: 0
         }
-        const play_records = await Hemp_TheDrink_PlayRecords.findAll({
-            where: {
-                user_id: user_id
-            }
-        });
+        const play_records = await getTheDrinkPlayRecordsByUserId(user_id);
         for (let i in play_records) {
             progress[play_records[i].dataValues.ending] += 1;
         }

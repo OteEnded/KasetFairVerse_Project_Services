@@ -1,5 +1,4 @@
 const { Sequelize } = require('sequelize');
-
 const putil = require('../utilities/projectutility')
 
 connection = null;
@@ -54,8 +53,8 @@ function connect(){
 
     console.log("dbconnector[connect]: Connecting...")
 
-    let configData = putil.getConfig()
-    let database_in_use = configData['database_in_use']
+    const configData = putil.getConfig()
+    const database_in_use = configData['database_in_use']
 
     if (!validateConfig(configData)){
         process.exit(1);
@@ -64,7 +63,6 @@ function connect(){
 
     let db_port = configData['database_listing'][database_in_use[0]][database_in_use[1]]['port'];
     if (db_port === null) db_port = 3306
-
 
     let db_connectinfo = {
         host: configData['database_listing'][database_in_use[0]][database_in_use[1]]['host'],

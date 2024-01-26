@@ -49,15 +49,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(apiMiddleware.logRequest);
 app.use('/.well-known/acme-challenge', express.static(path.join(__dirname, 'public', '.well-known', 'acme-challenge')));
 app.use('/', indexRouter);
-app.use('/Admin', adminRouter);
-app.use('/Testing', testingRouter);
-app.use('/Users', usersRouter);
-app.use('/Accessories', accessoriesRouter);
-app.use('/CoffeeBean', coffeebeanRouter);
-app.use('/Cornmilk', cornmilkRouter);
-app.use('/Cosmetic', cosmeticRouter);
-app.use('/KubKaoKabGang', kubkaokabgangRouter);
-app.use('/Hemp', hempRouter);
+
+// config api routes
+app.use('/Api/Admin', adminRouter);
+app.use('/Api/Testing', testingRouter);
+app.use('/Api/Users', usersRouter);
+app.use('/Api/Accessories', accessoriesRouter);
+app.use('/Api/CoffeeBean', coffeebeanRouter);
+app.use('/Api/Cornmilk', cornmilkRouter);
+app.use('/Api/Cosmetic', cosmeticRouter);
+app.use('/Api/KubKaoKabGang', kubkaokabgangRouter);
+app.use('/Api/Hemp', hempRouter);
 
 
 

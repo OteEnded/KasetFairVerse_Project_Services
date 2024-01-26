@@ -3,7 +3,7 @@ var router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 const Cosmetic = require('../models/Cosmetic');
 
-// GET /Cosmetic/HoldYourBasket/get - Get all HoldYourBasket play records
+// GET /Api/Cosmetic/HoldYourBasket/get - Get all HoldYourBasket play records
 router.get('/HoldYourBasket/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getAllHoldYourBasketPlayRecords();
@@ -27,7 +27,7 @@ router.get('/HoldYourBasket/get', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// GET /Cosmetic/HoldYourBasket/get/user_id/{user_id} - Get Cosmetic_HoldYourBasket_PlayRecords by user_id
+// GET /Api/Cosmetic/HoldYourBasket/get/user_id/{user_id} - Get Cosmetic_HoldYourBasket_PlayRecords by user_id
 router.get('/HoldYourBasket/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketPlayRecordsByUserId(req.params.user_id);
@@ -51,7 +51,7 @@ router.get('/HoldYourBasket/get/user_id/:user_id', apiMiddleware.authenticate, a
     }
 });
 
-// GET /Cosmetic/HoldYourBasket/get/round_id/{round_id} - Get Cosmetic_HoldYourBasket_PlayRecords by round_id
+// GET /Api/Cosmetic/HoldYourBasket/get/round_id/{round_id} - Get Cosmetic_HoldYourBasket_PlayRecords by round_id
 router.get('/HoldYourBasket/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketPlayRecordsByRoundId(req.params.round_id);
@@ -75,7 +75,7 @@ router.get('/HoldYourBasket/get/round_id/:round_id', apiMiddleware.authenticate,
     }
 });
 
-// GET /Cosmetic/HoldYourBasket/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
+// GET /Api/Cosmetic/HoldYourBasket/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
 router.get('/HoldYourBasket/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getSumOfHoldYourBasketScoresByUserId(req.params.user_id);
@@ -99,7 +99,7 @@ router.get('/HoldYourBasket/get_sum_score/user_id/:user_id', apiMiddleware.authe
     }
 });
 
-// GET /Cosmetic/HoldYourBasket/get_high_score/user_id/{user_id} - Get high scores by user_id
+// GET /Api/Cosmetic/HoldYourBasket/get_high_score/user_id/{user_id} - Get high scores by user_id
 router.get('/HoldYourBasket/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketHighScoresByUserId(req.params.user_id);
@@ -123,7 +123,7 @@ router.get('/HoldYourBasket/get_high_score/user_id/:user_id', apiMiddleware.auth
     }
 });
 
-// GET /Cosmetic/HoldYourBasket/get_highest_score - Get the highest score record of Cosmetic_HoldYourBasket_PlayRecords
+// GET /Api/Cosmetic/HoldYourBasket/get_highest_score - Get the highest score record of Cosmetic_HoldYourBasket_PlayRecords
 router.get('/HoldYourBasket/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketHighestScoresRecord();
@@ -148,7 +148,7 @@ router.get('/HoldYourBasket/get_highest_score', apiMiddleware.authenticate, asyn
     }
 });
 
-// GET /Cosmetic/HoldYourBasket/get_find/{column}/{value} - Get Cosmetic_HoldYourBasket_PlayRecords by column and value
+// GET /Api/Cosmetic/HoldYourBasket/get_find/{column}/{value} - Get Cosmetic_HoldYourBasket_PlayRecords by column and value
 router.get('/HoldYourBasket/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.findHoldYourBasketPlayRecords(req.params.column, req.params.value);
@@ -173,7 +173,7 @@ router.get('/HoldYourBasket/get_find/:column/:value', apiMiddleware.authenticate
     }
 });
 
-// PUT /Cosmetic/HoldYourBasket/save - Create a Cosmetic_HoldYourBasket_PlayRecords Create a new user or update an existing Cosmetic_HoldYourBasket_PlayRecords
+// PUT /Api/Cosmetic/HoldYourBasket/save - Create a Cosmetic_HoldYourBasket_PlayRecords Create a new user or update an existing Cosmetic_HoldYourBasket_PlayRecords
 router.put('/HoldYourBasket/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
@@ -237,7 +237,7 @@ router.put('/HoldYourBasket/save', apiMiddleware.authenticate, async (req, res) 
     }
 });
 
-// DELETE /Cosmetic/HoldYourBasket/delete/round_id/{round_id} - Delete a Cosmetic_HoldYourBasket_PlayRecords
+// DELETE /Api/Cosmetic/HoldYourBasket/delete/round_id/{round_id} - Delete a Cosmetic_HoldYourBasket_PlayRecords
 router.delete('/HoldYourBasket/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.deleteHoldYourBasketPlayRecord(req.params.round_id);
@@ -262,7 +262,7 @@ router.delete('/HoldYourBasket/delete/round_id/:round_id', apiMiddleware.authent
     }
 });
 
-// GET /Cosmetic/HoldYourBasket/get_playlife - Get all ColorMatching play records
+// GET /Api/Cosmetic/HoldYourBasket/get_playlife - Get all ColorMatching play records
 router.get('/HoldYourBasket/get_playlife', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getAllHoldYourBasketPlayLifes();
@@ -288,7 +288,7 @@ router.get('/HoldYourBasket/get_playlife', apiMiddleware.authenticate, async (re
 });
 
 
-// GET /Cosmetic/HoldYourBasket/get_playlife/user_id/{user_id} - Get play life by user_id
+// GET /Api/Cosmetic/HoldYourBasket/get_playlife/user_id/{user_id} - Get play life by user_id
 router.get('/HoldYourBasket/get_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketPlayLifesByUserId(req.params.user_id);
@@ -313,7 +313,7 @@ router.get('/HoldYourBasket/get_playlife/user_id/:user_id', apiMiddleware.authen
     }
 });
 
-// GET /Cosmetic/SpinWheel/get_playlife/user_id/{user_id} - Get play life by user_id
+// GET /Api/Cosmetic/SpinWheel/get_playlife/user_id/{user_id} - Get play life by user_id
 router.get('/SpinWheel/get_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getSpinWheelPlayLifesByUserId(req.params.user_id);
@@ -338,7 +338,7 @@ router.get('/SpinWheel/get_playlife/user_id/:user_id', apiMiddleware.authenticat
     }
 });
 
-// PUT /Cosmetic/HoldYourBasket/offset_playlife/user_id/{user_id} - Update Cosmetic_HoldYourBasket_PlayLifes by offset
+// PUT /Api/Cosmetic/HoldYourBasket/offset_playlife/user_id/{user_id} - Update Cosmetic_HoldYourBasket_PlayLifes by offset
 router.put('/HoldYourBasket/offset_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if user_id is provided
@@ -372,7 +372,7 @@ router.put('/HoldYourBasket/offset_playlife/user_id/:user_id', apiMiddleware.aut
     }
 });
 
-// PUT /Cosmetic/SpinWheel/offset_playlife/user_id/{user_id} - Update Cosmetic_SpinWheel_PlayLifes by offset
+// PUT /Api/Cosmetic/SpinWheel/offset_playlife/user_id/{user_id} - Update Cosmetic_SpinWheel_PlayLifes by offset
 router.put('/SpinWheel/offset_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if user_id is provided

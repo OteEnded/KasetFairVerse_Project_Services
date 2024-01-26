@@ -1,4 +1,4 @@
-// entities/Star_Buffers.js
+// entities/Stars.js
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
@@ -12,7 +12,7 @@ const game_list = [
     "KubKaoKabGang/CWheat",
     "KubKaoKabGang/PasteScrumble"
 ];
-const Star_Buffers = connection.define('Star_Buffers', {
+const Stars = connection.define('Star', {
     star_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -32,4 +32,4 @@ const Star_Buffers = connection.define('Star_Buffers', {
     }
 });
 
-module.exports = Star_Buffers;
+module.exports = Stars;

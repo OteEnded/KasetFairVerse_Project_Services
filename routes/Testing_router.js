@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 
-// GET /Testing/test
+// GET /Api/Testing/test
 router.get('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
@@ -28,7 +28,7 @@ router.get('/test', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// POST /Testing/test
+// POST /Api/Testing/test
 router.post('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
@@ -53,7 +53,7 @@ router.post('/test', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// PUT /Testing/test
+// PUT /Api/Testing/test
 router.put('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
@@ -79,7 +79,7 @@ router.put('/test', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// DELETE /Testing/test
+// DELETE /Api/Testing/test
 router.delete('/test', apiMiddleware.authenticate, async (req, res) => {
     try {
         res.json({
@@ -104,6 +104,6 @@ router.delete('/test', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// GET /Testing/test2
+// GET /Api/Testing/test2
 
 module.exports = router;

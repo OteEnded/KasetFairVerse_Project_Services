@@ -1,5 +1,6 @@
-const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
 const sequelize = require('sequelize');
+const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
+const Star = require('../models/Star');
 
 // Function to get all ColorMatching play records
 async function getAllColorMatchingPlayRecords() {
@@ -112,6 +113,13 @@ async function findColorMatchingPlayRecords(column, value) {
 async function createColorMatchingPlayRecord(req) {
     try {
         const play_record = await Accessories_ColorMatching_PlayRecords.create(req);
+
+        if (req.is_win) {
+            await Star.starUp(req.user_id, "Accessories/ColorMatching");
+        }
+
+
+
         return play_record;
     } catch (error) {
         throw error;
@@ -153,6 +161,7 @@ async function deleteColorMatchingPlayRecord(round_id) {
         throw error;
     }
 }
+
 
 
 // Exporting functions
