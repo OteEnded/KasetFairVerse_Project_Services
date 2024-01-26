@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mysql = require('mysql2');
 const favicon = require('serve-favicon');
+const rateLimit = require('express-rate-limit');
 
 const putil = require('./utilities/projectutility')
 const dbconnector = require('./services/dbconnector')
@@ -44,6 +45,38 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Create a simple in-memory cache to track IPs
+const ipCache = {};
+
+// Custom middleware to check if IP is blacklisted
+const checkBlacklist = (req, res, next) => {
+    const clientIp = req.ip; // Express automatically determines the client's IP
+
+    if (ipCache[clientIp] && ipCache[clientIp].exceededLimit) {
+        return res.status(429).send('Rate limit exceeded. You are blacklisted.');
+    }
+
+    next();
+};
+
+// Rate-limit middleware with some custom options
+const limiter = rateLimit({
+    windowMs: 3 * 60 * 1000, // 15 minutes
+    max: 50, // max requests per window
+    handler: (req, res) => {
+        const clientIp = req.ip;
+
+        // Update tracking data for the blacklisted IP
+        ipCache[clientIp] = { exceededLimit: true };
+
+        res.status(429).send('Rate limit exceeded. You are blacklisted.');
+    },
+});
+
+// Apply the checkBlacklist middleware before the rate limiter
+app.use(checkBlacklist);
+app.use(limiter);
 
 // config routes
 app.use(apiMiddleware.logRequest);
