@@ -1,4 +1,8 @@
 /.history
 /config.json
 db_backup
-db_backup/
+cert
+
+node_modules
+package-lock.json
+

@@ -79,9 +79,9 @@ function onError(error) {
   }
 
   const addr = this.address();
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + addr
-    : 'Port ' + addr.port;
+  const bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
