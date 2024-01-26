@@ -6,7 +6,7 @@ const dbmigrateandseed = require('../services/dbmigrateandseed');
 const star = require('../models/Star');
 const user = require('../models/User')
 
-// GET /Api/Admin/migrate
+// GET /api/Admin/migrate
 router.post('/migrate', apiMiddleware.authenticate, async (req, res) => {
     try {
         await dbmigrateandseed.migrate();
@@ -30,7 +30,7 @@ router.post('/migrate', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// GET /Api/Admin/seed
+// GET /api/Admin/seed
 router.post('/seed', apiMiddleware.authenticate, async (req, res) => {
     try {
         await dbmigrateandseed.seed();
@@ -54,7 +54,7 @@ router.post('/seed', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// POST /Api/Admin/starUp/user_id/:user_id
+// POST /api/Admin/starUp/user_id/:user_id
 router.post('/star_up/user_id/:user_id/which_game/:which_game', apiMiddleware.authenticate, async (req, res) => {
     try {
         await star.starUp(parseInt(req.params.user_id), "Hemp/TheDrink");

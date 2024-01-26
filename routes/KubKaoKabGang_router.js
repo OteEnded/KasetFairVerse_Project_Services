@@ -3,7 +3,7 @@ var router = express.Router();
 const KubKaoKabKang = require('../models/KubKaoKabKang');
 const apiMiddleware = require('../services/apimiddleware');
 
-// GET /Api/KubKaoKabKang/PasteScrumble/get - Get all PasteScrumble play records
+// GET /api/KubKaoKabKang/PasteScrumble/get - Get all PasteScrumble play records
 router.get('/PasteScrumble/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getAllPasteScrumblePlayRecords();
@@ -28,7 +28,7 @@ router.get('/PasteScrumble/get', apiMiddleware.authenticate, async (req, res) =>
     }
 });
 
-// GET /Api/KubKaoKabKang/PasteScrumble/get/user_id/{user_id} - Get KubKaoKabKang_PasteScrumble_PlayRecords by user_id
+// GET /api/KubKaoKabKang/PasteScrumble/get/user_id/{user_id} - Get KubKaoKabKang_PasteScrumble_PlayRecords by user_id
 router.get('/PasteScrumble/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumblePlayRecordsByUserId(req.params.user_id);
@@ -52,7 +52,7 @@ router.get('/PasteScrumble/get/user_id/:user_id', apiMiddleware.authenticate, as
     }
 });
 
-// GET /Api/KubKaoKabKang/PasteScrumble/get/round_id/{round_id} - Get KubKaoKabKang_PasteScrumble_PlayRecords by round_id
+// GET /api/KubKaoKabKang/PasteScrumble/get/round_id/{round_id} - Get KubKaoKabKang_PasteScrumble_PlayRecords by round_id
 router.get('/PasteScrumble/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumblePlayRecordsByRoundId(req.params.round_id);
@@ -76,7 +76,7 @@ router.get('/PasteScrumble/get/round_id/:round_id', apiMiddleware.authenticate, 
     }
 });
 
-// GET /Api/KubKaoKabKang/PasteScrumble/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
+// GET /api/KubKaoKabKang/PasteScrumble/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
 router.get('/PasteScrumble/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getSumOfPasteScrumbleScoresByUserId(req.params.user_id);
@@ -100,7 +100,7 @@ router.get('/PasteScrumble/get_sum_score/user_id/:user_id', apiMiddleware.authen
     }
 });
 
-// GET /Api/KubKaoKabKang/PasteScrumble/get_high_score/user_id/{user_id} - Get high scores by user_id
+// GET /api/KubKaoKabKang/PasteScrumble/get_high_score/user_id/{user_id} - Get high scores by user_id
 router.get('/PasteScrumble/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumbleHighScoresByUserId(req.params.user_id);
@@ -124,7 +124,7 @@ router.get('/PasteScrumble/get_high_score/user_id/:user_id', apiMiddleware.authe
     }
 });
 
-// GET /Api/KubKaoKabKang/PasteScrumble/get_highest_score - Get the highest score record of KubKaoKabKang_PasteScrumble_PlayRecords
+// GET /api/KubKaoKabKang/PasteScrumble/get_highest_score - Get the highest score record of KubKaoKabKang_PasteScrumble_PlayRecords
 router.get('/PasteScrumble/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumbleHighestScoresRecord();
@@ -149,7 +149,7 @@ router.get('/PasteScrumble/get_highest_score', apiMiddleware.authenticate, async
     }
 });
 
-// GET /Api/KubKaoKabKang/PasteScrumble/get_find/{column}/{value} - Find KubKaoKabKang_PasteScrumble_PlayRecords by column and value
+// GET /api/KubKaoKabKang/PasteScrumble/get_find/{column}/{value} - Find KubKaoKabKang_PasteScrumble_PlayRecords by column and value
 router.get('/PasteScrumble/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.findPasteScrumblePlayRecords(req.params.column, req.params.value);
@@ -174,7 +174,7 @@ router.get('/PasteScrumble/get_find/:column/:value', apiMiddleware.authenticate,
     }
 });
 
-// PUT /Api/KubKaoKabKang/PasteScrumble/save - Create a KubKaoKabKang_PasteScrumble_PlayRecords Create a new user or update an existing KubKaoKabKang_PasteScrumble_PlayRecords
+// PUT /api/KubKaoKabKang/PasteScrumble/save - Create a KubKaoKabKang_PasteScrumble_PlayRecords Create a new user or update an existing KubKaoKabKang_PasteScrumble_PlayRecords
 router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
@@ -238,7 +238,7 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// DELETE /Api/KubKaoKabKang/PasteScrumble/delete/round_id/{round_id} - Delete a KubKaoKabKang_PasteScrumble_PlayRecord
+// DELETE /api/KubKaoKabKang/PasteScrumble/delete/round_id/{round_id} - Delete a KubKaoKabKang_PasteScrumble_PlayRecord
 router.delete('/PasteScrumble/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.deletePasteScrumblePlayRecord(req.params.round_id);
@@ -262,7 +262,7 @@ router.delete('/PasteScrumble/delete/round_id/:round_id', apiMiddleware.authenti
     }
 });
 
-// GET /Api/KubKaoKabKang/CWheat/get - Get all CWheat play records
+// GET /api/KubKaoKabKang/CWheat/get - Get all CWheat play records
 router.get('/CWheat/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getAllCWheatPlayRecords();
@@ -286,7 +286,7 @@ router.get('/CWheat/get', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// GET /Api/KubKaoKabKang/CWheat/get/user_id/{user_id} - Get KubKaoKabKang_CWheat_PlayRecords by user_id
+// GET /api/KubKaoKabKang/CWheat/get/user_id/{user_id} - Get KubKaoKabKang_CWheat_PlayRecords by user_id
 router.get('/CWheat/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatPlayRecordsByUserId(req.params.user_id);
@@ -310,7 +310,7 @@ router.get('/CWheat/get/user_id/:user_id', apiMiddleware.authenticate, async (re
     }
 });
 
-// GET /Api/KubKaoKabKang/CWheat/get/round_id/{round_id} - Get KubKaoKabKang_CWheat_PlayRecords by round_id
+// GET /api/KubKaoKabKang/CWheat/get/round_id/{round_id} - Get KubKaoKabKang_CWheat_PlayRecords by round_id
 router.get('/CWheat/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatPlayRecordsByRoundId(req.params.round_id);
@@ -334,7 +334,7 @@ router.get('/CWheat/get/round_id/:round_id', apiMiddleware.authenticate, async (
     }
 });
 
-// GET /Api/KubKaoKabKang/CWheat/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
+// GET /api/KubKaoKabKang/CWheat/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
 router.get('/CWheat/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getSumOfCWheatScoresByUserId(req.params.user_id);
@@ -358,7 +358,7 @@ router.get('/CWheat/get_sum_score/user_id/:user_id', apiMiddleware.authenticate,
     }
 });
 
-// GET /Api/KubKaoKabKang/CWheat/get_high_score/user_id/{user_id} - Get high scores by user_id
+// GET /api/KubKaoKabKang/CWheat/get_high_score/user_id/{user_id} - Get high scores by user_id
 router.get('/CWheat/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatHighScoresByUserId(req.params.user_id);
@@ -382,7 +382,7 @@ router.get('/CWheat/get_high_score/user_id/:user_id', apiMiddleware.authenticate
     }
 });
 
-// GET /Api/KubKaoKabKang/CWheat/get_highest_score - Get the highest score record of KubKaoKabKang_CWheat_PlayRecords
+// GET /api/KubKaoKabKang/CWheat/get_highest_score - Get the highest score record of KubKaoKabKang_CWheat_PlayRecords
 router.get('/CWheat/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatHighestScoresRecord();
@@ -407,7 +407,7 @@ router.get('/CWheat/get_highest_score', apiMiddleware.authenticate, async (req, 
     }
 });
 
-// GET /Api/KubKaoKabKang/CWheat/get_find/{column}/{value} - Find KubKaoKabKang_CWheat_PlayRecords by column and value
+// GET /api/KubKaoKabKang/CWheat/get_find/{column}/{value} - Find KubKaoKabKang_CWheat_PlayRecords by column and value
 router.get('/CWheat/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.findCWheatPlayRecords(req.params.column, req.params.value);
@@ -432,7 +432,7 @@ router.get('/CWheat/get_find/:column/:value', apiMiddleware.authenticate, async 
     }
 });
 
-// PUT /Api/KubKaoKabKang/CWheat/save - Create a KubKaoKabKang_CWheat_PlayRecords Create a new user or update an existing KubKaoKabKang_CWheat_PlayRecords
+// PUT /api/KubKaoKabKang/CWheat/save - Create a KubKaoKabKang_CWheat_PlayRecords Create a new user or update an existing KubKaoKabKang_CWheat_PlayRecords
 router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
@@ -496,7 +496,7 @@ router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// DELETE /Api/KubKaoKabKang/CWheat/delete/round_id/{round_id} - Delete a KubKaoKabKang_CWheat_PlayRecords
+// DELETE /api/KubKaoKabKang/CWheat/delete/round_id/{round_id} - Delete a KubKaoKabKang_CWheat_PlayRecords
 router.delete('/CWheat/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.deleteCWheatPlayRecord(req.params.round_id);

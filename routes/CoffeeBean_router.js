@@ -3,7 +3,7 @@ var router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 const CoffeeBean = require('../models/CoffeeBean');
 
-// GET /Api/CoffeeBean/FindMyMeow/get - Get all FindMyMeow play records
+// GET /api/CoffeeBean/FindMyMeow/get - Get all FindMyMeow play records
 router.get('/FindMyMeow/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.getAllFindMyMeowPlayRecords();
@@ -27,7 +27,7 @@ router.get('/FindMyMeow/get', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// GET /Api/CoffeeBean/FindMyMeow/get/user_id/{user_id} - Get CoffeeBean_FindMyMeow_PlayRecords by user_id
+// GET /api/CoffeeBean/FindMyMeow/get/user_id/{user_id} - Get CoffeeBean_FindMyMeow_PlayRecords by user_id
 router.get('/FindMyMeow/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.getFindMyMeowPlayRecordsByUserId(req.params.user_id);
@@ -51,7 +51,7 @@ router.get('/FindMyMeow/get/user_id/:user_id', apiMiddleware.authenticate, async
     }
 });
 
-// GET /Api/CoffeeBean/FindMyMeow/get/round_id/{round_id} - Get CoffeeBean_FindMyMeow_PlayRecords by round_id
+// GET /api/CoffeeBean/FindMyMeow/get/round_id/{round_id} - Get CoffeeBean_FindMyMeow_PlayRecords by round_id
 router.get('/FindMyMeow/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.getFindMyMeowPlayRecordsByRoundId(req.params.round_id);
@@ -75,7 +75,7 @@ router.get('/FindMyMeow/get/round_id/:round_id', apiMiddleware.authenticate, asy
     }
 });
 
-// PUT /Api/CoffeeBean/FindMyMeow/save - Create a CoffeeBean_FindMyMeow_PlayRecords Create a new user or update an existing CoffeeBean_FindMyMeow_PlayRecords
+// PUT /api/CoffeeBean/FindMyMeow/save - Create a CoffeeBean_FindMyMeow_PlayRecords Create a new user or update an existing CoffeeBean_FindMyMeow_PlayRecords
 router.put('/FindMyMeow/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
@@ -132,7 +132,7 @@ router.put('/FindMyMeow/save', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// DELETE /Api/CoffeeBean/FindMyMeow/delete/round_id/{round_id} - Delete a CoffeeBean_FindMyMeow_PlayRecords
+// DELETE /api/CoffeeBean/FindMyMeow/delete/round_id/{round_id} - Delete a CoffeeBean_FindMyMeow_PlayRecords
 router.delete('/FindMyMeow/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.deleteFindMyMeowPlayRecord(req.params.round_id);

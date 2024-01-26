@@ -3,7 +3,7 @@ var router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 const Hemp = require('../models/Hemp');
 
-// GET /Api/Hemp/TheDrink/get - Get all Hemp TheDrink play records
+// GET /api/Hemp/TheDrink/get - Get all Hemp TheDrink play records
 router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getAllTheDrinkPlayRecords();
@@ -27,7 +27,7 @@ router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// GET /Api/Hemp/TheDrink/get/user_id/{user_id} - Get Hemp_TheDrink_PlayRecords by user_id
+// GET /api/Hemp/TheDrink/get/user_id/{user_id} - Get Hemp_TheDrink_PlayRecords by user_id
 router.get('/TheDrink/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkPlayRecordsByUserId(req.params.user_id);
@@ -51,7 +51,7 @@ router.get('/TheDrink/get/user_id/:user_id', apiMiddleware.authenticate, async (
     }
 });
 
-// GET /Api/Hemp/TheDrink/get/round_id/{round_id} - Get Hemp_TheDrink_PlayRecords by round_id
+// GET /api/Hemp/TheDrink/get/round_id/{round_id} - Get Hemp_TheDrink_PlayRecords by round_id
 router.get('/TheDrink/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkPlayRecordsByRoundId(req.params.round_id);
@@ -75,7 +75,7 @@ router.get('/TheDrink/get/round_id/:round_id', apiMiddleware.authenticate, async
     }
 });
 
-// GET /Api/Hemp/TheDrink/number_of_ending/user_id/{user_id} - Get how many different TheDrink endings a user has played
+// GET /api/Hemp/TheDrink/number_of_ending/user_id/{user_id} - Get how many different TheDrink endings a user has played
 router.get('/TheDrink/get_number_of_ending/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getNumberOfDifferentTheDrinkEndingsPlayed(req.params.user_id);
@@ -99,7 +99,7 @@ router.get('/TheDrink/get_number_of_ending/user_id/:user_id', apiMiddleware.auth
     }
 });
 
-// GET /Api/Hemp/TheDrink/progress/user_id/{user_id} - Get Hemp TheDrink progress a user has played
+// GET /api/Hemp/TheDrink/progress/user_id/{user_id} - Get Hemp TheDrink progress a user has played
 router.get('/TheDrink/get_progress/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkProgressByUserId(req.params.user_id);
@@ -123,7 +123,7 @@ router.get('/TheDrink/get_progress/user_id/:user_id', apiMiddleware.authenticate
     }
 });
 
-// GET /Api/Hemp/TheDrink/get_find/{column}/{value} - Find Hemp_TheDrink_PlayRecords
+// GET /api/Hemp/TheDrink/get_find/{column}/{value} - Find Hemp_TheDrink_PlayRecords
 router.get('/TheDrink/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.findTheDrinkPlayRecords(req.params.column, req.params.value);
@@ -147,7 +147,7 @@ router.get('/TheDrink/get_find/:column/:value', apiMiddleware.authenticate, asyn
     }
 });
 
-// PUT /Api/Hemp/TheDrink/save - Create a Hemp_TheDrink_PlayRecords Create a new user or update an existing Hemp_TheDrink_PlayRecords
+// PUT /api/Hemp/TheDrink/save - Create a Hemp_TheDrink_PlayRecords Create a new user or update an existing Hemp_TheDrink_PlayRecords
 router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
@@ -211,7 +211,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// DELETE /Api/Hemp/TheDrink/delete/{round_id} - Delete a Hemp_TheDrink_PlayRecords
+// DELETE /api/Hemp/TheDrink/delete/{round_id} - Delete a Hemp_TheDrink_PlayRecords
 router.delete('/TheDrink/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.deleteTheDrinkPlayRecord(req.params.round_id);

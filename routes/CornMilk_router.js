@@ -3,7 +3,7 @@ var router = express.Router();
 const apiMiddleware = require('../services/apimiddleware');
 const CornMilk = require('../models/CornMilk');
 
-// GET /Api/CornMilk/RaisuwanCrush/get - Get all RaisuwanCrush play records
+// GET /api/CornMilk/RaisuwanCrush/get - Get all RaisuwanCrush play records
 router.get('/RaisuwanCrush/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getAllRaisuwanCrushPlayRecords();
@@ -27,7 +27,7 @@ router.get('/RaisuwanCrush/get', apiMiddleware.authenticate, async (req, res) =>
     }
 });
 
-// GET /Api/CornMilk/RaisuwanCrush/get/user_id/{user_id} - Get CornMilk_RaisuwanCrush_PlayRecords by user_id
+// GET /api/CornMilk/RaisuwanCrush/get/user_id/{user_id} - Get CornMilk_RaisuwanCrush_PlayRecords by user_id
 router.get('/RaisuwanCrush/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushPlayRecordsByUserId(req.params.user_id);
@@ -51,7 +51,7 @@ router.get('/RaisuwanCrush/get/user_id/:user_id', apiMiddleware.authenticate, as
     }
 });
 
-// GET /Api/CornMilk/RaisuwanCrush/get/round_id/{round_id} - Get CornMilk_RaisuwanCrush_PlayRecords by round_id
+// GET /api/CornMilk/RaisuwanCrush/get/round_id/{round_id} - Get CornMilk_RaisuwanCrush_PlayRecords by round_id
 router.get('/RaisuwanCrush/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushPlayRecordsByRoundId(req.params.round_id);
@@ -75,7 +75,7 @@ router.get('/RaisuwanCrush/get/round_id/:round_id', apiMiddleware.authenticate, 
     }
 });
 
-// GET /Api/CornMilk/RaisuwanCrush/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
+// GET /api/CornMilk/RaisuwanCrush/get_sum_score/user_id/{user_id} - Get sum of scores by user_id
 router.get('/RaisuwanCrush/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getSumOfRaisuwanCrushScoresByUserId(req.params.user_id);
@@ -99,7 +99,7 @@ router.get('/RaisuwanCrush/get_sum_score/user_id/:user_id', apiMiddleware.authen
     }
 });
 
-// GET /Api/CornMilk/RaisuwanCrush/get_high_score/user_id/{user_id} - Get high scores by user_id
+// GET /api/CornMilk/RaisuwanCrush/get_high_score/user_id/{user_id} - Get high scores by user_id
 router.get('/RaisuwanCrush/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushHighScoresByUserId(req.params.user_id);
@@ -123,7 +123,7 @@ router.get('/RaisuwanCrush/get_high_score/user_id/:user_id', apiMiddleware.authe
     }
 });
 
-// GET /Api/CornMilk/RaisuwanCrush/get_highest_score - Get the highest score record of CornMilk_RaisuwanCrush_PlayRecords
+// GET /api/CornMilk/RaisuwanCrush/get_highest_score - Get the highest score record of CornMilk_RaisuwanCrush_PlayRecords
 router.get('/RaisuwanCrush/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushHighestScoresRecord();
@@ -148,7 +148,7 @@ router.get('/RaisuwanCrush/get_highest_score', apiMiddleware.authenticate, async
     }
 });
 
-// GET /Api/CornMilk/RaisuwanCrush/get_find/{column}/{value} - Get CornMilk_RaisuwanCrush_PlayRecords by column and value
+// GET /api/CornMilk/RaisuwanCrush/get_find/{column}/{value} - Get CornMilk_RaisuwanCrush_PlayRecords by column and value
 router.get('/RaisuwanCrush/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.findRaisuwanCrushPlayRecords(req.params.column, req.params.value);
@@ -173,7 +173,7 @@ router.get('/RaisuwanCrush/get_find/:column/:value', apiMiddleware.authenticate,
     }
 });
 
-// PUT /Api/CornMilk/RaisuwanCrush/save - Create a CornMilk_RaisuwanCrush_PlayRecords Create a new user or update an existing CornMilk_RaisuwanCrush_PlayRecords
+// PUT /api/CornMilk/RaisuwanCrush/save - Create a CornMilk_RaisuwanCrush_PlayRecords Create a new user or update an existing CornMilk_RaisuwanCrush_PlayRecords
 router.put('/RaisuwanCrush/save', apiMiddleware.authenticate, async (req, res) => {
     try {
         // check if round_id is provided
@@ -227,7 +227,7 @@ router.put('/RaisuwanCrush/save', apiMiddleware.authenticate, async (req, res) =
     }
 });
 
-// DELETE /Api/CornMilk/RaisuwanCrush/delete/round_id/{round_id} - Delete a CornMilk_RaisuwanCrush_PlayRecords
+// DELETE /api/CornMilk/RaisuwanCrush/delete/round_id/{round_id} - Delete a CornMilk_RaisuwanCrush_PlayRecords
 router.delete('/RaisuwanCrush/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.deleteRaisuwanCrushPlayRecord(req.params.round_id);

@@ -3,7 +3,7 @@ var router = express.Router();
 const user = require('../models/User');
 const apiMiddleware = require('../services/apimiddleware');
 
-// GET /Api/Users/get - Get all users
+// GET /api/Users/get - Get all users
 router.get('/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await user.getAllUsers();
@@ -26,7 +26,7 @@ router.get('/get', apiMiddleware.authenticate, async (req, res) => {
     }
 });
 
-// GET /Api/Users/get/user_id/{user_id} - Get users by user_id
+// GET /api/Users/get/user_id/{user_id} - Get users by user_id
 router.get('/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await user.getUser(req.params.user_id);
@@ -48,7 +48,7 @@ router.get('/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res)
     }
 });
 
-// GET /Api/Users/get/username/{username} - Get users by username
+// GET /api/Users/get/username/{username} - Get users by username
 router.get('/get/username/:username', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await user.getUsersByUserName(req.params.username);
@@ -69,7 +69,7 @@ router.get('/get/username/:username', apiMiddleware.authenticate, async (req, re
     }
 });
 
-// PUT /Api/Users/save - Create a new user or update an existing user
+// PUT /api/Users/save - Create a new user or update an existing user
 router.put('/save', apiMiddleware.authenticate, async (req, res) => {
     try {
 
@@ -133,7 +133,7 @@ router.put('/save', apiMiddleware.authenticate, async (req, res) => {
     }
 }); 
 
-// DELETE /Api/Users/delete/{user_id} - Delete users by user_id
+// DELETE /api/Users/delete/{user_id} - Delete users by user_id
 router.delete('/delete/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await user.deleteUser(req.params.user_id);
@@ -155,7 +155,7 @@ router.delete('/delete/:user_id', apiMiddleware.authenticate, async (req, res) =
 });
 
 
-// GET /Api/Users/get_bbt_user - Get users from BBT by token
+// GET /api/Users/get_bbt_user - Get users from BBT by token
 router.get('/get_bbt_user/token/:token', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await user.getUserFromBigBangTheory(req.params.token);
