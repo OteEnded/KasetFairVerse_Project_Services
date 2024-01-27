@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const KubKaoKabKang = require('../models/KubKaoKabKang');
-const apiMiddleware = require('../services/apimiddleware');
+const KubKaoKabKang = require('../../models/KubKaoKabKang');
+const apiMiddleware = require('../../services/apimiddleware');
 
 // GET /api/KubKaoKabKang/PasteScrumble/get - Get all PasteScrumble play records
 router.get('/PasteScrumble/get', apiMiddleware.authenticate, async (req, res) => {

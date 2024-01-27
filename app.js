@@ -3,12 +3,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mysql = require('mysql2');
 const favicon = require('serve-favicon');
 const rateLimit = require('express-rate-limit');
 
-const putil = require('./utilities/projectutility')
-const dbconnector = require('./services/dbconnector')
+// const putil = require('./utilities/projectutility')
+// const dbconnector = require('./services/dbconnector')
 const dbrelationdefiner = require('./services/dbrelationdefiner')
 
 console.log("app[main]: imported every primary module, starting the app...")
@@ -20,15 +19,15 @@ dbrelationdefiner.defineRelationships();
 const cors = require('cors');
 const apiMiddleware = require('./services/apimiddleware');
 const indexRouter = require('./routes/index');
-const adminRouter = require('./routes/Admin_router');
-const testingRouter = require('./routes/Testing_router');
-const usersRouter = require('./routes/Users_router');
-const accessoriesRouter = require('./routes/Accessories_router');
-const coffeebeanRouter = require('./routes/CoffeeBean_router');
-const cornmilkRouter = require('./routes/Cornmilk_router');
-const cosmeticRouter = require('./routes/Cosmetic_router');
-const hempRouter = require('./routes/Hemp_router');
-const kubkaokabgangRouter = require('./routes/KubKaoKabGang_router');
+const adminRouter = require('./routes/api/Admin_router');
+const testingRouter = require('./routes/api/Testing_router');
+const usersRouter = require('./routes/api/Users_router');
+const accessoriesRouter = require('./routes/api/Accessories_router');
+const coffeebeanRouter = require('./routes/api/CoffeeBean_router');
+const cornmilkRouter = require('./routes/api/CornMilk_router');
+const cosmeticRouter = require('./routes/api/Cosmetic_router');
+const hempRouter = require('./routes/api/Hemp_router');
+const kubkaokabgangRouter = require('./routes/api/KubKaoKabGang_router');
 
 const app = express();
 app.use(cors());
@@ -38,12 +37,13 @@ app.use(favicon('./public/images/tab-icon.ico'));
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile); // Set the HTML rendering engine
 app.set('view engine', 'html'); // Set the view engine to render HTML
-app.set('view engine', 'jade');
+// app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Create a simple in-memory cache to track IPs
@@ -62,8 +62,8 @@ const checkBlacklist = (req, res, next) => {
 
 // Rate-limit middleware with some custom options
 const limiter = rateLimit({
-    windowMs: 3 * 60 * 1000, // 15 minutes
-    max: 50, // max requests per window
+    windowMs: 2 * 60 * 1000, // 2 minutes
+    max: 150, // max requests per window
     handler: (req, res) => {
         const clientIp = req.ip;
 

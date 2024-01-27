@@ -1,5 +1,6 @@
 const KubKaoKabKang_PasteScrumble_PlayRecords = require('../entities/KubKaoKabGang_PasteScrumble_PlayRecords');
 const KubKaoKabKang_CWheat_PlayRecords = require('../entities/KubKaoKabGang_CWheat_PlayRecords');
+const Star = require('../models/Star');
 
 // Function to get all PasteScrumble play records
 async function getAllPasteScrumblePlayRecords() {
@@ -105,6 +106,7 @@ async function findPasteScrumblePlayRecords(column, value) {
 async function createPasteScrumblePlayRecord(req) {
     try {
         const play_record = await KubKaoKabKang_PasteScrumble_PlayRecords.create(req);
+        await pasteScrumbleStarUp(play_record);
         return play_record;
     } catch (error) {
         throw error;
@@ -251,6 +253,7 @@ async function findCWheatPlayRecords(column, value) {
 async function createCWheatPlayRecord(req) {
     try {
         const play_record = await KubKaoKabKang_CWheat_PlayRecords.create(req);
+        await CWheatStarUp(play_record);
         return play_record;
     } catch (error) {
         throw error;
@@ -288,6 +291,40 @@ async function deleteCWheatPlayRecord(round_id) {
             }
         });
         return play_record;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to check if user should be given a PasteScrumble star and perform star up if so
+async function pasteScrumbleStarUp(play_record){
+    try {
+        const score = play_record.score;
+        if (score >= 1500) {
+            let starUpReq = {
+                user_id: play_record.user_id,
+                source: Star.star_source_code.KubKaoKabGang_PasteScrumble,
+                message: "Game star from KubKaoKabGang_CWheat at " + play_record
+            }
+            await Star.starUp(starUpReq);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to check if user should be given a CWheat star and perform star up if so
+async function CWheatStarUp(play_record){
+    try {
+        const score = play_record.score;
+        if (score >= 10) {
+            let starUpReq = {
+                user_id: play_record.user_id,
+                source: Star.star_source_code.KubKaoKabGang_CWheat,
+                message: "Game star from KubKaoKabGang_CWheat at " + play_record
+            }
+            await Star.starUp(starUpReq);
+        }
     } catch (error) {
         throw error;
     }

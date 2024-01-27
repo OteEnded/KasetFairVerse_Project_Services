@@ -113,13 +113,7 @@ async function findColorMatchingPlayRecords(column, value) {
 async function createColorMatchingPlayRecord(req) {
     try {
         const play_record = await Accessories_ColorMatching_PlayRecords.create(req);
-
-        if (req.is_win) {
-            await Star.starUp(req.user_id, "Accessories/ColorMatching");
-        }
-
-
-
+        await colorMatchingStarUp(play_record);
         return play_record;
     } catch (error) {
         throw error;
@@ -162,6 +156,22 @@ async function deleteColorMatchingPlayRecord(round_id) {
     }
 }
 
+// Function to check if user should be given a ColorMatching star and perform star up if so
+async function colorMatchingStarUp(play_record) {
+    try {
+        const is_win = play_record.is_win;
+        if (!is_win) return;
+
+        await Star.starUp({
+            user_id: play_record.user_id,
+            source: Star.star_source_code.Accessories_ColorMatching,
+            message: "Game star from Accessories_ColorMatching at " + play_record
+        });
+
+    } catch (error) {
+        throw error;
+    }
+}
 
 
 // Exporting functions

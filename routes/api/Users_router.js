@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const user = require('../models/User');
-const apiMiddleware = require('../services/apimiddleware');
+const user = require('../../models/User');
+const apiMiddleware = require('../../services/apimiddleware');
 
 // GET /api/Users/get - Get all users
 router.get('/get', apiMiddleware.authenticate, async (req, res) => {

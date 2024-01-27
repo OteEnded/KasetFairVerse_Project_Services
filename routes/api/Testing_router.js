@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const apiMiddleware = require('../services/apimiddleware');
+const apiMiddleware = require('../../services/apimiddleware');
 
 // GET /api/Testing/test
 router.get('/test', apiMiddleware.authenticate, async (req, res) => {

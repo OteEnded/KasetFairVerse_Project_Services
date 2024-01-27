@@ -140,7 +140,7 @@ async function getDefaultUser(which_type = "tester") {
 
     // check if default user is already in database
     const user_in_db = await users.findAll();
-    if (user_in_db.length > 0) {
+    if (user_in_db.length <= 0) {
         await dbmigrateandseed.seed();
     }
 

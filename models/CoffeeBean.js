@@ -1,4 +1,5 @@
 const CoffeeBean_FindMyMeow_PlayRecords = require('../entities/CoffeeBean_FindMyMeow_PlayRecords');
+const Star = require('../models/Star');
 
 // Function to get all FindMyMeow play records
 async function getAllFindMyMeowPlayRecords() {
@@ -108,6 +109,7 @@ async function getFindMyMeowGoldenCatHighScoresByUserId(user_id) {
 async function createFindMyMeowPlayRecord(req) {
     try {
         const play_record = await CoffeeBean_FindMyMeow_PlayRecords.create(req);
+        await findMyMeowStarUp(play_record)
         return play_record;
     }
     catch (error) {
@@ -139,6 +141,24 @@ async function deleteFindMyMeowPlayRecord(round_id) {
             }
         });
         return play_record;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to check if user should be given a FindMyMeow star and perform star up if so
+async function findMyMeowStarUp(play_record) {
+    try {
+        const normal_cat = play_record.normal_cat;
+        const golden_cat = play_record.golden_cat;
+        if (normal_cat >= 100 || golden_cat >= 5) {
+            let starUpReq = {
+                user_id: play_record.user_id,
+                source: Star.star_source_code.CoffeeBean_FindMyMeow,
+                message: "Game star from CoffeeBean_FindMyMeow at " + play_record
+            }
+            await Star.starUp(starUpReq);
+        }
     } catch (error) {
         throw error;
     }

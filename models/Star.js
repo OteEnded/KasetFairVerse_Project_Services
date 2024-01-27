@@ -1,20 +1,32 @@
 const Stars = require('../entities/Stars');
+const Star_Usages = require('../entities/Star_Usages');
 const Point_Sent_Logs = require('../entities/Point_Sent_Logs');
 const Point_Sent_Fail_Logs = require('../entities/Point_Sent_Fail_Logs');
 const user = require('../models/User');
 const apirequester = require('../services/apirequester');
 
-const game_list = [
-    "Accessories_ColorMatching",
-    "CoffeeBean_FindMyMeow",
-    "CornMilk_RaisuwanCrush",
-    "Cosmetic_HoldYourBasket",
-    "Hemp_TheDrink",
-    "KubKaoKabGang_CWheat",
-    "KubKaoKabGang_PasteScrumble"
-];
+const star_source_code = {
+    Accessories_ColorMatching: "Accessories_ColorMatching",
+    CoffeeBean_FindMyMeow: "CoffeeBean_FindMyMeow",
+    CornMilk_RaisuwanCrush: "CornMilk_RaisuwanCrush",
+    Cosmetic_HoldYourBasket: "Cosmetic_HoldYourBasket",
+    Hemp_TheDrink: "Hemp_TheDrink",
+    KubKaoKabGang_CWheat: "KubKaoKabGang_CWheat",
+    KubKaoKabGang_PasteScrumble: "KubKaoKabGang_PasteScrumble",
+    // Major: "Major",
+    // Special: "Special",
+    // Test: "Test"
+}
 
-const game_name_point_slug_dict = {
+function getStarSourceList() {
+    let star_list = [];
+    for (let i in star_source_code) {
+        star_list.push(star_source_code[i]);
+    }
+    return star_list;
+}
+
+const star_source_point_slug_dict = {
     "Accessories_ColorMatching": "accessories",
     "CoffeeBean_FindMyMeow": "coffee_bean",
     "CornMilk_RaisuwanCrush": "raisuwan",
@@ -24,62 +36,72 @@ const game_name_point_slug_dict = {
     "KubKaoKabGang_PasteScrumble": "paste_scrumble"
 }
 
-// Function to get all star buffers
-async function getAllStarBuffers() {
+// Function to get all stars
+async function getAllStars(include_used = false) {
     try {
-        const all_star_buffers = await Stars.findAll();
-        const star_buffer_list = [];
-        for (let i in all_star_buffers) {
-            star_buffer_list.push(all_star_buffers[i].dataValues);
+        const all_stars = await Stars.findAll();
+        const star_list = [];
+        for (let i in all_stars) {
+            star_list.push(all_stars[i].dataValues);
         }
-        return star_buffer_list;
+        return star_list;
     } catch (error) {
         throw error;
     }
 }
 
-// Function to get star buffer by user_id
-async function getStarBufferByUserId(user_id) {
+// Function to get stars by user_id
+async function getStarsByUserId(user_id, include_used = false) {
     try {
-        const star_buffer = await Stars.findOne({
+        const stars = await Stars.findAll({
             where: {
                 user_id: user_id
             }
         });
-        return star_buffer;
+        if (!include_used) {
+            const star_usages = await Star_Usages.findAll();
+            for (let i in star_usages) {
+                for (let j in stars) {
+                    if (star_usages[i].dataValues.star_id === stars[j].dataValues.star_id) {
+                        stars.splice(j, 1);
+                    }
+                }
+            }
+        }
+        return stars;
     }
     catch (error) {
         throw error;
     }
 }
 
-// Function to get star buffer by which game
-async function getStarBufferByWhichGame(which_game) {
-    if (!game_list.includes(which_game)) {
-        throw new Error("Invalid game name");
+// Function to get stars by which source
+async function getStarsByWhichSource(source) {
+    if (!getStarSourceList().includes(source)) {
+        throw new Error("Invalid source name");
     }
     try {
-        const star_buffer = await Stars.findOne({
+        const stars = await Stars.findAll({
             where: {
-                from_game: which_game
+                source: source
             }
         });
-        return star_buffer;
+        return stars;
     }
     catch (error) {
         throw error;
     }
 }
 
-// Function to get star buffer by star_id
-async function getStarBufferByStarId(star_id) {
+// Function to get the star by star_id
+async function getStarByStarId(star_id) {
     try {
-        const star_buffer = await Stars.findOne({
+        const star = await Stars.findOne({
             where: {
                 star_id: star_id
             }
         });
-        return star_buffer;
+        return star;
     }
     catch (error) {
         throw error;
@@ -101,15 +123,15 @@ async function getSumOfStarsByUserId(user_id) {
     }
 }
 
-// Function to get sum of stars by which game
-async function getSumOfStarsByWhichGame(which_game) {
-    if (!game_list.includes(which_game)) {
-        throw new Error("Invalid game name");
+// Function to get sum of stars by source
+async function getSumOfStarsBySource(source) {
+    if (!getStarSourceList().includes(source)) {
+        throw new Error("Invalid source name");
     }
     try {
         const sum_of_stars = await Stars.sum('star', {
             where: {
-                from_game: which_game
+                source: source
             }
         });
         return sum_of_stars;
@@ -148,20 +170,40 @@ async function getPointSentLogByStarId(star_id) {
     }
 }
 
-// Function to set up a star to the buffer
-async function starUp(user_id, which_game) {
-    if (!game_list.includes(which_game)) {
-        throw new Error("Invalid game name");
+// Function to create a new star
+async function createStar(req) {
+
+    console.log("Stars[createStar]: There is a create star request ->", req);
+
+    const user_id = req.user_id;
+    const source = req.source;
+    const message = req.message;
+    if (!getStarSourceList().includes(source)) {
+        throw new Error("Invalid source name");
     }
 
-    await Stars.create({
+    const new_star = await Stars.create({
         user_id: user_id,
-        from_game: which_game
+        source: source,
+        message: message
     });
 
-    await fetchUpStarToBBT();
+    console.log("Stars[createStar]: Ttar created ->", new_star)
+
+    return new_star;
 }
 
+// Function to set up a star to the buffer
+async function starUp(req) {
+
+    console.log("Stars[starUp]: There is a star up request ->", req);
+
+    await createStar(req);
+
+    await fetchUpStarToBBT();
+
+    console.log("Stars[starUp]: Performed star action.");
+}
 
 
 // Function sent star to bbt
@@ -172,14 +214,17 @@ async function sendStarToBBT(star) {
     // get access token from user_id
     let token_from_buffer = await user.getUserTokenBufferByUserId(star.user_id);
     console.log("Stars[sentStarToBBT]: token_from_buffer ->", token_from_buffer);
-    if (!token_from_buffer) throw new Error("Cannot find bbt token from bbt token buffer where user_id = " + star.user_id);
+    if (!token_from_buffer) {
+        console.error("Stars[sentStarToBBT]: cannot find bbt token from bbt token buffer where user_id = " + star.user_id);
+        return "Cannot find bbt token from bbt token buffer where user_id = " + star.user_id;
+    }
 
     token_from_buffer = token_from_buffer.bbt_token;
     const query =
     `mutation {
         createPointTransection 
             (createPointTransectionInput: {
-            point_slug: "${game_name_point_slug_dict[star.from_game]}"
+            point_slug: "${star_source_point_slug_dict[star.source]}"
         })
         {
             id
@@ -201,7 +246,7 @@ async function fetchUpStarToBBT() {
     console.log("Stars[fetchUpStarToBBT]: fetching up star to bbt");
 
     // get all unsent star from star buffer
-    let unsent_star_buffer_list = await getAllStarBuffers();
+    let unsent_star_buffer_list = await getAllStars();
     const point_sent_log_list = await getAllPointSentLogs();
     for (let i in point_sent_log_list) {
         const point_sent_log = point_sent_log_list[i];
@@ -246,37 +291,86 @@ async function fetchUpStarToBBT() {
     console.log("Stars[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
-// Function to get stars a user has played
+// Function to get star inventory by user_id
 // {
-//     Accessories/ColorMatching: 1,
-//     CoffeeBean/FindMyMeow: 7,
-//     CornMilk/RaisuwanCrush 0,
-//     Cosmetic/HoldYourBasket: 3,
-//     Strawberry: 2,
-//     Hemp/TheDrink: 4.
-//     KubKaoKabGang/CWheat: 1,
-//     KubKaoKabGang/PasteScrumble: 7
+//     Accessories_ColorMatching: 1,
+//     CoffeeBean_FindMyMeow: 7,
+//     CornMilk_RaisuwanCrush 0,
+//     Cosmetic_HoldYourBasket: 3,
+//     Hemp_TheDrink: 4.
+//     KubKaoKabGang_CWheat: 1,
+//     KubKaoKabGang_PasteScrumble: 7
 // }
+async function getStarInventoryByUserId(user_id, include_used = false) {
+    try {
+        const star_inv = {}
 
-// async function checkUserHasAllDifferenceStar(user_id) {
+        const users_stars = await getStarsByUserId(user_id, include_used);
+        
+        for (let i in users_stars) {
+            if (!Object.keys(star_inv).includes(users_stars[i].dataValues.source)) {
+                star_inv[users_stars[i].dataValues.source] = 0;
+            }
+            star_inv[users_stars[i].dataValues.source] += 1;
+        }
+
+        return star_inv;
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to get number of different star sources by user_id
+async function getNumberOfDifferentStarSourcesByUserId(user_id) {
+    try {
+        const star_inv = await getStarInventoryByUserId(user_id);
+        return Object.keys(star_inv).length;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// // Function to get number of different star game by user_id
+// async function getNumberOfDifferentStarGamesByUserId(user_id) {
 //     try {
-//         const star_inv = {
-//             Accessories/ColorMatching: 0
+//         const game_list = [
+//             "Accessories_ColorMatching",
+//             "CoffeeBean_FindMyMeow",
+//             "CornMilk_RaisuwanCrush",
+//             "Cosmetic_HoldYourBasket",
+//             "Hemp_TheDrink",
+//             "KubKaoKabGang_CWheat",
+//             "KubKaoKabGang_PasteScrumble"
+//         ]
+//         let numberOfDifferentStarGames = 0;
+//         const star_inv = await getStarInventoryByUserId(user_id);
+//         for (let i in game_list) {
+//             if (Object.keys(star_inv).includes(game_list[i])) {
+//                 numberOfDifferentStarGames += 1;
+//             }
 //         }
+//         return numberOfDifferentStarGames;
+//
 //     } catch (error) {
 //         throw error;
 //     }
 // }
 
+
 module.exports = {
-    getAllStarBuffers,
-    getStarBufferByUserId,
-    getStarBufferByWhichGame,
-    getStarBufferByStarId,
+    star_source_code,
+    getAllStars,
+    getStarsByUserId,
+    getStarsByWhichSource,
+    getStarByStarId,
     getSumOfStarsByUserId,
-    getSumOfStarsByWhichGame,
+    getSumOfStarsBySource,
     getAllPointSentLogs,
     getPointSentLogByStarId,
     starUp,
-    fetchUpStarToBBT
+    fetchUpStarToBBT,
+    getStarInventoryByUserId,
+    getNumberOfDifferentStarSourcesByUserId,
+    // getNumberOfDifferentStarGamesByUserId
 }

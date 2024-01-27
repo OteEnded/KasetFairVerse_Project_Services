@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const apiMiddleware = require('../services/apimiddleware');
-const Accessories = require('../models/Accessories');
+const apiMiddleware = require('../../services/apimiddleware');
+const Accessories = require('../../models/Accessories');
 
 // GET /api/Accessories/ColorMatching/get - Get all ColorMatching play records
 router.get('/ColorMatching/get', apiMiddleware.authenticate, async (req, res) => {

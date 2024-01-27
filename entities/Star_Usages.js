@@ -1,28 +1,18 @@
-// entities/Stars.js
+// entities/Stars_Usages.js
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
-const game_list = [
-    "Accessories/ColorMatching",
-    "CoffeeBean/FindMyMeow",
-    "CornMilk/RaisuwanCrush",
-    "Cosmetic/HoldYourBasket",
-    "Hemp/TheDrink",
-    "KubKaoKabGang/CWheat",
-    "KubKaoKabGang/PasteScrumble"
-];
-
-const Stars = connection.define('Star', {
-    star_id: {
+const Stars_Usages = connection.define('Stars_Usages', {
+    star_usage_id : {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         unique: true,
         autoIncrement: true,
     },
-    user_id: {
-        type: DataTypes.INTEGER,
+    coupon_uuid: {
+        type: DataTypes.UUIDV4,
         allowNull: false,
         unique: false,
     },
@@ -38,4 +28,4 @@ const Stars = connection.define('Star', {
     }
 });
 
-module.exports = Stars;
+module.exports = Stars_Usages;

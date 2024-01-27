@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const apiMiddleware = require('../services/apimiddleware');
-const CoffeeBean = require('../models/CoffeeBean');
+const apiMiddleware = require('../../services/apimiddleware');
+const CoffeeBean = require('../../models/CoffeeBean');
 
 // GET /api/CoffeeBean/FindMyMeow/get - Get all FindMyMeow play records
 router.get('/FindMyMeow/get', apiMiddleware.authenticate, async (req, res) => {

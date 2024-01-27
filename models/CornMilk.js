@@ -1,4 +1,5 @@
 const CornMilk_RaisuwanCrush_PlayRecords = require('../entities/CornMilk_RaisuwanCrush_PlayRecords');
+const Star = require('../models/Star');
 
 // Function to get all RaisuwanCrush play records
 async function getAllRaisuwanCrushPlayRecords() {
@@ -103,6 +104,7 @@ async function findRaisuwanCrushPlayRecords(column, value) {
 async function createRaisuwanCrushPlayRecord(req) {
     try {
         const play_record = await CornMilk_RaisuwanCrush_PlayRecords.create(req);
+        await raisuwanStarUp(play_record)
         return play_record;
     } catch (error) {
         throw error;
@@ -140,6 +142,23 @@ async function deleteRaisuwanCrushPlayRecord(round_id) {
             }
         });
         return play_record;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to check if user should be given a Raisuwan star and perform star up if so
+async function raisuwanStarUp(play_record){
+    try {
+        const score = play_record.score;
+        if (score >= 220) {
+            let starUpReq = {
+                user_id: play_record.user_id,
+                source: Star.star_source_code.CornMilk_RaisuwanCrush,
+                message: "Game star from CornMilk_RaisuwanCrush at " + play_record
+            }
+            await Star.starUp(starUpReq);
+        }
     } catch (error) {
         throw error;
     }

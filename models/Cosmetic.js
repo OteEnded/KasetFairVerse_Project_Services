@@ -1,5 +1,6 @@
 const Cosmetic_HoldYourBasket_PlayRecords = require('../entities/Cosmetic_HoldYourBasket_PlayRecords');
 const Cosmetic_HoldYourBasket_PlayLifes = require("../entities/Cosmetic_HoldYourBasket_PlayLifes");
+const Star = require('../models/Star');
 
 // Function to get all HoldYourBasket play records
 async function getAllHoldYourBasketPlayRecords() {
@@ -104,6 +105,7 @@ async function findHoldYourBasketPlayRecords(column, value) {
 async function createHoldYourBasketPlayRecord(req) {
     try {
         const play_record = await Cosmetic_HoldYourBasket_PlayRecords.create(req);
+        await holdYourBasketStarUp(play_record);
         return play_record;
     } catch (error) {
         throw error;
@@ -267,6 +269,30 @@ async function updateSpinWheelPlayLifes(user_id, offset) {
         return await getSpinWheelPlayLifesByUserId(user_id);
     }
     catch (error) {
+        throw error;
+    }
+}
+
+// Function to check if user should be given a HoldYourBasket star and perform star up if so
+async function holdYourBasketStarUp(play_record){
+    try {
+
+        const sum_score = await getSumOfHoldYourBasketScoresByUserId(play_record.user_id);
+        if (sum_score < 100000) return;
+
+        const is_starred = await Star.getStarsByUserId(play_record.user_id, true);
+        for (let i in is_starred) {
+            if (is_starred[i].source === Star.star_source_code.Cosmetic_HoldYourBasket) return;
+        }
+
+        let starUpReq = {
+            user_id: play_record.user_id,
+            source: Star.star_source_code.Cosmetic_HoldYourBasket,
+            message: "Game star from Cosmetic_HoldYourBasket at " + play_record + " that made user's sum score -> " + sum_score
+        }
+        await Star.starUp(starUpReq);
+
+    } catch (error) {
         throw error;
     }
 }

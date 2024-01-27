@@ -1,4 +1,5 @@
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
+const Star = require('../models/Star');
 
 // Function to get all Hemp TheDrink play records
 function getTheDrinkEndingList() {
@@ -152,6 +153,30 @@ async function deleteTheDrinkPlayRecord(round_id) {
             }
         });
         return play_record;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to check if user should be given a TheDrink star and perform star up if so
+async function theDrinkStarUp(play_record){
+    try {
+
+        const number_of_ending = await getNumberOfDifferentTheDrinkEndingsPlayed(play_record.user_id);
+        if (number_of_ending < 6) return;
+
+        const is_starred = await Star.getStarsByUserId(play_record.user_id, true);
+        for (let i in is_starred) {
+            if (is_starred[i].source === Star.star_source_code.Hemp_TheDrink) return;
+        }
+
+        let starUpReq = {
+            user_id: play_record.user_id,
+            source: Star.star_source_code.Hemp_TheDrink,
+            message: "Game star from Hemp_TheDrink at " + play_record + " that made user's number of ending -> " + number_of_ending
+        }
+        await Star.starUp(starUpReq);
+
     } catch (error) {
         throw error;
     }

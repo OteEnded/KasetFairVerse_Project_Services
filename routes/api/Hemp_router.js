@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const apiMiddleware = require('../services/apimiddleware');
-const Hemp = require('../models/Hemp');
+const express = require('express');
+const router = express.Router();
+const apiMiddleware = require('../../services/apimiddleware');
+const Hemp = require('../../models/Hemp');
 
 // GET /api/Hemp/TheDrink/get - Get all Hemp TheDrink play records
 router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {

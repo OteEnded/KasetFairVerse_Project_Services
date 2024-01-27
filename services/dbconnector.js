@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 const putil = require('../utilities/projectutility')
 
-connection = null;
+let connection = null;
 
 function validateConfig(configData){
 
@@ -102,5 +102,4 @@ function getConnection(){
 }
 
 module.exports.getConnection = getConnection
-module.exports.connection = connection
 module.exports.connect = connect
