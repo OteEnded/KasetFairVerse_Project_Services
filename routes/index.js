@@ -7,10 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 // claim reward page route
-const claim_reward_controller = require('../controllers/claim_reward_controller');
+const claim_reward_controller = require('../controllers/claim_reward_controller')
+const claim_coupon_controller = require('../controllers/claim_coupon_controller')
 
 router.get('/claim_reward', claim_reward_controller.claim_reward);
-
+router.get('/claim_coupon', claim_coupon_controller.claim_coupon);
 
 
 
@@ -39,4 +40,7 @@ router.get('/test2', testController.test2)
 
 router.get('/test3', testController.test3);
 
+router.get('/b', function(req, res, next) {
+    res.render('test/bootstrap_test.html', { title: 'welcome' });
+});
 module.exports = router;
