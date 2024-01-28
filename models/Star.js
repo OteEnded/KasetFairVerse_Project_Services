@@ -1,9 +1,5 @@
 const Stars = require('../entities/Stars');
-const Star_Usages = require('../entities/Star_Usages');
-const Point_Sent_Logs = require('../entities/Point_Sent_Logs');
-const Point_Sent_Fail_Logs = require('../entities/Point_Sent_Fail_Logs');
 const user = require('../models/User');
-const apirequester = require('../services/apirequester');
 
 const star_source_code = {
     Accessories_ColorMatching: "Accessories_ColorMatching",
@@ -13,9 +9,6 @@ const star_source_code = {
     Hemp_TheDrink: "Hemp_TheDrink",
     KubKaoKabGang_CWheat: "KubKaoKabGang_CWheat",
     KubKaoKabGang_PasteScrumble: "KubKaoKabGang_PasteScrumble",
-    // Major: "Major",
-    // Special: "Special",
-    // Test: "Test"
 }
 
 function getStarSourceList() {
@@ -58,16 +51,17 @@ async function getStarsByUserId(user_id, include_used = false) {
                 user_id: user_id
             }
         });
+
+        console.log("Stars[getStarsByUserId]: stars ->", stars);
+
         if (!include_used) {
-            const star_usages = await Star_Usages.findAll();
-            for (let i in star_usages) {
-                for (let j in stars) {
-                    if (star_usages[i].dataValues.star_id === stars[j].dataValues.star_id) {
-                        stars.splice(j, 1);
-                    }
+            for (let i in stars) {
+                if (stars[i].dataValues.coupon_uuid != null) {
+                    stars.splice(i, 1);
                 }
             }
         }
+
         return stars;
     }
     catch (error) {
@@ -123,52 +117,6 @@ async function getSumOfStarsByUserId(user_id) {
     }
 }
 
-// Function to get sum of stars by source
-async function getSumOfStarsBySource(source) {
-    if (!getStarSourceList().includes(source)) {
-        throw new Error("Invalid source name");
-    }
-    try {
-        const sum_of_stars = await Stars.sum('star', {
-            where: {
-                source: source
-            }
-        });
-        return sum_of_stars;
-    }
-    catch (error) {
-        throw error;
-    }
-}
-
-// Function to get all point sent logs
-async function getAllPointSentLogs() {
-    try {
-        const all_point_sent_logs = await Point_Sent_Logs.findAll();
-        const point_sent_log_list = [];
-        for (let i in all_point_sent_logs) {
-            point_sent_log_list.push(all_point_sent_logs[i].dataValues);
-        }
-        return point_sent_log_list;
-    } catch (error) {
-        throw error;
-    }
-}
-
-// Function to get point sent log by star_id
-async function getPointSentLogByStarId(star_id) {
-    try {
-        const point_sent_log = await Point_Sent_Logs.findOne({
-            where: {
-                star_id: star_id
-            }
-        });
-        return point_sent_log;
-    }
-    catch (error) {
-        throw error;
-    }
-}
 
 // Function to create a new star
 async function createStar(req) {
@@ -200,95 +148,7 @@ async function starUp(req) {
 
     await createStar(req);
 
-    await fetchUpStarToBBT();
-
     console.log("Stars[starUp]: Performed star action.");
-}
-
-
-// Function sent star to bbt
-async function sendStarToBBT(star) {
-
-    console.log("Stars[sentStarToBBT]: sending star to bbt ->", star);
-
-    // get access token from user_id
-    let token_from_buffer = await user.getUserTokenBufferByUserId(star.user_id);
-    console.log("Stars[sentStarToBBT]: token_from_buffer ->", token_from_buffer);
-    if (!token_from_buffer) {
-        console.error("Stars[sentStarToBBT]: cannot find bbt token from bbt token buffer where user_id = " + star.user_id);
-        return "Cannot find bbt token from bbt token buffer where user_id = " + star.user_id;
-    }
-
-    token_from_buffer = token_from_buffer.bbt_token;
-    const query =
-    `mutation {
-        createPointTransection 
-            (createPointTransectionInput: {
-            point_slug: "${star_source_point_slug_dict[star.source]}"
-        })
-        {
-            id
-            user_uid
-            point_slug
-            type
-            amount
-            created_at
-            updated_at
-            deleted_at
-        }
-    }`
-
-    return await apirequester.requestToBBT(token_from_buffer, query);
-}
-
-// Function sent (fetchUp) unsent star to bbt
-async function fetchUpStarToBBT() {
-    console.log("Stars[fetchUpStarToBBT]: fetching up star to bbt");
-
-    // get all unsent star from star buffer
-    let unsent_star_buffer_list = await getAllStars();
-    const point_sent_log_list = await getAllPointSentLogs();
-    for (let i in point_sent_log_list) {
-        const point_sent_log = point_sent_log_list[i];
-        for (let j in unsent_star_buffer_list) {
-            const unsent_star_buffer = unsent_star_buffer_list[j];
-            if (point_sent_log.star_id === unsent_star_buffer.star_id) {
-                console.log("Stars[fetchUpStarToBBT]: removing sent star from unsent star buffer list ->", unsent_star_buffer);
-                unsent_star_buffer_list.splice(j, 1);
-            }
-        }
-    }
-
-    console.log("Stars[fetchUpStarToBBT]: unsent star buffer list ->", unsent_star_buffer_list);
-
-    // send all unsent star to bbt
-    for (let i in unsent_star_buffer_list) {
-        let star_buffer = unsent_star_buffer_list[i];
-        console.log("Stars[fetchUpStarToBBT]: sending star to bbt ->", star_buffer);
-        let res = await sendStarToBBT(star_buffer);
-        console.log("Stars[fetchUpStarToBBT]: res ->", res);
-        if (Object.keys(res).includes("errors") || res.data == null) {
-            console.error("Stars[fetchUpStarToBBT]: error while sending star to bbt ->", res);
-            await Point_Sent_Fail_Logs.create({
-                star_id: star_buffer.star_id,
-                respond: res
-            });
-            continue;
-        }
-        await Point_Sent_Logs.create({
-            bbt_point_id: res.data.createPointTransection.id,
-            star_id: star_buffer.star_id,
-            bbt_user_uuid: res.data.createPointTransection.user_uid,
-            point_slug: res.data.createPointTransection.point_slug,
-            type: res.data.createPointTransection.type,
-            amount: res.data.createPointTransection.amount,
-            created_at: res.data.createPointTransection.created_at,
-            updated_at: res.data.createPointTransection.updated_at,
-            deleted_at: res.data.createPointTransection.deleted_at
-        });
-    }
-
-    console.log("Stars[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
 // Function to get star inventory by user_id
@@ -331,46 +191,7 @@ async function getNumberOfDifferentStarSourcesByUserId(user_id) {
     }
 }
 
-// // Function to get number of different star game by user_id
-// async function getNumberOfDifferentStarGamesByUserId(user_id) {
-//     try {
-//         const game_list = [
-//             "Accessories_ColorMatching",
-//             "CoffeeBean_FindMyMeow",
-//             "CornMilk_RaisuwanCrush",
-//             "Cosmetic_HoldYourBasket",
-//             "Hemp_TheDrink",
-//             "KubKaoKabGang_CWheat",
-//             "KubKaoKabGang_PasteScrumble"
-//         ]
-//         let numberOfDifferentStarGames = 0;
-//         const star_inv = await getStarInventoryByUserId(user_id);
-//         for (let i in game_list) {
-//             if (Object.keys(star_inv).includes(game_list[i])) {
-//                 numberOfDifferentStarGames += 1;
-//             }
-//         }
-//         return numberOfDifferentStarGames;
-//
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
 
 module.exports = {
-    star_source_code,
-    getAllStars,
-    getStarsByUserId,
-    getStarsByWhichSource,
-    getStarByStarId,
-    getSumOfStarsByUserId,
-    getSumOfStarsBySource,
-    getAllPointSentLogs,
-    getPointSentLogByStarId,
-    starUp,
-    fetchUpStarToBBT,
-    getStarInventoryByUserId,
-    getNumberOfDifferentStarSourcesByUserId,
-    // getNumberOfDifferentStarGamesByUserId
+
 }

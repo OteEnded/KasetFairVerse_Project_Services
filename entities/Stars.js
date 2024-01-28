@@ -35,6 +35,11 @@ const Stars = connection.define('Star', {
         type: DataTypes.TEXT,
         allowNull: true,
         unique: false,
+    },
+    coupon_uuid: {
+        type: DataTypes.UUIDV4,
+        allowNull: true,
+        unique: false,
     }
 });
 

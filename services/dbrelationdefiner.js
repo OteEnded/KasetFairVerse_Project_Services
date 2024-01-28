@@ -1,14 +1,14 @@
 // Entity_Relation.js
 // const dbconnector = require('../services/dbconnector');
 // const connection = dbconnector.getConnection();
+
 const RequestLogs = require('../entities/RequestLogs');
 const Users = require('../entities/Users');
 const BigBangTheory_User_Profiles = require('../entities/BigBangTheory_User_Profiles');
-const Point_Sent_Fail_Logs = require('../entities/Point_Sent_Fail_Logs');
 const BigBangTheory_Token_Buffers = require('../entities/BigBangTheory_Token_Buffers');
-const Point_Sent_Logs = require('../entities/Point_Sent_Logs');
 const Stars = require('../entities/Stars');
 const Coupons = require('../entities/Coupons');
+
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
 const CoffeeBean_FindMyMeow_PlayRecords = require('../entities/CoffeeBean_FindMyMeow_PlayRecords');
 const CornMilk_RaisuwanCrush_PlayRecords = require('../entities/CornMilk_RaisuwanCrush_PlayRecords');
@@ -53,12 +53,6 @@ function defineRelationships() {
 
     Stars.belongsTo(Users, { foreignKey: 'user_id' });
     Users.hasMany(Stars, { foreignKey: 'user_id' });
-
-    Stars.hasOne(Point_Sent_Logs, { foreignKey: 'star_id' });
-    Point_Sent_Logs.belongsTo(Stars, { foreignKey: 'star_id' });
-
-    Stars.hasMany(Point_Sent_Fail_Logs, { foreignKey: 'star_id' });
-    Point_Sent_Fail_Logs.belongsTo(Stars, { foreignKey: 'star_id' });
 
     Users.hasMany(Coupons, { foreignKey: 'user_id' });
     Coupons.belongsTo(Users, { foreignKey: 'user_id' });
