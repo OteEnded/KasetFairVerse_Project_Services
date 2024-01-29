@@ -8,5 +8,20 @@ module.exports = {
   ],
   darkMode: "class",
   plugins: [require("tw-elements/dist/plugin.cjs")],
-  theme: {}
+  theme: {
+    // fontFamily {
+    //   '',
+    // },
+    extend: {
+      colors: {
+        'primary': '#30845C',
+        'secondary': '#98D7D6',
+        'background': '#ECF4F6',
+        'limegreen': '#B1DFB7',
+        'red' : '#FF0000',
+        'blue' : '#024073'
+
+      },
+    },
+  },
 };
