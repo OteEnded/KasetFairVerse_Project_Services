@@ -21,7 +21,11 @@ function getRewardStocks() {
 }
 
 function getStarsUseToTradeCoupon() {
-    return getRewardConfig()["stars_use"];
+    let reward_stars_use = {};
+    for (let i in getRewardConfig()) {
+        reward_stars_use[i] = getRewardConfig()[i]["stars_use"];
+    }
+    return reward_stars_use;
 }
 
 module.exports = {
