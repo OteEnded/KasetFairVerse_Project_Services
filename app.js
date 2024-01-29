@@ -97,7 +97,14 @@ app.use('/Api/Cosmetic', cosmeticRouter);
 app.use('/Api/KubKaoKabGang', kubkaokabgangRouter);
 app.use('/Api/Hemp', hempRouter);
 
+// special - cosmetic add play lifes function
+const Cosmetic = require('./models/Cosmetic');
+const cron = require('node-cron');
 
+cron.schedule('0 0 * * *', async () => { // every day at 00:00 (UTC+7) add play lifes to every user in play lifes table
+    console.log("app[cron]: Adding play lifes to every user in Cosmetic_HoldYourBasket_PlayLifes table...");
+    await Cosmetic.addSpinWheelPlayLifesToAllUsers();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
