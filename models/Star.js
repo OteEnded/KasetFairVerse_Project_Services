@@ -1,5 +1,7 @@
 const Stars = require('../entities/Stars');
-const user = require('../models/User');
+
+const User = require('../models/User');
+const Coupon = require('../models/Coupon');
 
 const star_source_code = {
     Accessories_ColorMatching: "Accessories_ColorMatching",
@@ -136,9 +138,9 @@ async function createStar(req) {
         message: message
     });
 
-    console.log("Stars[createStar]: Ttar created ->", new_star)
+    console.log("Stars[createStar]: Star created ->", new_star)
 
-    return new_star;
+    return new_star.dataValues;
 }
 
 // Function to set up a star to the buffer
@@ -146,18 +148,47 @@ async function starUp(req) {
 
     console.log("Stars[starUp]: There is a star up request ->", req);
 
-    await createStar(req);
+    const new_star = await createStar(req);
+    console.log("Stars[starUp]: Performed star up action.");
 
-    console.log("Stars[starUp]: Performed star action.");
+    await checkIfUserShouldGetMajorCoupon(req.user_id);
+
+    return new_star;
+}
+
+// Function to check if a user has 7 difference stars for the first time so that he/she can get a major coupon
+async function checkIfUserShouldGetMajorCoupon(user_id) {
+    try {
+        const number_of_different_star_sources = await getNumberOfDifferentStarSourcesByUserId(user_id);
+        if (number_of_different_star_sources === 7) {
+
+            // Check if the user has already got the major coupon
+            const users_coupons = await Coupon.getCouponsByUserId(user_id);
+            for (let i in users_coupons) {
+                if (users_coupons[i].dataValues.reward === "major") {
+                    return;
+                }
+            }
+
+            console.log("Stars[checkIfUserShouldGetMajorCoupon]: User ->", user_id, "has 7 different stars for the first time. Creating a major coupon for the user.");
+
+            // Create a major coupon for the user
+            const result = await Coupon.majorCouponUp(user_id);
+            console.log("Stars[checkIfUserShouldGetMajorCoupon]: Invoked Coupon.majorCouponUp() ->", result);
+
+        }
+    } catch (error) {
+        throw error;
+    }
 }
 
 // Function to get star inventory by user_id
 // {
 //     Accessories_ColorMatching: 1,
 //     CoffeeBean_FindMyMeow: 7,
-//     CornMilk_RaisuwanCrush 0,
+//     CornMilk_RaisuwanCrush: 0, // not included
 //     Cosmetic_HoldYourBasket: 3,
-//     Hemp_TheDrink: 4.
+//     Hemp_TheDrink: 4,
 //     KubKaoKabGang_CWheat: 1,
 //     KubKaoKabGang_PasteScrumble: 7
 // }
@@ -165,10 +196,15 @@ async function getStarInventoryByUserId(user_id, include_used = false) {
     try {
         const star_inv = {}
 
+        for (let i in getStarSourceList()) {
+            star_inv[getStarSourceList()[i]] = 0;
+        }
+
         const users_stars = await getStarsByUserId(user_id, include_used);
         
         for (let i in users_stars) {
             if (!Object.keys(star_inv).includes(users_stars[i].dataValues.source)) {
+                console.warn("Stars[getStarInventoryByUserId]: Invalid star source ->", users_stars[i].dataValues.source, "for user_id ->", user_id);
                 star_inv[users_stars[i].dataValues.source] = 0;
             }
             star_inv[users_stars[i].dataValues.source] += 1;
@@ -182,16 +218,87 @@ async function getStarInventoryByUserId(user_id, include_used = false) {
 }
 
 // Function to get number of different star sources by user_id
-async function getNumberOfDifferentStarSourcesByUserId(user_id) {
+async function getNumberOfDifferentStarSourcesByUserId(user_id, include_used = false) {
     try {
-        const star_inv = await getStarInventoryByUserId(user_id);
-        return Object.keys(star_inv).length;
+        const star_inv = await getStarInventoryByUserId(user_id, include_used);
+
+        let number_of_different_star_sources = 0;
+        for (let i in star_inv) {
+            if (star_inv[i] > 0) {
+                number_of_different_star_sources += 1;
+            }
+        }
+
+        return number_of_different_star_sources;
+
     } catch (error) {
         throw error;
     }
 }
 
+// Function to mark a star as used
+async function useStar(star_id, coupon_uuid) {
+    try {
+        const star = await getStarByStarId(star_id);
+        if (!star) {
+            return {
+                is_success: false,
+                message: "Star not found with the given star_id -> " + star_id,
+                content: null
+            }
+        }
+        if (star.dataValues.coupon_uuid != null) {
+            return {
+                is_success: false,
+                message: "Star already used",
+                content: null
+            }
+        }
+        star.coupon_uuid = coupon_uuid;
+        await Stars.update(star.dataValues, {
+            where: {
+                star_id: star_id
+            }
+        });
+
+        return {
+            is_success: true,
+            message: "Star used successfully",
+            content: star
+        }
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to find a star to use
+async function findStarToUse(user_id, source) {
+    try {
+        const stars = await getStarsByUserId(user_id);
+        for (let i in stars) {
+            if (stars[i].dataValues.source === source) {
+                return stars[i].dataValues;
+            }
+        }
+        return null;
+    } catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
-    getStarSourceList
+    getAllStars,
+    getStarsByUserId,
+    getStarsByWhichSource,
+    getStarByStarId,
+    getSumOfStarsByUserId,
+    createStar,
+    starUp,
+    getStarInventoryByUserId,
+    getNumberOfDifferentStarSourcesByUserId,
+    getStarSourceList,
+    star_source_point_slug_dict,
+    useStar,
+    findStarToUse
 }

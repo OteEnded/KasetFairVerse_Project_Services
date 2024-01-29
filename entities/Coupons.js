@@ -7,7 +7,7 @@ const qrCode = require('qrcode');
 
 const Coupons = connection.define('Coupons', {
     coupon_uuid: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         primaryKey: true
     },
     user_id: {
@@ -19,7 +19,7 @@ const Coupons = connection.define('Coupons', {
         type: DataTypes.BLOB,
         allowNull: true,
     },
-    product: {
+    reward: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -32,8 +32,9 @@ const Coupons = connection.define('Coupons', {
     hooks: {
         beforeCreate: async (coupon, options) => {
             // Generate a UUID and set it for coupon_uuid before creating the record
-            console.log("Generating UUID for coupon_uuid")
+            console.log("Generating UUID for coupon_uuid");
             coupon.coupon_uuid = uuidv4();
+            console.log("Generating qr_code for coupon_uuid");
             coupon.qr_code = await qrCode.toBuffer(coupon.coupon_uuid);
         },
     },

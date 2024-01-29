@@ -48,4 +48,7 @@ router.get('/tw_test', function(req, res, next) {
     res.render('test/tailwind_test.html', {title: 'welcome'});
 });
 
+router.get('/t', function(req, res, next) {
+    res.render('test/t.html', { a: [1,2,3]});
+});
 module.exports = router;

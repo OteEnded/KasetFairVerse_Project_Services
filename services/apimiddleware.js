@@ -3,39 +3,39 @@ const putil = require('../utilities/projectutility');
 const RequestLog = require('../models/RequestLog');
 const dbconnector = require('../services/dbconnector');
 
-api_permission_group = null
+api_permission_groups = null
 
-function validate_api_permission_group_config_structure(checking_api_permission_group){
-    console.log("apimiddleware[validate_api_permission_group_config_structure]: Checking api_permission_group config structure...")
-    if (checking_api_permission_group == null) { return false }
-    if (Object.keys(checking_api_permission_group).length === 0) { return false }
-    for (let i in checking_api_permission_group){
-        if (!Object.keys(checking_api_permission_group[i]).includes("keys")) { return false }
-        if (!Object.keys(checking_api_permission_group[i]).includes("permissions")) { return false }
-        if (Object.keys(checking_api_permission_group[i]["permissions"]).length === 0) { return false }
-        for (let j in checking_api_permission_group[i]["permissions"]){
-            if (!Object.keys(checking_api_permission_group[i]["permissions"][j]).includes("read")) { return false }
-            if (!Object.keys(checking_api_permission_group[i]["permissions"][j]).includes("write")) { return false }
+function validate_api_permission_groups_config_structure(checking_api_permission_groups){
+    console.log("apimiddleware[validate_api_permission_groups_config_structure]: Checking api_permission_groups config structure...")
+    if (checking_api_permission_groups == null) { return false }
+    if (Object.keys(checking_api_permission_groups).length === 0) { return false }
+    for (let i in checking_api_permission_groups){
+        if (!Object.keys(checking_api_permission_groups[i]).includes("keys")) { return false }
+        if (!Object.keys(checking_api_permission_groups[i]).includes("permissions")) { return false }
+        if (Object.keys(checking_api_permission_groups[i]["permissions"]).length === 0) { return false }
+        for (let j in checking_api_permission_groups[i]["permissions"]){
+            if (!Object.keys(checking_api_permission_groups[i]["permissions"][j]).includes("read")) { return false }
+            if (!Object.keys(checking_api_permission_groups[i]["permissions"][j]).includes("write")) { return false }
         }
     }
     return true
 }
 
-function load_api_permission_group(){
-    checking_api_permission_group = putil.getConfig()["api_permission_group"]
-    if (!validate_api_permission_group_config_structure(checking_api_permission_group)) {
-        // throw new Error("ApiMiddleware[load_api_permission_group]: ERROR, api_permission_group config is not valid.")
-        console.error("ApiMiddleware[load_api_permission_group]: ERROR, api_permission_group config is not valid.")
+function load_api_permission_groups(){
+    checking_api_permission_groups = putil.getConfig()["api_permission_groups"]
+    if (!validate_api_permission_groups_config_structure(checking_api_permission_groups)) {
+        // throw new Error("ApiMiddleware[load_api_permission_groups]: ERROR, api_permission_groups config is not valid.")
+        console.error("ApiMiddleware[load_api_permission_groups]: ERROR, api_permission_groups config is not valid.")
         process.exit(1)
     }
-    api_permission_group = checking_api_permission_group
+    api_permission_groups = checking_api_permission_groups
 }
 
 function find_matching_group(key){
-    for (let i in api_permission_group){
+    for (let i in api_permission_groups){
         // console.log(i)
-        // console.log("apimiddleware[find_matching_group]: Checking if key ->", key, "matches with ->", api_permission_group[i]['keys'])
-        if (api_permission_group[i]['keys'].includes(key)){
+        // console.log("apimiddleware[find_matching_group]: Checking if key ->", key, "matches with ->", api_permission_groups[i]['keys'])
+        if (api_permission_groups[i]['keys'].includes(key)){
             return i
         }
     }
@@ -44,26 +44,26 @@ function find_matching_group(key){
 
 function is_allowed(req){
     console.log("apimiddleware[is_allowed]: Checking if request is allowed...")
-    load_api_permission_group()
+    load_api_permission_groups()
     let permission_group = find_matching_group(req.headers['api-key'])
     console.log("apimiddleware[is_allowed]: permission_group ->", permission_group)
     if (permission_group === ""){
         return false
     }
-    // console.log("api_permission_group", api_permission_group)
-    if (Object.keys(api_permission_group[permission_group]["permissions"]).includes("*")){
-        if (req.method === "GET" && api_permission_group[permission_group]["permissions"]["*"]["read"]){
+    // console.log("api_permission_groups", api_permission_groups)
+    if (Object.keys(api_permission_groups[permission_group]["permissions"]).includes("*")){
+        if (req.method === "GET" && api_permission_groups[permission_group]["permissions"]["*"]["read"]){
             return true
         }
-        if (api_permission_group[permission_group]["permissions"]["*"]["write"]){
+        if (api_permission_groups[permission_group]["permissions"]["*"]["write"]){
             return true
         }
     }
-    if (Object.keys(api_permission_group[permission_group]["permissions"]).includes(req.originalUrl.split("/")[2])){
-        if (req.method === "GET" && api_permission_group[permission_group]["permissions"][req.originalUrl.split("/")[2]]["read"]){
+    if (Object.keys(api_permission_groups[permission_group]["permissions"]).includes(req.originalUrl.split("/")[2])){
+        if (req.method === "GET" && api_permission_groups[permission_group]["permissions"][req.originalUrl.split("/")[2]]["read"]){
             return true
         }
-        if (api_permission_group[permission_group]["permissions"][req.originalUrl.split("/")[2]]["write"]){
+        if (api_permission_groups[permission_group]["permissions"][req.originalUrl.split("/")[2]]["write"]){
             return true
         }
     }

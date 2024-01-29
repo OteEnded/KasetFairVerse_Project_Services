@@ -37,10 +37,10 @@ function listLen(obj){
 }
 
 
-
-
-module.exports.debug = debug
-module.exports.readJSONFile = readJSONFile
-module.exports.getConfig = getConfig
-module.exports.listLen = listLen
-module.exports.getPort = getPort
+module.exports = {
+    debug,
+    readJSONFile,
+    getConfig,
+    getPort,
+    listLen,
+}

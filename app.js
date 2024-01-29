@@ -4,7 +4,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+const bodyParser = require('body-parser');
 
 // const putil = require('./utilities/projectutility')
 // const dbconnector = require('./services/dbconnector')
@@ -16,7 +18,6 @@ console.log("app[main]: imported every primary module, starting the app...")
 dbrelationdefiner.defineRelationships();
 
 // import routes
-const cors = require('cors');
 const apiMiddleware = require('./services/apimiddleware');
 const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/api/Admin_router');
@@ -82,6 +83,7 @@ app.use(limiter);
 // config routes
 app.use(apiMiddleware.logRequest);
 app.use('/.well-known/acme-challenge', express.static(path.join(__dirname, 'public', '.well-known', 'acme-challenge')));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', indexRouter);
 
 // config api routes

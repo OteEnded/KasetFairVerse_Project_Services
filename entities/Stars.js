@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
 
-const game_list = [
+const source_list = [
     "Accessories/ColorMatching",
     "CoffeeBean/FindMyMeow",
     "CornMilk/RaisuwanCrush",
@@ -37,7 +37,7 @@ const Stars = connection.define('Star', {
         unique: false,
     },
     coupon_uuid: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
         allowNull: true,
         unique: false,
     }

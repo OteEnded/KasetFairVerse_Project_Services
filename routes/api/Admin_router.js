@@ -105,7 +105,10 @@ router.post('/get_star_inv/user_id/:user_id', apiMiddleware.authenticate, async 
 // POST /api/Admin/coupon_up/user_id/:user_id
 router.post('/coupon_up/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
-        await coupon.createCoupon(parseInt(req.params.user_id));
+        await coupon.couponUp({
+            user_id: parseInt(req.params.user_id),
+            product: "Hemp_TheDrink"
+        });
         res.json({
             message: "done"
         })
