@@ -1,4 +1,7 @@
-# KasetFairVerse Project - Database/BackEnd/API
+# KasetFairVerse Project - Services
+## Extended from KasetFairVerse Project - Database/BackEnd/API
+
+This project is originally made to be an API (Backend, Database) for KasetFairVerse activity.
 
 ExpressJS is just a name, but this project doesn't strictly follow the framework format. This might cause confusion for those who are new to the project, including the developers working on it.
 
@@ -11,6 +14,8 @@ Big Bang Theory Staff request for node major version 18.x.x
 1. Clone the project
 2. Run `npm install` to install all dependencies
 3. Run `npm start` to start the project
+4. (Optional; For Tailwind UI to work) Run `npm run build`
+5. (Optional; For Tailwind UI to do live reload) Open new terminal and run `npm run tw`
 
 ## Game API Routes
 

@@ -40,7 +40,12 @@ router.get('/test2', testController.test2)
 
 router.get('/test3', testController.test3);
 
-router.get('/b', function(req, res, next) {
+router.get('/bs_test', function(req, res, next) {
     res.render('test/bootstrap_test.html', { title: 'welcome' });
 });
+
+router.get('/tw_test', function(req, res, next) {
+    res.render('test/tailwind_test.html', {title: 'welcome'});
+});
+
 module.exports = router;

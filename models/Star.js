@@ -193,5 +193,5 @@ async function getNumberOfDifferentStarSourcesByUserId(user_id) {
 
 
 module.exports = {
-
+    getStarSourceList
 }
