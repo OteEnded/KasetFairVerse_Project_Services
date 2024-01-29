@@ -298,6 +298,7 @@ module.exports = {
     getStarInventoryByUserId,
     getNumberOfDifferentStarSourcesByUserId,
     getStarSourceList,
+    star_source_code,
     star_source_point_slug_dict,
     useStar,
     findStarToUse

@@ -239,6 +239,10 @@ async function updateHoldYourBasketPlayLifes(user_id, offset) {
         let new_play_lifes = {
             hold_your_basket: current_play_lifes + offset
         };
+
+        if (new_play_lifes.hold_your_basket < 0) new_play_lifes.hold_your_basket = 0;
+        if (new_play_lifes.hold_your_basket > 20) new_play_lifes.hold_your_basket = 20;
+
         console.log(new_play_lifes)
         await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
             where: {
@@ -259,6 +263,10 @@ async function updateSpinWheelPlayLifes(user_id, offset) {
         let new_play_lifes = {
             spin_wheel: current_play_lifes + offset
         };
+
+        if (new_play_lifes.spin_wheel < 0) new_play_lifes.spin_wheel = 0;
+        if (new_play_lifes.spin_wheel > 10) new_play_lifes.spin_wheel = 10;
+
 
         await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
             where: {
@@ -297,6 +305,21 @@ async function holdYourBasketStarUp(play_record){
     }
 }
 
+// Function to add spinwheel play lifes to every user in play lifes table every day at 00:00
+async function addSpinWheelPlayLifesToAllUsers() {
+    try {
+
+        console.log("Cosmetic[addSpinWheelPlayLifesToAllUsers]: Adding spinwheel play lifes to every user in Cosmetic_HoldYourBasket_PlayLifes table...");
+
+        const all_play_lifes = await getAllHoldYourBasketPlayLifes();
+        for (let i in all_play_lifes) {
+            await updateSpinWheelPlayLifes(all_play_lifes[i].user_id, 5);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 // Exporting functions
 module.exports = {
@@ -314,5 +337,8 @@ module.exports = {
     getHoldYourBasketPlayLifesByUserId,
     getSpinWheelPlayLifesByUserId,
     updateHoldYourBasketPlayLifes,
-    updateSpinWheelPlayLifes
+    updateSpinWheelPlayLifes,
+    createHoldYourBasketPlayLifes,
+    createSpinWheelPlayLifes,
+    addSpinWheelPlayLifesToAllUsers
 };
