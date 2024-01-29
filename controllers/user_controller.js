@@ -7,7 +7,7 @@ const Reward = require('../models/Reward')
 // <<functionBody, return>>
 // }
 
-const reward_list = {
+const reward_dict = {
     ku_milk: ["นมเกษตร","จาก KU milk"],
     ku_ice_cream: ["ไอศครีม","จาก KU premium"],
     est_cola: ["เครื่องดื่ม","จาก Est"],
@@ -20,13 +20,27 @@ const reward_list = {
     kfc: ["บัตรกำนัล","จาก KFC"],
 };
 
+const image_dict = {
+    ku_milk: "ku_milk",
+    ku_ice_cream: "ku_ice_cream",
+    est_cola: "est_cola",
+    oishi: "oishi",
+    dog_food_nk: "nk",
+    dog_food_oliver: "oliver",
+    cat_food_paihangout: "paihangout",
+    pz_cussons_set: "pz_cussons",
+    seven_11: "seven_11",
+    kfc: "kfc",
+};
+
 function getRewardDiv(){
     const reward_div = [];
     const reward_star_use = Reward.getStarsUseToTradeCoupon();
-    for (let i in reward_list) {
+    for (let i in reward_dict) {
         reward_div.push({
-            reward: reward_list[i],
-            stars_use: reward_star_use[i]
+                reward: reward_dict[i],
+                stars_use: reward_star_use[i],
+                image: "/images/sponsers/" + image_dict[i] + ".png"
             }
         );
     }
@@ -38,14 +52,14 @@ function getRewardDiv(){
 // export.<<controllerSubName>> = (req, res) => {
 // <<controllerLogic, render>>
 // }
-exports.claim_coupon = (req, res) => {
-
-    res.render('claim_coupon', {});
-}
 
 exports.reward = (req, res) => {
 
     const reward_div_list = getRewardDiv();
 
     res.render('user/reward', { reward_div_list })
+}
+
+exports.trade_coupon = (req, res) => {
+    res.render('user/trade_coupon')
 }

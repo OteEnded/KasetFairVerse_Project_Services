@@ -7,6 +7,7 @@
 
     <!-- TailwindCSS -->
     <link href="/stylesheets/output.css" rel="stylesheet" />
+    <script src="../../models/Reward.js"></script>
 
 </head>
 <body class="bg-background">
@@ -25,14 +26,14 @@
 </nav>
 
 <!-- content -->
-<div class="flex flex-col mx-auto p-16 pt-0 container">
-    <div class="flex flex-col lg:flex-row items-center justify-center w-full p-8">
+<div class="flex flex-col mx-auto p-0 lg:px-16 container">
+    <div class="flex flex-col lg:flex-row items-center justify-center w-full ">
         <h1 class="text-3xl text-white ">
             แลกของรางวัล
         </h1>
     </div>
 
-    <div class="bg-white lg:pl-16 lg:py-16 p-16 border rounded-md my-5 flex flex-col lg:flex-col items-center w-full">
+    <section class="bg-white lg:p-16 lg:py-16 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center ">
         <!-- info -->
         <div>
             <p class="text-14px font-semibold text-blue">
@@ -45,37 +46,73 @@
 
         <!-- รายการของรางวัล -->
         <div>
-            <h2 class="text-2xl underline py-10">
+            <h2 class="text-2xl underline py-10 text-blue">
                 รายการของรางวัล
             </h2>
         </div>
+        <div class="grid grid-cols-2 gap-6 sm:gap-x-10 sm:grid-cols-5 lg:gap-16 lg:grid-cols-5">
+            <% for (let i = 0; i < reward_div_list.length; i++) { %>
+            <div class="flex flex-col items-center justify-center w-full ">
 
-        <% for (let i = 0; i < reward_div_list.length; i++) { %>
-        <%= reward_div_list[i] %>
-        <% } %>
+                <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
+                    <img src="<%= reward_div_list[i].image %>" width="75" >
+                </div>
 
-        <% for (let i = 0; i < reward_div_list.length; i++) { %>
-        <div class="grid grid-cols-2 gap-20 lg:gap-x-44 lg:grid-cols-5 ">
-            <div class="gird grid-rows-1 items-center justify-center">
-                <h3 class="">
+                <div>
+                <h3 class="text-[18px] text-blue">
                     <%= reward_div_list[i].reward[0] %>
                 </h3>
-                <h3 class="">
+                </div>
+
+                <h4 class="text-xs lg:text-[12px] xl:text-[14px] text-blue">
                     <%= reward_div_list[i].reward[1] %>
-                </h3>
-                <h4>
-                    <%= reward_div_list[i].stars_use %>
+                </h4>
+
+                <h4 class="text-xs md:text-xs lg:text-[14px] text-red pt-2">
+                    แลก <%= reward_div_list[i].stars_use %> ดวง
                 </h4>
             </div>
+            <% } %>
         </div>
-        <% } %>
+
+        <div class="flex flex-col pt-10 ">
+            <a href="/trade_coupon">
+            <button class="bg-primary hover:bg-blue text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                แลกดาว
+            </button>
+            </a>
+        </div>
+
+        <div class="flex flex-col pt-3 ">
+            <a href="/reward">
+            <button class="bg-primary hover:bg-blue text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                ดูคูปองของฉัน
+            </button>
+            </a>
+        </div>
+
+    </section>
+
+    <!-- สปอน -->
+    <section class="bg-white p-6 border rounded-md my-4 flex flex-col lg:flex-col items-center">
+        <div>
+            <h2 class="text-2xl underline py-10 text-blue">
+                สนับสนุนโดย
+            </h2>
+        </div>
+    </section>
+
+    <div class="pb-10">
 
     </div>
 </div>
 
-<footer>
-    <div class="" style="">
-        เดี๋ยวค่อยใส่ภาพ
+
+<section>
+    <div class="bg-primary p-4 md:py-4 flex flex-col lg:flex-col items-center">
+        <img src="images/footer_logo.png" width="200" class="block justify-center items-center">
     </div>
-</footer>
+</section>
+
+</body>
 </html>
