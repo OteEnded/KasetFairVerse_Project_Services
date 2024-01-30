@@ -63,3 +63,17 @@ exports.reward = (req, res) => {
 exports.trade_coupon = (req, res) => {
     res.render('user/trade_coupon')
 }
+
+exports.trade_coupon_find_matching_reward = (req, res) => {
+
+    const submittedForm = req.body;
+
+    console.log("Here", submittedForm);
+    console.log("Here2", Object.keys(submittedForm));
+
+    res.render('user/trade_coupon');
+}
+
+exports.my_coupon = (req, res) => {
+    res.render('user/my_coupon')
+}

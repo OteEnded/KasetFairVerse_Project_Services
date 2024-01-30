@@ -43,6 +43,7 @@ app.set('view engine', 'html'); // Set the view engine to render HTML
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 // Serve static files from the 'public' directory
 app.use(express.static('public'));

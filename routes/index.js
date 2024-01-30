@@ -13,6 +13,8 @@ const user_controller = require('../controllers/user_controller')
 router.get('/claim_reward', claim_reward_controller.claim_reward);
 router.get('/reward', user_controller.reward);
 router.get('/trade_coupon', user_controller.trade_coupon);
+router.post('/trade_coupon', user_controller.trade_coupon_find_matching_reward);
+router.get('/my_coupon', user_controller.my_coupon);
 
 
 
