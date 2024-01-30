@@ -3,6 +3,8 @@ const Stars = require('../entities/Stars');
 const User = require('../models/User');
 const Coupon = require('../models/Coupon');
 
+const apirequester = require('../services/apirequester');
+
 const star_source_code = {
     Accessories_ColorMatching: "Accessories_ColorMatching",
     CoffeeBean_FindMyMeow: "CoffeeBean_FindMyMeow",
@@ -285,6 +287,47 @@ async function findStarToUse(user_id, source) {
     } catch (error) {
         throw error;
     }
+}
+
+// Function sent star to bbt
+async function sendStarToBBT(star) {
+
+    console.log("Star[sentStarToBBT]: sending star to bbt ->", star);
+
+    // get access token from user_id
+    let token_from_buffer = await User.getUserTokenBufferByUserId(star.user_id);
+    console.log("Star[sentStarToBBT]: token_from_buffer ->", token_from_buffer);
+    if (!token_from_buffer) throw new Error("Cannot find bbt token from bbt token buffer where user_id = " + star.user_id);
+
+    token_from_buffer = token_from_buffer.bbt_token;
+    const query =
+        `mutation {
+        createPointTransection 
+            (createPointTransectionInput: {
+            point_slug: "${star_source_point_slug_dict[star.source]}"
+        })
+        {
+            id
+            user_uid
+            point_slug
+            type
+            amount
+            created_at
+            updated_at
+            deleted_at
+        }
+    }`
+
+    return await apirequester.requestToBBT(token_from_buffer, query);
+}
+
+// Function sent (fetchUp) unsent star to bbt
+async function fetchUpStarToBBT() {
+    console.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
+
+    // new fetch up stars to bbt logic
+
+    console.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
 module.exports = {

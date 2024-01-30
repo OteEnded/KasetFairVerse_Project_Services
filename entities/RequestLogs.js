@@ -1,4 +1,4 @@
-// entities/KubKaoKabKang_PlayRecords.js
+// entities/RequestLogs.js
 const { DataTypes } = require('sequelize');
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
