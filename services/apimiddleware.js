@@ -112,8 +112,8 @@ async function logRequest(req, res, next) {
         let log = {
             requester_ip: req.ip,
             request_to: req.hostname + req.originalUrl,
-            request_method: req.method,
             request_protocol: req.protocol,
+            request_method: req.method,
             request_header: req.headers,
             request_body: req.body
         }

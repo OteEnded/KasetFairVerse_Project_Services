@@ -29,15 +29,19 @@ const RequestLogs = connection.define('RequestLogs', {
     },
     request_protocol: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+    },
+    request_method: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     request_header: {
         type: DataTypes.JSON,
-        allowNull: false,
+        allowNull: true,
     },
     request_body: {
         type: DataTypes.JSON,
-        allowNull: false,
+        allowNull: true,
     }
 });
 
