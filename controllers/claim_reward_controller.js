@@ -16,5 +16,5 @@ exports.claim_reward = (req, res) => {
     let user = {
         name: "Ote"
     }
-    res.render('claim_reward', { user })
+    res.render('staff/claim_reward', { user })
 }

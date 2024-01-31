@@ -974,6 +974,10 @@ html.dark{
   order: 0;
 }
 
+.col-end-2{
+  grid-column-end: 2;
+}
+
 .float-right{
   float: right;
 }
@@ -1000,6 +1004,10 @@ html.dark{
 
 .m-4{
   margin: 1rem;
+}
+
+.m-5{
+  margin: 1.25rem;
 }
 
 .m-auto{
@@ -1554,6 +1562,10 @@ html.dark{
   width: 1.5rem;
 }
 
+.w-60{
+  width: 15rem;
+}
+
 .w-7{
   width: 1.75rem;
 }
@@ -1664,6 +1676,18 @@ html.dark{
 
 .w-screen{
   width: 100vw;
+}
+
+.w-24{
+  width: 6rem;
+}
+
+.w-28{
+  width: 7rem;
+}
+
+.w-40{
+  width: 10rem;
 }
 
 .min-w-0{
@@ -2165,6 +2189,10 @@ html.dark{
 
 .grid-flow-col{
   grid-auto-flow: column;
+}
+
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-cols-2{
@@ -3117,6 +3145,11 @@ html.dark{
   padding-right: 0.375rem;
 }
 
+.px-10{
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 .px-12{
   padding-left: 3rem;
   padding-right: 3rem;
@@ -3500,6 +3533,10 @@ html.dark{
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[14px\]{
+  font-size: 14px;
 }
 
 .font-black{
@@ -5693,9 +5730,21 @@ html.dark{
   .min-\[576px\]\:max-w-\[500px\]{
     max-width: 500px;
   }
+
+  .min-\[576px\]\:max-w-\[600px\]{
+    max-width: 600px;
+  }
 }
 
 @media (min-width: 640px){
+  .sm\:inline{
+    display: inline;
+  }
+
+  .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .sm\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -5708,9 +5757,27 @@ html.dark{
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
+  .sm\:items-start{
+    align-items: flex-start;
+  }
+
   .sm\:gap-x-10{
     -moz-column-gap: 2.5rem;
          column-gap: 2.5rem;
+  }
+
+  .sm\:pt-0{
+    padding-top: 0px;
+  }
+
+  .sm\:text-xl{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:text-lg{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 }
 
@@ -5726,6 +5793,10 @@ html.dark{
 
   .md\:mb-0{
     margin-bottom: 0px;
+  }
+
+  .md\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .md\:flex-row{
@@ -5768,6 +5839,10 @@ html.dark{
     gap: 4rem;
   }
 
+  .lg\:gap-12{
+    gap: 3rem;
+  }
+
   .lg\:p-16{
     padding: 4rem;
   }
@@ -5791,12 +5866,20 @@ html.dark{
     padding-top: 1.5rem;
   }
 
+  .lg\:pt-0{
+    padding-top: 0px;
+  }
+
   .lg\:text-\[12px\]{
     font-size: 12px;
   }
 
   .lg\:text-\[14px\]{
     font-size: 14px;
+  }
+
+  .lg\:text-\[18px\]{
+    font-size: 18px;
   }
 }
 
