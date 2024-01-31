@@ -129,7 +129,7 @@ const reward_config = {
     }
 };
 
-const sponsors = {
+const sponsors_list = {
     ThePremiumAtKu: {
         name: "The Premium @ KU",
         image: "/images/sponsors/the_premium_at_ku.png"
@@ -213,9 +213,14 @@ function getStarsUseToTradeCoupon() {
     return reward_stars_use;
 }
 
+function getSponsorsList() {
+    return sponsors_list;
+}
+
 module.exports = {
     getRewardConfig,
     getRewardList,
     getRewardStocks,
-    getStarsUseToTradeCoupon
+    getStarsUseToTradeCoupon,
+    getSponsorsList
 }
