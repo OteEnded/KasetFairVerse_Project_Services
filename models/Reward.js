@@ -129,6 +129,62 @@ const reward_config = {
     }
 };
 
+const sponsors_list = {
+    ThePremiumAtKu: {
+        name: "The Premium @ KU",
+        image: "/images/sponsors/the_premium_at_ku.png"
+    },
+    KuMilk: {
+        name: "KU Milk",
+        image: "/images/sponsors/ku_milk.png"
+    },
+    EstCola: {
+        name: "Est Cola",
+        image: "/images/sponsors/est_cola.png"
+    },
+    Oishi: {
+        name: "Oishi",
+        image: "/images/sponsors/oishi.png"
+    },
+    DoiKham: {
+        name: "Doi Kham",
+        image: "/images/sponsors/doikham.png"
+    },
+    SevenEleven: {
+        name: "7-11",
+        image: "/images/sponsors/seven_eleven.png"
+    },
+    InfinitM: {
+        name: "Infinit M",
+        image: "/images/sponsors/infinite_m.png"
+    },
+    KFC: {
+        name: "KFC",
+        image: "/images/sponsors/kfc.png"
+    },
+    NK: {
+        name: "N&K",
+        image: "/images/sponsors/nk.png"
+    },
+    Oliver: {
+        name: "Oliver",
+        image: "/images/sponsors/oliver.png"
+    },
+    PaiHangOut: {
+        name: "Pai Hangout",
+        image: "/images/sponsors/paihangout.png"
+    },
+    PZCussons: {
+        name: "PZ Cussons",
+        image: "/images/sponsors/pz_cussons.png"
+    },
+    Major: {
+        name: "Major",
+        image: "/images/sponsors/major.png"
+    }
+};
+
+
 function getRewardConfig() {
     return reward_config;
 }
@@ -157,9 +213,14 @@ function getStarsUseToTradeCoupon() {
     return reward_stars_use;
 }
 
+function getSponsorsList() {
+    return sponsors_list;
+}
+
 module.exports = {
     getRewardConfig,
     getRewardList,
     getRewardStocks,
-    getStarsUseToTradeCoupon
+    getStarsUseToTradeCoupon,
+    getSponsorsList
 }
