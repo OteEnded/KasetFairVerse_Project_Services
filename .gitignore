@@ -6,4 +6,4 @@ cert/
 
 node_modules
 package-lock.json
-/output.css
+output.css
