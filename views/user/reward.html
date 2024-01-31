@@ -27,7 +27,7 @@
 <!-- content -->
 <div class="flex flex-col mx-auto pt-12 lg:px-16 container">
     <div class="flex flex-col lg:flex-row items-center justify-center w-full ">
-        <h1 class="text-3xl text-white font-bold">
+        <h1 class="text-6xl text-blue font-bold">
             แลกของรางวัล
         </h1>
     </div>
@@ -36,14 +36,19 @@
         <!-- info -->
         <div>
             <section>
-                <p class="text-14px font-medium text-blue">
-                    ยินดีต้อนรับสู่หน้าแลกคูปอง คุณสามารถนำดาวจากการเล่นเกมต่าง ๆ ในซุ้มมาแลกเป็นคูปอง เพื่อแลกรับของรางวัลภายในงานเกษตรแฟร์
+                <h4 class="text-center text-[20px] font-semibold text-blue">
+                    ยินดีต้อนรับสู่หน้าแลกคูปอง
+                </h4>
+                <p class="text-center text-[16px] font-semibold text-blue">
+                    คุณสามารถนำดาวจากการเล่นเกมต่าง ๆ ในซุ้มมาแลกเป็นคูปอง เพื่อแลกรับของรางวัลภายในงานเกษตรแฟร์
                 </p>
             </section>
 
             <section>
-                <p class="text-14px font-medium text-red pt-5 ">
-                    หากคุณเก็บครบ 7 ดาว รับไปเลย ฟรี ! ตั๋วหนังเมเจอร์ (โดยไม่ต้องแลก)
+                <p class="text-center text-[16px] font-semibold text-red pt-5 ">
+                    หากคุณเก็บครบ 7 ดาว รับไปเลย ฟรี ! ตั๋วหนังเมเจอร์ 2 ใบ (โดยไม่ต้องแลก)
+                    <br>และผู้เล่นที่เข้ามาแลกของรางวัล 100 ท่านแรกที่หน้างาน
+                    <br> รับฟรี ! ของรางวัลพิเศษจาก The premium @ KU
                 </p>
             </section>
 
@@ -80,17 +85,22 @@
             <% } %>
         </div>
 
-        <div class="flex flex-col pt-10 ">
+        <p class="text-center text-[20px] font-semibold text-red  pt-10 ">
+            ผู้เล่นที่ขยันเก็บสะสมดาว จะมีของรางวัลพิเศษให้!!
+        </p>
+
+        <div class="flex flex-col pt-5 ">
             <a href="/trade_coupon">
-            <button class="bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+            <button class="text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
                 แลกดาว
             </button>
             </a>
         </div>
 
+
         <div class="flex flex-col pt-3 ">
             <a href="/my_coupon">
-            <button class="bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+            <button class="text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
                 ดูคูปองของฉัน
             </button>
             </a>
@@ -102,8 +112,28 @@
     <section class="bg-white p-6 border rounded-md my-4 flex flex-col lg:flex-col items-center">
         <div>
             <h2 class="text-2xl underline py-10 text-blue font-semibold">
-                สนับสนุนโดย
+                ผู้สนับสนุนของรางวัล
             </h2>
+        </div>
+
+<!--        1-->
+        <div class="grid grid-cols-2  gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5">
+            <div class="flex flex-col flex-wrap items-center justify-center w-full ">
+                <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
+                    <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
+                        <img src="/images/QRCode.png" width="75" >
+                    </div>
+                </div>
+            </div>
+<!--            2-->
+            <div class="flex flex-col flex-wrap items-center justify-center w-full ">
+                <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
+                    <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
+                        <img src="/images/QRCode.png" width="75" >
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 

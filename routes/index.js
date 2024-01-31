@@ -7,10 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 // claim reward page route
-const claim_reward_controller = require('../controllers/claim_reward_controller')
+const staff_controller = require('../controllers/staff_controller')
 const user_controller = require('../controllers/user_controller')
 
-router.get('/claim_reward', claim_reward_controller.claim_reward);
+router.get('/claim_reward', staff_controller.claim_reward);
+router.get('/coupon_validation', staff_controller.coupon_validation);
 router.get('/reward', user_controller.reward);
 router.get('/trade_coupon', user_controller.trade_coupon);
 router.post('/trade_coupon', user_controller.trade_coupon_find_matching_reward);

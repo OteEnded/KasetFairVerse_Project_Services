@@ -18,3 +18,7 @@ exports.claim_reward = (req, res) => {
     }
     res.render('staff/claim_reward', { user })
 }
+
+exports.coupon_validation = (req, res) => {
+    res.render('staff/coupon_validation')
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> แลกรางวัล </title>
+
+  <!-- TailwindCSS -->
+  <link href="/stylesheets/output.css" rel="stylesheet" />
+
+</head>
+<body class="bg-background">
+<!-- TW Elements JavaScript -->
+<script src="/tw-elements/dist/js/tw-elements.umd.min.js" type="text/javascript"></script>
+
+<!-- qr code reader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- Navbar-->
+
+<nav class="bg-transparent">
+  <div class="max-w-screen-xl flex-wrap fixed top-0 z-10 flex w-full items-center justify-between p-4">
+      <img src="images/LOGO_KasetFairVerse.png" class="h-8" />
+  </div>
+</nav>
+
+
+<div class="flex flex-col mx-auto pt-12 lg:px-16 container ">
+  <div class="flex flex-col  items-center justify-center w-full ">
+
+    <div class=" bg-white lg:pt-6 lg:py-6 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center flex-wrap drop-shadow-lg">
+      <section>
+        <!--card-->
+        <div class="container mx-auto">
+          <div class="flex flex-col lg:flex-row bg-secondary text-white text-center py-4 px-20 rounded-lg shadow-md relative">
+            <div class="container mx-auto">
+              <div class="flex flex-col">
+                <section class="flex flex-col text-gray-900">
+                  <div class="text-lg font-semibold"> คูปองแลกของรางวัล </div>
+                  <div> เจ้าของคูปอง :</div>
+                  <div> ของรางวัล : </div>
+                  <div class="font-semibold"> <br> รหัสคูปอง </div>
+                  <div>256428174820123</div>
+                  <!-- coupon shape -->
+                  <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
+                  <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
+                </section>
+
+              </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+    </div>
+<!--ปุ่ม-->
+    <div class="flex flex-col items-center justify-center pt-5 ">
+      <form action="/claim_reward" method="get">
+        <button id="accept" type="submit"
+                class="flex items-center justify-center text-sm bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+          มอบรางวัลแล้ว
+        </button>
+      </form>
+
+      <a href="/claim_reward">
+        <br>
+        <button
+                class="flex items-center justify-center text-sm bg-[#de0a26] hover:bg-[#f94449] hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+          ยกเลิก
+        </button>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- TW Elements JavaScript -->
+<script src="/tw-elements/dist/js/tw-elements.umd.min.js" type="text/javascript"></script>
+</body>
+</html>
