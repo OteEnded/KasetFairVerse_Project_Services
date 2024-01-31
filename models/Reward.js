@@ -16,7 +16,7 @@ const reward_config = {
         display: {
             name: "ของที่ระลึก",
             from: "จาก Doi Kham",
-            image: "/images/sponsors/doi_kham.png"
+            image: "/images/sponsors/doikham.png"
         }
     },
     SevenEleven_mug: {
@@ -43,7 +43,7 @@ const reward_config = {
         display: {
             name: "พวงกุญแจ ตุ๊กตาหมี",
             from: "จาก Infinit M",
-            image: "/images/sponsors/infinit_m.png"
+            image: "/images/sponsors/infinite_m.png"
         }
     },
     KFC_gift_voucher: {
@@ -61,7 +61,7 @@ const reward_config = {
         display: {
             name: "ตุ๊กตาคละแบบ",
             from: "จาก Infinit M",
-            image: "/images/sponsors/infinit_m.png"
+            image: "/images/sponsors/infinite_m.png"
         }
     },
     NK_dog_food: {
