@@ -27,6 +27,11 @@ function getRewardDiv(){
     return reward_div;
 }
 
+// function getSponsorDiv(){
+//     const sponsor_div = [];
+//     const sponsor_config = Reward.
+//     return sponsor_div;
+// }
 
 // // define route handler (with export)
 // export.<<controllerSubName>> = (req, res) => {

@@ -3,19 +3,27 @@ const router = express.Router();
 
 // home page route
 router.get('/', function(req, res, next) {
-    res.render('welcome.html', { title: 'welcome' });
+    res.redirect('/reward');
+});
+
+router.get('/path_finder', function(req, res, next) {
+    res.render('path_finder', {  });
+});
+
+router.get('/api', function(req, res, next) {
+    res.render('welcome-api', {  });
 });
 
 // claim reward page route
-const staff_controller = require('../controllers/staff_controller')
-const user_controller = require('../controllers/user_controller')
+const staff_pages_controller = require('../controllers/staff_pages_controller')
+const user_pages_controller = require('../controllers/user_pages_controller')
 
-router.get('/claim_reward', staff_controller.claim_reward);
-router.get('/coupon_validation', staff_controller.coupon_validation);
-router.get('/reward', user_controller.reward);
-router.get('/trade_coupon', user_controller.trade_coupon);
-router.post('/trade_coupon', user_controller.trade_coupon_find_matching_reward);
-router.get('/my_coupon', user_controller.my_coupon);
+router.get('/claim_reward', staff_pages_controller.claim_reward);
+router.get('/coupon_validation', staff_pages_controller.coupon_validation);
+router.get('/reward', user_pages_controller.reward);
+router.get('/trade_coupon', user_pages_controller.trade_coupon);
+router.post('/trade_coupon', user_pages_controller.trade_coupon_find_matching_reward);
+router.get('/my_coupon', user_pages_controller.my_coupon);
 
 
 
