@@ -22,11 +22,6 @@ const Coupons = connection.define('Coupons', {
     reward: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    is_redeemed: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
     }
 }, {
     hooks: {

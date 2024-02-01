@@ -79,14 +79,27 @@ async function getTradeAbleRewardList(star_amount){
 }
 
 async function getUsersCoupons(user_id){
-
+    const user_coupons = await Coupon.getCouponsByUserId(user_id);
+    const user = await User.getUser(user_id);
+    const user_coupons_list = [];
+    for (let i in user_coupons){
+        let reward = Reward.getRewardConfig()[user_coupons[i].reward].display;
+        let is_redeemed = false;
+        user_coupons_list.push({
+            coupon_uuid: user_coupons[i].coupon_uuid,
+            user: user,
+            reward: reward,
+            qr_code: user_coupons[i].qr_code,
+            is_redeemed: is_redeemed,
+        });
+    }
+    return user_coupons_list;
 }
 
 // // define route handler (with export)
 // export.<<controllerSubName>> = (req, res) => {
 // <<controllerLogic, render>>
 // }
-
 exports.reward = async (req, res) => {
 
     const reward_div_list = getRewardDiv();
@@ -176,7 +189,9 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
     }
     const user = await User.getUserFromBBTToken(access_token);
 
-    res.render('user/my_coupon', { first_popup: {} });
+    const user_coupons_list = await getUsersCoupons(user.user_id);
+
+    res.render('user/my_coupon', { first_popup: {}, user_coupons_list });
 }
 
 exports.my_coupon = async (req, res) => {
@@ -188,7 +203,9 @@ exports.my_coupon = async (req, res) => {
     }
     const user = await User.getUserFromBBTToken(access_token);
 
-    res.render('user/my_coupon', { first_popup: {} });
+    const user_coupons_list = await getUsersCoupons(user.user_id);
+
+    res.render('user/my_coupon', { first_popup: {}, user_coupons_list });
 }
 
 exports.login = async (req, res) => {

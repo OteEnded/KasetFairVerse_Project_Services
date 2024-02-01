@@ -1,4 +1,5 @@
 const Coupons = require('../entities/Coupons');
+const Reward_Claim_Logs = require('../entities/Reward_Claim_Logs');
 
 const Reward = require('../models/Reward');
 const User = require('../models/User');
