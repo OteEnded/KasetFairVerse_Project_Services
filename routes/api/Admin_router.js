@@ -107,7 +107,7 @@ router.post('/coupon_up/user_id/:user_id', apiMiddleware.authenticate, async (re
     try {
         a = await coupon.createCoupon({
             user_id: parseInt(req.params.user_id),
-            reward: "Major_ticket_2"
+            reward: req.body.reward
         });
         console.log(a);
         res.json({

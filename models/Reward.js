@@ -15,7 +15,7 @@ const reward_config = {
         stock: 180,
         display: {
             name: "ของที่ระลึก",
-            from: "จาก Doi Kham",
+            from: "จาก ดอยคำ",
             image: "/images/sponsors/doikham.png"
         }
     },
