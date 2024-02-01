@@ -158,8 +158,8 @@ router.delete('/delete/:user_id', apiMiddleware.authenticate, async (req, res) =
 // GET /api/Users/get_bbt_user - Get users from BBT by token
 router.get('/get_bbt_user/token/:token', apiMiddleware.authenticate, async (req, res) => {
     try {
-        const result = await user.getUserFromBigBangTheory(req.params.token);
-        // const result = await user.getUserFromBigBangTheory(req.body.token);
+        const result = await user.getUserFromBBTToken(req.params.token);
+        // const result = await user.getUserFromBBTToken(req.body.token);
         console.log(result);
         res.json({
             is_success: true,

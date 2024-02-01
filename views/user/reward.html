@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> แลกคูปอง </title>
+    <title> ของรางวัล </title>
 
     <!-- TailwindCSS -->
     <link href="/stylesheets/output.css" rel="stylesheet" />
@@ -17,7 +17,7 @@
 
 <nav class="bg-transparent">
     <div class="max-w-screen-xl flex-wrap fixed top-0 z-10 flex w-full items-center justify-between p-4">
-        <a href="/reward" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a id="rewardPage" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="images/LOGO_KasetFairVerse.png" class="h-8" />
             <span class="self-center font-semibold text-blue whitespace-nowrap dark:text-white"> KASETFAIR VERSE </span>
         </a>
@@ -27,7 +27,7 @@
 <!-- content -->
 <div class="flex flex-col mx-auto pt-12 lg:px-16 container">
     <div class="flex flex-col lg:flex-row items-center justify-center w-full ">
-        <h1 class="text-6xl text-blue font-bold">
+        <h1 class="text-6xl text-blue font-bold drop-shadow-xl">
             แลกของรางวัล
         </h1>
     </div>
@@ -60,9 +60,9 @@
                 รายการของรางวัล
             </h2>
         </div>
-        <div class="grid grid-cols-2  gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5">
+        <div class="grid grid-cols-2 gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5 shadow-sm p-2">
             <% for (let i = 0; i < reward_div_list.length; i++) { %>
-            <div class="flex flex-col flex-wrap items-center justify-center w-full ">
+            <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-lg p-2">
 
                 <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
                     <img src="<%= reward_div_list[i].image %>" width="75" >
@@ -86,20 +86,20 @@
         </div>
 
         <p class="text-center text-[20px] font-semibold text-red  pt-10 ">
-            ผู้เล่นที่ขยันเก็บสะสมดาว จะมีของรางวัลพิเศษให้!!
+            ผู้เล่นที่ขยันเก็บสะสมดาว จะมีของรางวัลพิเศษ(ของรางวัลมูลค่าสูง)ให้!!
         </p>
 
         <div class="flex flex-col pt-5 ">
-            <a href="/trade_coupon">
+            <a id="tradeCouponButton">
             <button class="text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-                แลกดาว
+                แลกของรางวัล
             </button>
             </a>
         </div>
 
 
         <div class="flex flex-col pt-3 ">
-            <a href="/my_coupon">
+            <a id="myCouponButton">
             <button class="text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
                 ดูคูปองของฉัน
             </button>
@@ -116,23 +116,16 @@
             </h2>
         </div>
 
-<!--        1-->
-        <div class="grid grid-cols-2  gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5">
+        <div class="grid grid-cols-2  gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5 p-2">
+            <% for (let i = 0; i < sponsor_div_list.length; i++) { %>
             <div class="flex flex-col flex-wrap items-center justify-center w-full ">
                 <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
-                    <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
-                        <img src="/images/QRCode.png" width="75" >
+                    <div class="bg-white flex flex-col lg:flex-col items-center h-24">
+                        <img src="<%= sponsor_div_list[i].image %>" width="75" >
                     </div>
                 </div>
             </div>
-<!--            2-->
-            <div class="flex flex-col flex-wrap items-center justify-center w-full ">
-                <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
-                    <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
-                        <img src="/images/QRCode.png" width="75" >
-                    </div>
-                </div>
-            </div>
+            <% } %>
 
         </div>
     </section>
@@ -148,6 +141,30 @@
         <img src="images/footer_logo.png" width="200" class="block justify-center items-center">
     </div>
 </section>
+
+<script>
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Create a URL object from the current URL
+    const url = new URL(currentUrl);
+
+    // Get the search part of the URL, including the '?'
+    const searchParams = url.search;
+
+    // Create a URLSearchParams object from the search part
+    const urlSearchParams = new URLSearchParams(searchParams);
+
+    // Get the value of the 'access_token' parameter
+    const accessToken = urlSearchParams.get('access_token');
+
+    // Now you can use the 'accessToken' variable wherever you need it
+    console.log(currentUrl, accessToken);
+
+    rewardPage.href = "/reward?access_token=" + accessToken;
+    myCouponButton.href = "/my_coupon?access_token=" + accessToken;
+    tradeCouponButton.href = "/trade_coupon?access_token=" + accessToken;
+</script>
 
 <!-- TW Elements JavaScript -->
 <script src="/tw-elements/dist/js/tw-elements.umd.min.js" type="text/javascript"></script>

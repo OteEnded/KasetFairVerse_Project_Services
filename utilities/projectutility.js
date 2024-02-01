@@ -30,17 +30,27 @@ function getPort(){
     return getConfig().port
 }
 
-function listLen(obj){
-    var len = 0
-    for (i in obj) len++
-    return len
+function objLen(obj){
+    return Object.keys(obj).length;
 }
 
+function getRandomIntInRange(min = null, max = null){
+    if (min == null) return Math.random();
+    if (max == null){
+        max = min
+        min = 0
+    }
+    if(min > max){
+        [min, max] = [max, min]
+    }
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 module.exports = {
     debug,
     readJSONFile,
     getConfig,
     getPort,
-    listLen,
+    objLen,
+    getRandomIntInRange,
 }

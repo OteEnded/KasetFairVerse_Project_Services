@@ -1,3 +1,3 @@
-const a = require('../models/Star')
+const a = require('../models/Reward')
 
-console.log(a.getStarSourceList())
+console.log(a.getRewardList())

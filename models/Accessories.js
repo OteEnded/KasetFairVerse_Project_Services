@@ -164,7 +164,7 @@ async function colorMatchingStarUp(play_record) {
 
         await Star.starUp({
             user_id: play_record.user_id,
-            source: Star.star_source_code.Accessories_ColorMatching,
+            source: Star.star_config.Accessories_ColorMatching.code_name,
             message: "Game star from Accessories_ColorMatching at " + play_record
         });
 

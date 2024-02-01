@@ -5,32 +5,71 @@ const Coupon = require('../models/Coupon');
 
 const apirequester = require('../services/apirequester');
 
-const star_source_code = {
-    Accessories_ColorMatching: "Accessories_ColorMatching",
-    CoffeeBean_FindMyMeow: "CoffeeBean_FindMyMeow",
-    CornMilk_RaisuwanCrush: "CornMilk_RaisuwanCrush",
-    Cosmetic_HoldYourBasket: "Cosmetic_HoldYourBasket",
-    Hemp_TheDrink: "Hemp_TheDrink",
-    KubKaoKabGang_CWheat: "KubKaoKabGang_CWheat",
-    KubKaoKabGang_PasteScrumble: "KubKaoKabGang_PasteScrumble",
+const star_config = {
+    Accessories_ColorMatching: {
+        code_name: "Accessories_ColorMatching",
+        point_slug: "accessories",
+        display: {
+            name: "ColorMatching",
+            image: "/images/stars/Accessories_ColorMatching.png"
+        },
+    },
+    CoffeeBean_FindMyMeow: {
+        code_name: "CoffeeBean_FindMyMeow",
+        point_slug: "coffee_bean",
+        display: {
+            name: "FindMyMeow",
+            image: "/images/stars/CoffeeBean_FindMyMeow.png"
+        },
+    },
+    CornMilk_RaisuwanCrush: {
+        code_name: "CornMilk_RaisuwanCrush",
+        point_slug: "raisuwan",
+        display: {
+            name: "RaisuwanCrush",
+            image: "/images/stars/CornMilk_RaisuwanCrush.png"
+        },
+    },
+    Cosmetic_HoldYourBasket: {
+        code_name: "Cosmetic_HoldYourBasket",
+        point_slug: "cosmetics",
+        display: {
+            name: "HoldYourBasket",
+            image: "/images/stars/Cosmetic_HoldYourBasket.png"
+        },
+    },
+    Hemp_TheDrink: {
+        code_name: "Hemp_TheDrink",
+        point_slug: "hemp",
+        display: {
+            name: "TheDrink",
+            image: "/images/stars/Hemp_TheDrink.png"
+        },
+    },
+    KubKaoKabGang_CWheat: {
+        code_name: "KubKaoKabGang_CWheat",
+        point_slug: "wheat",
+        display: {
+            name: "CWheat",
+            image: "/images/stars/KubKaoKabGang_CWheat.png"
+        },
+    },
+    KubKaoKabGang_PasteScrumble: {
+        code_name: "KubKaoKabGang_PasteScrumble",
+        point_slug: "paste_scrumble",
+        display: {
+            name: "PasteScrumble",
+            image: "/images/stars/KubKaoKabGang_PasteScrumble.png"
+        },
+    }
 }
 
 function getStarSourceList() {
     let star_list = [];
-    for (let i in star_source_code) {
-        star_list.push(star_source_code[i]);
+    for (let i in star_config) {
+        star_list.push(star_config[i].code_name);
     }
     return star_list;
-}
-
-const star_source_point_slug_dict = {
-    "Accessories_ColorMatching": "accessories",
-    "CoffeeBean_FindMyMeow": "coffee_bean",
-    "CornMilk_RaisuwanCrush": "raisuwan",
-    "Cosmetic_HoldYourBasket": "cosmetics",
-    "Hemp_TheDrink": "hemp",
-    "KubKaoKabGang_CWheat": "wheat",
-    "KubKaoKabGang_PasteScrumble": "paste_scrumble"
 }
 
 // Function to get all stars
@@ -188,7 +227,7 @@ async function checkIfUserShouldGetMajorCoupon(user_id) {
 // {
 //     Accessories_ColorMatching: 1,
 //     CoffeeBean_FindMyMeow: 7,
-//     CornMilk_RaisuwanCrush: 0, // not included
+//     CornMilk_RaisuwanCrush: 0,
 //     Cosmetic_HoldYourBasket: 3,
 //     Hemp_TheDrink: 4,
 //     KubKaoKabGang_CWheat: 1,
@@ -304,7 +343,7 @@ async function sendStarToBBT(star) {
         `mutation {
         createPointTransection 
             (createPointTransectionInput: {
-            point_slug: "${star_source_point_slug_dict[star.source]}"
+            point_slug: "${star_config[star.source].point_slug}"
         })
         {
             id
@@ -341,8 +380,7 @@ module.exports = {
     getStarInventoryByUserId,
     getNumberOfDifferentStarSourcesByUserId,
     getStarSourceList,
-    star_source_code,
-    star_source_point_slug_dict,
+    star_config,
     useStar,
     findStarToUse
 }

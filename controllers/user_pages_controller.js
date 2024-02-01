@@ -1,6 +1,9 @@
 // // import
 // const <<moduleNickname>> = require('<<modulePath>>')
-const Reward = require('../models/Reward')
+const Reward = require('../models/Reward');
+const Star = require('../models/Star');
+const User = require('../models/User');
+const Coupon = require('../models/Coupon');
 
 // // define view function
 // function <<functionName>>(<<functionParam>>) {
@@ -27,38 +30,171 @@ function getRewardDiv(){
     return reward_div;
 }
 
-// function getSponsorDiv(){
-//     const sponsor_div = [];
-//     const sponsor_config = Reward.
-//     return sponsor_div;
-// }
+function getSponsorDiv(){
+    const sponsor_div = [];
+    const sponsor_config = Reward.getSponsorsList();
+    for (let i in sponsor_config){
+        sponsor_div.push({
+            image: sponsor_config[i].image,
+            name: sponsor_config[i].name,
+        });
+    }
+    return sponsor_div;
+}
+
+async function getUserStars(user_id, ){
+    const star_inv = await Star.getStarInventoryByUserId(user_id);
+    const star_inv_list = [];
+    for (let i in star_inv){
+        let style = "";
+        if (star_inv[i] > 0) style = "flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30";
+        else style = "flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg  hover:bg-gray-200";
+        star_inv_list.push({
+            code_name: Star.star_config[i].code_name,
+            display: Star.star_config[i].display,
+            amount: star_inv[i],
+            style: style,
+            force_checked: false
+        });
+    }
+    return star_inv_list;
+}
+
+async function getTradeAbleRewardList(star_amount){
+    const reward_trede_policy = Reward.getStarsUseToTradeCoupon();
+    const reward_left = await Reward.getRewardLeft();
+    const reward_config = Reward.getRewardConfig();
+    const trade_able_reward_list = [];
+    for (let i in reward_trede_policy){
+        if (reward_trede_policy[i] === star_amount){
+            trade_able_reward_list.push({
+                code_name: i,
+                reward: reward_config[i].display.name + " " + reward_config[i].display.from,
+                image: reward_config[i].display.image,
+                stock_left: reward_left[i]
+            });
+        }
+    }
+    return trade_able_reward_list;
+}
+
+async function getUsersCoupons(user_id){
+
+}
 
 // // define route handler (with export)
 // export.<<controllerSubName>> = (req, res) => {
 // <<controllerLogic, render>>
 // }
 
-exports.reward = (req, res) => {
+exports.reward = async (req, res) => {
 
     const reward_div_list = getRewardDiv();
+    const sponsor_div_list = getSponsorDiv();
 
-    res.render('user/reward', { reward_div_list })
+    res.render('user/reward', { reward_div_list, sponsor_div_list })
 }
 
-exports.trade_coupon = (req, res) => {
-    res.render('user/trade_coupon')
+exports.trade_coupon = async (req, res) => {
+
+    let access_token = req.query.access_token;
+    console.log("access_token", access_token)
+    if (access_token === undefined || access_token === null){
+        access_token = "1";
+    }
+    const user = await User.getUserFromBBTToken(access_token);
+
+    const star_div_list = await getUserStars(user.user_id);
+    const star_check_box_list = [];
+    for (let i in star_div_list){
+        star_check_box_list.push(star_div_list[i].code_name);
+    }
+
+    const trade_able_reward_list = [];
+    const reward_check_box_list = [];
+
+    const mode = "select_star";
+
+    res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: [] })
 }
 
-exports.trade_coupon_find_matching_reward = (req, res) => {
+exports.trade_coupon_submit_select_star = async (req, res) => {
 
     const submittedForm = req.body;
 
     console.log("Here", submittedForm);
     console.log("Here2", Object.keys(submittedForm));
 
-    res.render('user/trade_coupon');
+    let access_token = req.query.access_token;
+    console.log("access_token", access_token)
+    if (access_token === undefined || access_token === null){
+        access_token = "1";
+    }
+    const user = await User.getUserFromBBTToken(access_token);
+
+    let star_selected = 0;
+    const star_div_list = await getUserStars(user.user_id);
+    for (let i in star_div_list){
+        if (Object.keys(submittedForm).includes(star_div_list[i].code_name)){
+            star_div_list[i].force_checked = true;
+            star_selected += 1;
+            console.log(star_div_list[i]);
+        }
+    }
+
+    const star_check_box_list = [];
+    for (let i in star_div_list){
+        star_check_box_list.push(star_div_list[i].code_name);
+    }
+
+    const trade_able_reward_list = await getTradeAbleRewardList(star_selected);
+    const reward_check_box_list = [];
+    for (let i in trade_able_reward_list){
+        reward_check_box_list.push(trade_able_reward_list[i].code_name);
+    }
+
+    const mode = "select_reward";
+
+    res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: Object.keys(submittedForm) });
 }
 
-exports.my_coupon = (req, res) => {
-    res.render('user/my_coupon')
+exports.trade_coupon_submit_select_reward = async (req, res) => {
+
+    const submittedForm = req.body;
+
+    console.log("Here", submittedForm);
+    console.log("Here2", Object.keys(submittedForm));
+
+    const star_selected = submittedForm["passingSelectedStar"].split(",");
+    star_selected.pop();
+    console.log("Here3", star_selected);
+
+    let access_token = req.query.access_token;
+    console.log("access_token", access_token)
+    if (access_token === undefined || access_token === null){
+        access_token = "1";
+    }
+    const user = await User.getUserFromBBTToken(access_token);
+
+    res.render('user/my_coupon', { first_popup: {} });
+}
+
+exports.my_coupon = async (req, res) => {
+
+    let access_token = req.query.access_token;
+    console.log("access_token", access_token)
+    if (access_token === undefined || access_token === null){
+        access_token = "1";
+    }
+    const user = await User.getUserFromBBTToken(access_token);
+
+    res.render('user/my_coupon', { first_popup: {} });
+}
+
+exports.login = async (req, res) => {
+
+}
+
+exports.login_submit = async (req, res) => {
+
 }

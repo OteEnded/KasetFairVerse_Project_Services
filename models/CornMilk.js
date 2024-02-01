@@ -154,7 +154,7 @@ async function raisuwanStarUp(play_record){
         if (score >= 220) {
             let starUpReq = {
                 user_id: play_record.user_id,
-                source: Star.star_source_code.CornMilk_RaisuwanCrush,
+                source: Star.star_config.CornMilk_RaisuwanCrush.code_name,
                 message: "Game star from CornMilk_RaisuwanCrush at " + play_record
             }
             await Star.starUp(starUpReq);

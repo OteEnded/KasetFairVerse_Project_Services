@@ -167,12 +167,12 @@ async function theDrinkStarUp(play_record){
 
         const is_starred = await Star.getStarsByUserId(play_record.user_id, true);
         for (let i in is_starred) {
-            if (is_starred[i].source === Star.star_source_code.Hemp_TheDrink) return;
+            if (is_starred[i].source === Star.star_config.Hemp_TheDrink.code_name) return;
         }
 
         let starUpReq = {
             user_id: play_record.user_id,
-            source: Star.star_source_code.Hemp_TheDrink,
+            source: Star.star_config.Hemp_TheDrink.code_name,
             message: "Game star from Hemp_TheDrink at " + play_record + " that made user's number of ending -> " + number_of_ending
         }
         await Star.starUp(starUpReq);

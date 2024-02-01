@@ -303,7 +303,7 @@ async function pasteScrumbleStarUp(play_record){
         if (score >= 1500) {
             let starUpReq = {
                 user_id: play_record.user_id,
-                source: Star.star_source_code.KubKaoKabGang_PasteScrumble,
+                source: Star.star_config.KubKaoKabGang_PasteScrumble.code_name,
                 message: "Game star from KubKaoKabGang_CWheat at " + play_record
             }
             await Star.starUp(starUpReq);
@@ -320,7 +320,7 @@ async function CWheatStarUp(play_record){
         if (score >= 10) {
             let starUpReq = {
                 user_id: play_record.user_id,
-                source: Star.star_source_code.KubKaoKabGang_CWheat,
+                source: Star.star_config.KubKaoKabGang_CWheat.code_name,
                 message: "Game star from KubKaoKabGang_CWheat at " + play_record
             }
             await Star.starUp(starUpReq);

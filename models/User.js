@@ -134,6 +134,68 @@ async function requestUserFromBigBangTheory(access_token) {
     }
 }
 
+// Function to request user login from big bang theory to get access token using username and password
+async function requestUserLoginFromBigBangTheory(username, password) {
+    try {
+
+        console.log("User[requestUserFromBigBangTheory]: Logging in user from big bang theory with username -> " + username + " and password -> " + password);
+
+        let query =
+        `
+            mutation {
+            login(loginInput:{
+                username: ${username},
+                    password: ${password}
+            }) {
+                access_token
+                user{
+                    id
+                    uuid
+                    username
+                    email
+                    phone_number
+                    profile{
+                        image_profile
+                        user_id
+                        date_of_birth
+                        display_name
+                        gender
+                        location_base
+                        caption
+                    }
+                }
+            }
+            }
+        `;
+
+        return await apirequester.requestToBBT("", query);
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+async function userLogin(username, password) {
+    try {
+
+        console.log("User[userLogin]: Logging in user with username -> " + username + " and password -> " + password);
+
+        const res_from_bbt = await requestUserLoginFromBigBangTheory(username, password);
+
+        if (Object.keys(res_from_bbt).includes("errors") || res_from_bbt.data == null) {
+            console.log("User[userLogin]: ERROR! Cannot login user from big bang theory with the username and password");
+            return null;
+        }
+
+        return res_from_bbt.data.login.access_token;
+
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Function to get default user
 async function getDefaultUser(which_type = "tester") {
 
     console.log("User[getDefaultUser]: Getting default user ->", which_type);
@@ -180,25 +242,25 @@ async function getDefaultUser(which_type = "tester") {
 }
 
 // Function to get user from big bang theory using access token
-async function getUserFromBigBangTheory(access_token) {
+async function getUserFromBBTToken(access_token) {
 
     try {
 
-        console.log("User[getUserFromBigBangTheory]: Getting user from big bang theory with token -> " + access_token);
+        console.log("User[getUserFromBBTToken]: Getting user from big bang theory with token -> " + access_token);
 
 
         if (access_token == null) {
-            console.log("User[getUserFromBigBangTheory]: access_token is null, return error user");
+            console.log("User[getUserFromBBTToken]: access_token is null, return error user");
             return await getDefaultUser("error");
         }
 
         if (access_token === "1") {
-            console.log("User[getUserFromBigBangTheory]: access_token is 1, return tester user");
+            console.log("User[getUserFromBBTToken]: access_token is 1, return tester user");
             return await getDefaultUser("tester");
         }
 
         if (access_token.toUpperCase().startsWith("guest".toUpperCase())) {
-            console.log("User[getUserFromBigBangTheory]: access_token is guest, return guest user");
+            console.log("User[getUserFromBBTToken]: access_token is guest, return guest user");
             return await getDefaultUser("guest");
         }
 
@@ -216,13 +278,13 @@ async function getUserFromBigBangTheory(access_token) {
                     user_id: data_from_buffer.user_id
                 }
             });
-            console.log("User[getUserFromBigBangTheory]: found token in buffer, set target_user to ->", target_user);
+            console.log("User[getUserFromBBTToken]: found token in buffer, set target_user to ->", target_user);
         }
 
         const res_from_bbt = await requestUserFromBigBangTheory(access_token);
 
         if (Object.keys(res_from_bbt).includes("errors") || res_from_bbt.data == null) {
-            console.log("User[getUserFromBigBangTheory]: ERROR! Cannot get user from big bang theory with the token");
+            console.log("User[getUserFromBBTToken]: ERROR! Cannot get user from big bang theory with the token");
             return await getDefaultUser("error");
         }
 
@@ -386,7 +448,7 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
-    getUserFromBigBangTheory,
+    getUserFromBBTToken,
     getAllUserTokenBuffer,
     getUserTokenBufferByBBTToken,
     getUserTokenBufferByUserId

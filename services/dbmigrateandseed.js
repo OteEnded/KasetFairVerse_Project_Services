@@ -1,5 +1,6 @@
 const dbconnector = require('../services/dbconnector');
 const connection = dbconnector.getConnection();
+const putil = require('../utilities/projectutility');
 
 async function migrate(is_force = true) {
     connection.sync({ force: is_force }) // Use force: true carefully, it will drop the table if it already exists
@@ -12,6 +13,11 @@ async function migrate(is_force = true) {
 }
 
 async function seed() {
+
+    console.log("dbmigrateandseed[seed]: Seeding...")
+
+    console.log("dbmigrateandseed[seed]: --- Seeding User table ---")
+
     const User = require('../models/User');
     const user_in_db = await User.getAllUsers();
     if (user_in_db.length > 0) {
@@ -28,6 +34,33 @@ async function seed() {
         });
         user_id++;
     }
+
+    console.log("dbmigrateandseed[seed]: --- Seeding Star table ---")
+
+    const Star = require('../models/Star');
+    const star_in_db = await Star.getAllStars();
+    if (star_in_db.length > 0) {
+        console.log("Star table is not empty, skipping seed...");
+        return;
+    }
+    for (let i in Star.getStarSourceList()){
+        for (let j = 0; j < putil.getRandomIntInRange(8); j++){
+            await Star.createStar({
+                user_id: 1,
+                source: Star.getStarSourceList()[i]
+            });
+        }
+    }
+
+    const Coupon = require('../models/Coupon');
+    await Coupon.createCoupon(
+        {
+            user_id: 1,
+            reward: "Major_ticket_2"
+        }
+    );
+
+    console.log("dbmigrateandseed[seed]: --- Seeding Ended ---")
 }
 
 module.exports = {

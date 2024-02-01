@@ -66,7 +66,7 @@ const checkBlacklist = (req, res, next) => {
 // Rate-limit middleware with some custom options
 const limiter = rateLimit({
     windowMs: 2 * 60 * 1000, // 2 minutes
-    max: 150, // max requests per window
+    max: 300, // max requests per window
     handler: (req, res) => {
         const clientIp = req.ip;
 

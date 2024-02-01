@@ -17,7 +17,7 @@
 
 <nav class="bg-transparent">
     <div class="max-w-screen-xl flex-wrap fixed top-0 z-10 flex w-full items-center justify-between p-4">
-        <a href="/reward" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a id="rewardPage" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="images/LOGO_KasetFairVerse.png" class="h-8" />
             <span class="self-center font-semibold text-blue whitespace-nowrap dark:text-white"> KASETFAIR VERSE </span>
         </a>
@@ -27,132 +27,133 @@
 <!-- content -->
 <div class="flex flex-col mx-auto pt-12 lg:px-16 container">
     <div class="flex flex-col lg:flex-row items-center justify-center w-full ">
-        <h1 class="text-6xl text-blue font-bold">
-            แลกดาว
+        <h1 class="text-6xl text-blue font-bold drop-shadow-xl">
+            แลกคูปอง
         </h1>
     </div>
 
     <div class="bg-white lg:pt-6 lg:py-6 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center flex-wrap">
         <section>
-            <form action="/trade_coupon" method="post">
-                <h3 class="mb-5 text-lg text-gray-900 flex items-center justify-center font-semibold"> เลือกดาวที่ต้องการใช้ </h3>
+            <form id="selectStarForm" method="post">
+                <h3 class="mb-5 text-lg font-semibold text-blue underline flex items-center justify-center font-semibold"> เลือกดาวที่ต้องการใช้ </h3>
 
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
+                    <% for (let i = 0; i < 4; i++) { %>
                     <div>
-                        <input type="checkbox" id="C Wheat" name="C Wheat" class="hidden peer" disabled>
-                        <label for="C Wheat" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg  hover:bg-gray-200">
+                        <input type="checkbox" id="<%= star_div_list[i].code_name %>" name="<%= star_div_list[i].code_name %>" class="hidden peer"
+                        <% if (star_div_list[i].amount < 1 || mode == "select_reward") { %>
+                        disabled
+                        <% } else if (star_div_list[i].force_checked) { %>
+                        checked disabled
+                        <% } %>
+                        >
+
+                        <label for="<%= star_div_list[i].code_name %>" class="<%= star_div_list[i].style %> text-y">
                             <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> C Wheat </div>
-                                <div class="flex justify-center items-center drop-shadow-xl grayscale"><img src="/images/game_star/rice_star.png" width="75" class=""></div>
-                                <div class="text-sm font-medium flex justify-center items-center"> x0 </div>
+                                <div class="text-lg font-semibold flex justify-center items-center"> <%= star_div_list[i].display.name %> </div>
+                                <div class="flex justify-center items-center drop-shadow-xl <% if (star_div_list[i].amount < 1) { %>grayscale<% } %>"><img src="<%= star_div_list[i].display.image %>" width="75" class=""></div>
+
+                                <div class="text-md font-medium flex justify-center items-center
+                                <% if (star_div_list[i].amount == 0) { %> text-red <% } if (star_div_list[i].amount == 1) { %> text-yellow-600 <% } %>">
+                                    x<%= star_div_list[i].amount %>
+                                </div>
+
                             </div>
                         </label>
                     </div>
-                    <div>
-                        <input type="checkbox" id="boba" name="boba" class="hidden peer">
-                        <label for="boba" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30 ">
-                            <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> Boba </div>
-                                <div class="flex justify-center items-center drop-shadow-xl"><img src="/images/game_star/rice_star.png" width="75" class=""></div>
-                                <div class="text-sm font-medium flex justify-center items-center"> x6 </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="baba" name="baba" class="hidden peer">
-                        <label for="baba" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30 ">
-                            <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> Baba </div>
-                                <div class="flex justify-center items-center drop-shadow-xl"><img src="/images/game_star/rice_star.png" width="75" class=""></div>
-                                <div class="text-sm font-medium flex justify-center items-center"> x3 </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="baba" name="baba" class="hidden peer">
-                        <label for="baba" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30 ">
-                            <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> Baba </div>
-                                <div class="flex justify-center items-center drop-shadow-xl"><img src="/images/game_star/rice_star.png" width="75" class=""></div>
-                                <div class="text-sm font-medium flex justify-center items-center"> x3 </div>
-                            </div>
-                        </label>
-                    </div>
+                    <% } %>
                 </div>
 
                 <div class="lg:px-16 pt-10 grid grid-cols-2 gap-6 sm:grid-cols-3">
-
+                    <% for (let j = 4; j < star_div_list.length; j++) { %>
                     <div>
-                        <input type="checkbox" id="baba" name="baba" class="hidden peer">
-                        <label for="baba" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30 ">
+                        <input type="checkbox" id="<%= star_div_list[j].code_name %>" name="<%= star_div_list[j].code_name %>" class="hidden peer"
+                        <% if (star_div_list[j].amount < 1 || mode == "select_reward") { %>
+                        disabled
+                        <% } else if (star_div_list[j].force_checked) { %>
+                        checked disabled
+                        <% } %>
+                        >
+                        <label for="<%= star_div_list[j].code_name %>" class="<%= star_div_list[j].style %>">
                             <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> Baba </div>
-                                <div class="flex justify-center items-center drop-shadow-xl"><img src="/images/game_star/rice_star.png" width="75" class=""></div>
-                                <div class="text-sm font-medium flex justify-center items-center"> x3 </div>
+                                <div class="text-lg font-semibold flex justify-center items-center"> <%= star_div_list[j].display.name %> </div>
+                                <div class="flex justify-center items-center drop-shadow-xl <% if (star_div_list[j].amount < 1) { %>grayscale<% } %>"><img src="<%= star_div_list[j].display.image %>" width="75" class=""></div>
+                                <div class="text-md font-medium flex justify-center items-center
+                                <% if (star_div_list[j].amount == 0) { %> text-red <% } if (star_div_list[j].amount == 1) { %> text-yellow-600 <% } %>">
+                                    x<%= star_div_list[j].amount %>
+                                </div>
                             </div>
                         </label>
                     </div>
-                    <div>
-                        <input type="checkbox" id="baba" name="baba" class="hidden peer">
-                        <label for="baba" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30 ">
-                            <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> Baba </div>
-                                <div class="flex justify-center items-center drop-shadow-xl"><img src="/images/game_star/rice_star.png" width="75" class=""></div>
-                                <div class="text-sm font-medium flex justify-center items-center"> x3 </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="baba" name="baba" class="hidden peer">
-                        <label for="baba" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30 ">
-                            <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> Baba </div>
-                                <div class="flex justify-center items-center drop-shadow-xl"><img src="/images/game_star/rice_star.png" width="75" class=""></div>
-                                <div class="text-sm font-medium flex justify-center items-center"> x3 </div>
-                            </div>
-                        </label>
-                    </div>
+                    <% } %>
                 </div>
 
-                <div class="flex items-center justify-center pt-8">
-                    <button type="submit" class=" text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-                        ใช้ดาว
+                <div class="flex items-center justify-center p-4 text-red font-semibold">
+                    <p class="text-center">
+                    โปรดระวัง: ดาว HoldYourBasket และ ดาว TheDrink สามารถได้รับเพียง 1 ครั้งเท่านั้น <br> (อยู่ระหว่างการปรับ แก้ใขให้ดาว HoldYourBasket ได้รับหลายครั้งได้)
+                    </p>
+                </div>
+
+                <div class="gap-2 flex items-center justify-center <% if (mode == 'select_reward') { %> hidden <% } %>">
+                    <button id="selectStar" type="button" class=" text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                        ⬇ เลือกของรางวัล ⬇
+                    </button>
+                    <button hidden id="selectStarConFirm" type="submit" class=" p-1 text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                        ✔ ยืนยัน
+                    </button>
+                    <button hidden id="selectStarCancel" type="button" class=" p-1 text-xl bg-rose-600 hover:bg-rose-400 hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                        ❌ ยกเลิก
                     </button>
                 </div>
-
 
             </form>
         </section>
 
-        <section class="pt-10">
-            <h3 class="mb-5 text-lg font-semibold text-red flex items-center justify-center"> กรุณาเลือกของรางวัลที่ต้องการ </h3>
-            <form>
-                <ul>
-                    <li>
-                        <input type="checkbox" id="reward" name="baba" class="hidden peer">
-                        <label for="reward" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg
-                                                    cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg hover:bg-secondary hover:bg-opacity-30 ">
+        <section class="pt-1" <% if (mode == "select_star") { %> hidden <% } %>>
+            <div class="flex items-center justify-center p-4">
+                <a id="cancelSelected">
+                    <button type="button" class=" text-xl bg-rose-600 hover:bg-rose-400 hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                        ยกเลิกการเลือก
+                    </button>
+                </a>
+            </div>
+            <h3 class="pt-10 mb-5 text-lg font-semibold text-blue underline flex items-center justify-center"> กรุณาเลือกของรางวัลที่ต้องการ </h3>
+        <form id="selectRewardForm" method="post">
+            <ul>
+                <% for (let i in trade_able_reward_list) { %>
+                <li>
+                    <div class="p-1">
+                        <input type="checkbox" id="<%= trade_able_reward_list[i].code_name %>" name="<%= trade_able_reward_list[i].code_name %>" class="hidden peer" <% if (trade_able_reward_list[i].stock_left < 1) { %>disabled<% } %>>
+                        <label for="<%= trade_able_reward_list[i].code_name %>" class="flex flex-col w-full p-5 text-gray-900 bg-gray-50 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary peer-checked:drop-shadow-lg <% if (trade_able_reward_list[i].stock_left > 0) { %> hover:bg-secondary hover:bg-opacity-30<% }%>">
                             <div class="items-center justify-center">
-                                <div class="text-lg font-semibold flex justify-center items-center"> บัตรกำนัล KFC </div>
+                                <div class="text-lg font-semibold flex justify-center items-center"> <%= trade_able_reward_list[i].reward %> </div>
+                            </div>
+                            <div class="items-center justify-center">
+                                <% if (trade_able_reward_list[i].stock_left < 1) { %>
+                                <div class="text-md text-red flex justify-center items-center"> ของหมด </div>
+                                <% } else { %>
+                                <% if (trade_able_reward_list[i].stock_left < 2) { %>
+                                <div class="text-md text-orange-500 flex justify-center items-center"> คงเหลือ <%= trade_able_reward_list[i].stock_left %> ชิ้น </div>
+                                <% } else { %>
+                                <div class="text-md flex justify-center items-center"> คงเหลือ <%= trade_able_reward_list[i].stock_left %> ชิ้น </div>
+                                <% } %>
+                                <% } %>
                             </div>
                         </label>
-                    </li>
-                </ul>
+                    </div>
+                </li>
+                <% } %>
+            </ul>
+
+            <label for="passingSelectedStar" hidden><input type="text" id="passingSelectedStar" name="passingSelectedStar" hidden></label>
+
                 <div class="flex items-center justify-center pt-8">
                     <button type="submit" class=" text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-                        แลก
+                        แลกคูปอง
                     </button>
                 </div>
             </form>
         </section>
-
     </div>
 
 </div>
@@ -164,6 +165,79 @@
 </section>
 
 <script>
+
+    const tradeAbleRewardList = [<%= reward_check_box_list %>];
+
+    // add listener to all checkbox, if any checkbox is checked, other checkbox will be unchecked
+    for (let i in tradeAbleRewardList){
+        tradeAbleRewardList[i].addEventListener('change', function() {
+            if (this.checked) {
+                for (let j in tradeAbleRewardList){
+                    if (tradeAbleRewardList[j] != this){
+                        tradeAbleRewardList[j].checked = false;
+                    }
+                }
+            }
+        });
+    }
+
+    const starCheckBoxList = [<%= star_check_box_list %>];
+
+    selectStar.addEventListener('click', function() {
+
+        // check if any star checkbox is checked
+        let isAnyStarChecked = false;
+        for (let i in starCheckBoxList){
+            console.log(starCheckBoxList[i])
+            if (starCheckBoxList[i].checked){
+                isAnyStarChecked = true;
+                break;
+            }
+        }
+        if (!isAnyStarChecked){
+            window.alert("โปรดเลือกดาวที่ต้องการใช้ อย่างน้อย 1 ดาว\nหากคุณยังไม่มี สามารถได้รับดาวได้จากการเล่นเกมในซุ้มต่างๆ");
+            return;
+        }
+
+        selectStar.hidden = true;
+        selectStarConFirm.hidden = false;
+        selectStarCancel.hidden = false;
+    });
+
+    selectStarCancel.addEventListener('click', function() {
+        // reload the page
+        window.location.reload();
+    });
+
+    selected_star = [<%= selected_star %>];
+    for (let i in selected_star){
+        passingSelectedStar.value += selected_star[i].id + ",";
+        selected_star[i].checked = true;
+    }
+
+
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Create a URL object from the current URL
+    const url = new URL(currentUrl);
+
+    // Get the search part of the URL, including the '?'
+    const searchParams = url.search;
+
+    // Create a URLSearchParams object from the search part
+    const urlSearchParams = new URLSearchParams(searchParams);
+
+    // Get the value of the 'access_token' parameter
+    const accessToken = urlSearchParams.get('access_token');
+
+    // Now you can use the 'accessToken' variable wherever you need it
+    console.log(currentUrl, accessToken);
+
+    rewardPage.href = "/reward?access_token=" + accessToken;
+    cancelSelected.href = "/trade_coupon?access_token=" + accessToken;
+    selectStarForm.action = "/trade_coupon?access_token=" + accessToken;
+    selectRewardForm.action = "/my_coupon?access_token=" + accessToken;
 
 </script>
 

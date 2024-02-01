@@ -1,8 +1,8 @@
 const Coupons = require('../entities/Coupons');
 
+const Reward = require('../models/Reward');
 const User = require('../models/User');
 const Star = require('../models/Star');
-const Reward = require('../models/Reward');
 
 // Function to get all coupons
 async function getAllCoupons() {
@@ -51,7 +51,7 @@ async function getCouponByCouponUuid(coupon_uuid) {
 // Function to get sum of coupons by user_id
 async function getSumOfCouponsByUserId(user_id) {
     try {
-        const sum_of_coupons = await Coupons.sum('coupon', {
+        const sum_of_coupons = await Coupons.count({
             where: {
                 user_id: user_id
             }
@@ -211,6 +211,17 @@ async function couponUp(req) {
 // Function to create a coupon
 async function createCoupon(req) {
     try {
+        const Reward = require('../models/Reward');
+
+        // Check reward is valid
+        if (!Reward.getRewardList().includes(req.reward)) {
+            return {
+                is_success: false,
+                message: "Reward not found with the given reward -> " + req.reward + " from the list of rewards -> " + Reward.getRewardList(),
+                content: null
+            }
+        }
+
         const coupon = await Coupons.create({
             user_id: req.user_id,
             reward: req.reward,
@@ -258,6 +269,22 @@ async function majorCouponUp(user_id) {
     }
 }
 
+// Function to get sum of coupons by reward
+async function getSumOfCouponsByReward(reward) {
+    try {
+        const sum_of_coupons = await Coupons.sum('coupon', {
+            where: {
+                reward: reward
+            }
+        });
+        return sum_of_coupons;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+
 module.exports = {
     getAllCoupons,
     getCouponsByUserId,
@@ -266,6 +293,8 @@ module.exports = {
     createCouponRequest,
     couponUp,
     createCoupon, // For TESTING ONLY! Remove this line in production
-    majorCouponUp
+    majorCouponUp,
+    getSumOfCouponsByReward,
+    getCouponsByReward
 
 }

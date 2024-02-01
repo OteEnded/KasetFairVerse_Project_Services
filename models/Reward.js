@@ -1,4 +1,4 @@
-const putil = require('../utilities/projectutility');
+
 
 const reward_config = {
     EstCola_Oishi_drinks: {
@@ -184,7 +184,6 @@ const sponsors_list = {
     }
 };
 
-
 function getRewardConfig() {
     return reward_config;
 }
@@ -217,10 +216,43 @@ function getSponsorsList() {
     return sponsors_list;
 }
 
+// reward_left = {
+//     EstCola_Oishi_drinks: 100,
+//     DoiKham_gift_set: 80,
+//     SevenEleven_mug: 0,
+//     SevenEleven_folder: 40,
+//     InfinitM_keychain_2: 6,
+//     KFC_gift_voucher: 10,
+//     InfinitM_random_plushy: 9,
+//     NK_dog_food: 1,
+//     NK_cat_food: 12,
+//     Oliver_dog_food: 14,
+//     Oliver_cat_food: 32,
+//     PaiHangOut_cat_food: 12,
+//     PZCussons_gift_set: 16,
+//     Major_ticket_2: 5
+// };
+async function getRewardLeft() {
+    const { getSumOfCouponsByUserId } = require('../models/Coupon');
+    const reward_left = {};
+    for (let i in reward_config) {
+        let coupon_that_claim_this_reward = await getSumOfCouponsByUserId(i)
+        reward_left[i] = reward_config[i].stock - coupon_that_claim_this_reward;
+    }
+    return reward_left;
+}
+
+async function getRewardLeftByReward(reward) {
+    const rewardLeft = await getRewardLeft();
+    return rewardLeft[reward];
+}
+
 module.exports = {
     getRewardConfig,
     getRewardList,
     getRewardStocks,
     getStarsUseToTradeCoupon,
-    getSponsorsList
+    getSponsorsList,
+    getRewardLeft,
+    getRewardLeftByReward
 }

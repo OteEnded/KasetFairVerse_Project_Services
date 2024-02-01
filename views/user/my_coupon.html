@@ -17,7 +17,7 @@
 
 <nav class="bg-transparent">
     <div class="max-w-screen-xl flex-wrap fixed top-0 z-10 flex w-full items-center justify-between p-4">
-        <a href="/reward" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a id="rewardPage" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="images/LOGO_KasetFairVerse.png" class="h-8" />
             <span class="self-center font-semibold text-blue whitespace-nowrap dark:text-white"> KASETFAIR VERSE </span>
         </a>
@@ -115,6 +115,28 @@
     </div>
 </div>
 
+<script>
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Create a URL object from the current URL
+    const url = new URL(currentUrl);
+
+    // Get the search part of the URL, including the '?'
+    const searchParams = url.search;
+
+    // Create a URLSearchParams object from the search part
+    const urlSearchParams = new URLSearchParams(searchParams);
+
+    // Get the value of the 'access_token' parameter
+    const accessToken = urlSearchParams.get('access_token');
+
+    // Now you can use the 'accessToken' variable wherever you need it
+    console.log(currentUrl, accessToken);
+
+    rewardPage.href = "/reward?access_token=" + accessToken;
+
+</script>
 
 <!-- TW Elements JavaScript -->
 <script src="/tw-elements/dist/js/tw-elements.umd.min.js" type="text/javascript"></script>

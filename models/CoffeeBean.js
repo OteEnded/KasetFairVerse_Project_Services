@@ -154,7 +154,7 @@ async function findMyMeowStarUp(play_record) {
         if (normal_cat >= 100 || golden_cat >= 5) {
             let starUpReq = {
                 user_id: play_record.user_id,
-                source: Star.star_source_code.CoffeeBean_FindMyMeow,
+                source: Star.star_config.CoffeeBean_FindMyMeow.code_name,
                 message: "Game star from CoffeeBean_FindMyMeow at " + play_record
             }
             await Star.starUp(starUpReq);

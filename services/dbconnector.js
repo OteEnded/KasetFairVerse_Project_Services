@@ -16,11 +16,11 @@ function validateConfig(configData){
         return false
     }
 
-    next_condition = (putil.listLen(configData['database_in_use']) !== 3)
+    next_condition = (putil.objLen(configData['database_in_use']) !== 3)
     if (next_condition){
         console.log(
             "dbconnector[validateConfig]: ABORT, database_in_use in config file is not in a right sql config format.\n" +
-            "(require length 3, given " + putil.listLen(database_in_use) + ")."
+            "(require length 3, given " + putil.objLen(database_in_use) + ")."
         )
         return false
     }
