@@ -217,7 +217,7 @@ exports.my_coupon = async (req, res) => {
 }
 
 exports.login = async (req, res) => {
-
+    res.render('user/login');
 }
 
 exports.login_submit = async (req, res) => {
