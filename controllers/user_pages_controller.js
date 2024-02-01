@@ -176,11 +176,12 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
     const submittedForm = req.body;
 
     console.log("Here", submittedForm);
-    console.log("Here2", Object.keys(submittedForm));
 
     const star_selected = submittedForm["passingSelectedStar"].split(",");
     star_selected.pop();
     console.log("Here3", star_selected);
+
+    const reward_selected = Object.keys(submittedForm)[0];
 
     let access_token = req.query.access_token;
     console.log("access_token", access_token)
@@ -189,9 +190,15 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
     }
     const user = await User.getUserFromBBTToken(access_token);
 
-    const user_coupons_list = await getUsersCoupons(user.user_id);
+    const newCoupon = await Coupon.createCoupon({
+        user_id: user.user_id,
+        reward: reward_selected
+    });
 
-    res.render('user/my_coupon', { first_popup: {}, user_coupons_list });
+    const user_coupons_list = await getUsersCoupons(user.user_id);
+    const first_popup = newCoupon.coupon_uuid;
+
+    res.render('user/my_coupon', { first_popup, user_coupons_list });
 }
 
 exports.my_coupon = async (req, res) => {
@@ -204,8 +211,9 @@ exports.my_coupon = async (req, res) => {
     const user = await User.getUserFromBBTToken(access_token);
 
     const user_coupons_list = await getUsersCoupons(user.user_id);
+    const first_popup = "";
 
-    res.render('user/my_coupon', { first_popup: {}, user_coupons_list });
+    res.render('user/my_coupon', { first_popup, user_coupons_list });
 }
 
 exports.login = async (req, res) => {
