@@ -8,6 +8,7 @@ const BigBangTheory_User_Profiles = require('../entities/BigBangTheory_User_Prof
 const BigBangTheory_Token_Buffers = require('../entities/BigBangTheory_Token_Buffers');
 const Stars = require('../entities/Stars');
 const Coupons = require('../entities/Coupons');
+const Reward_Claim_Logs = require('../entities/Reward_Claim_Logs');
 
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
 const CoffeeBean_FindMyMeow_PlayRecords = require('../entities/CoffeeBean_FindMyMeow_PlayRecords');
@@ -56,6 +57,10 @@ function defineRelationships() {
 
     Users.hasMany(Coupons, { foreignKey: 'user_id' });
     Coupons.belongsTo(Users, { foreignKey: 'user_id' });
+
+    Reward_Claim_Logs.belongsTo(Coupons, { foreignKey: 'coupon_uuid' });
+    Coupons.hasMany(Reward_Claim_Logs, { foreignKey: 'coupon_uuid' });
+
 }
 
 module.exports.defineRelationships = defineRelationships;

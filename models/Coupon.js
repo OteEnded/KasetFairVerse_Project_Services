@@ -285,6 +285,46 @@ async function getSumOfCouponsByReward(reward) {
     }
 }
 
+// Function to get all coupon from a user that didn't use yet
+async function getAllAvailableCouponByUserId(user_id){
+    try {
+        const all_coupon = await getCouponsByUserId(user_id);
+        const available_coupon_list = [];
+
+        const all = await Reward_Claim_Logs.findAll();
+        let column_uuid = [];
+
+        for (let i in all){
+            column_uuid.push(all[i].dataValues.coupon_uuid)
+        }
+
+        for (let i in all_coupon){
+            if (column_uuid.includes(all_coupon[i].coupon_uuid)){
+                available_coupon_list.push(all_coupon[i]);
+            }
+        }
+        return available_coupon_list;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+// Function to check if coupon is available
+async function isCouponAvailable(coupon_uuid){
+    try {
+        const find_reward_claim_logs = await Reward_Claim_Logs.findOne({
+            where: {
+                coupon_uuid: coupon_uuid
+            }
+        });
+        return find_reward_claim_logs == null;
+
+    }
+    catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
     getAllCoupons,
@@ -296,6 +336,8 @@ module.exports = {
     createCoupon, // For TESTING ONLY! Remove this line in production
     majorCouponUp,
     getSumOfCouponsByReward,
-    getCouponsByReward
+    getCouponsByReward,
+    getAllAvailableCouponByUserId,
+    isCouponAvailable,
 
 }

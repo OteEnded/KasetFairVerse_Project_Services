@@ -37,10 +37,10 @@
               <div class="flex flex-col">
                 <section class="flex flex-col text-gray-900">
                   <div class="text-lg font-semibold"> คูปองแลกของรางวัล </div>
-                  <div> เจ้าของคูปอง :</div>
-                  <div> ของรางวัล : </div>
+                  <div> <u>เจ้าของคูปอง:</u> <br> <%= user.username %></div>
+                  <div> <u>ของรางวัล:</u> <br> <%= reward.display.name %> <%= reward.display.from %> </div>
                   <div class="font-semibold"> <br> รหัสคูปอง </div>
-                  <div>256428174820123</div>
+                  <div><%= coupon.coupon_uuid %></div>
                   <!-- coupon shape -->
                   <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
                   <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
@@ -55,7 +55,11 @@
     </div>
 <!--ปุ่ม-->
     <div class="flex flex-col items-center justify-center pt-5 ">
-      <form action="/claim_reward" method="get">
+      <form action="/coupon_validation" method="post">
+
+        <label for="coupon_uuid"><input type="text" value="" name="coupon_uuid" id="coupon_uuid" hidden></label>
+        <label for="staff"><input type="text" value="" name="staff" id="staff" hidden></label>
+
         <button id="accept" type="submit"
                 class="flex items-center justify-center text-sm bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
           มอบรางวัลแล้ว

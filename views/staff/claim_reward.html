@@ -115,18 +115,13 @@
 
     function success(result) {
 
-        // document.getElementById('result').innerHTML =
-        // `
-        // <h2>Success!</h2>
-        // <p><a href="${result}">${result}</a></p>
-        // `;
-
-        // Prints result as a link inside result element
-        scanner.clear();
         // Clears scanning instance
+        scanner.clear();
 
-        document.getElementById('reader').remove();
         // Removes reader element from DOM since no longer needed
+        document.getElementById('reader').remove();
+
+        window.location.href = "/coupon_validation?qr_result=" + result;
 
     }
 
