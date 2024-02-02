@@ -228,4 +228,13 @@ exports.login = async (req, res) => {
 
 exports.login_submit = async (req, res) => {
 
+    const username = req.body.username;
+    const password = req.body.password;
+
+    console.log("user_page_controller[login_submit]: there is a login req with username -> " + username + " and password -> " + password);
+
+    const access_token = await User.userLogin(username, password);
+
+    res.redirect('/reward?access_token=' + access_token);
+
 }
