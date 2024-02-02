@@ -7,7 +7,7 @@ async function requestToBBT(access_token, query, variables = {}) {
     try {
         const options = {
             'method': 'POST',
-            'url': 'https://apisix-gateway-beta.bigbangtheory.work/graphql/portal',
+            'url': 'https://apisix-gateway.bigbangtheory.io/graphql/portal',
             'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + access_token
