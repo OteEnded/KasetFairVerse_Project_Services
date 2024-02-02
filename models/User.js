@@ -270,7 +270,7 @@ async function getUserFromBBTToken(access_token) {
             }
         });
 
-        let target_user;
+        let target_user = null;
 
         if (data_from_buffer != null) {
             target_user = await users.findOne({

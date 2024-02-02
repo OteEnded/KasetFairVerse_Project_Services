@@ -104,8 +104,16 @@ exports.reward = async (req, res) => {
 
     const reward_div_list = getRewardDiv();
     const sponsor_div_list = getSponsorDiv();
+    let logged_in;
 
-    res.render('user/reward', { reward_div_list, sponsor_div_list })
+    let access_token = req.query.access_token;
+    console.log("access_token", access_token)
+
+    const user = await User.getUserFromBBTToken(access_token);
+    console.log("user", user)
+    logged_in = !(user.dataValues.user_id === 2);
+
+    res.render('user/reward', { reward_div_list, sponsor_div_list, logged_in, username: user.username });
 }
 
 exports.trade_coupon = async (req, res) => {
@@ -116,6 +124,9 @@ exports.trade_coupon = async (req, res) => {
         access_token = "1";
     }
     const user = await User.getUserFromBBTToken(access_token);
+    if (user.user_id === 2){
+        res.redirect('/login');
+    }
 
     const star_div_list = await getUserStars(user.user_id);
     const star_check_box_list = [];
@@ -128,7 +139,7 @@ exports.trade_coupon = async (req, res) => {
 
     const mode = "select_star";
 
-    res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: [] })
+    res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: [], reward_div_list: getRewardDiv() })
 }
 
 exports.trade_coupon_submit_select_star = async (req, res) => {
@@ -168,7 +179,7 @@ exports.trade_coupon_submit_select_star = async (req, res) => {
 
     const mode = "select_reward";
 
-    res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: Object.keys(submittedForm) });
+    res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: Object.keys(submittedForm), reward_div_list: getRewardDiv() });
 }
 
 exports.trade_coupon_submit_select_reward = async (req, res) => {
@@ -215,6 +226,10 @@ exports.my_coupon = async (req, res) => {
         access_token = "1";
     }
     const user = await User.getUserFromBBTToken(access_token);
+    console.log("user", user);
+    if (user.user_id === 2){
+        res.redirect('/login');
+    }
 
     const user_coupons_list = await getUsersCoupons(user.user_id);
     const first_popup = "";
