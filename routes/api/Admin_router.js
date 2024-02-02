@@ -8,6 +8,7 @@ const qrCode = require('qrcode');
 const star = require('../../models/Star');
 const coupon = require('../../models/Coupon');
 const coupons = require('../../entities/Coupons');
+const User = require('../../models/User');
 
 // GET /api/Admin/migrate
 router.post('/migrate', apiMiddleware.authenticate, async (req, res) => {
@@ -169,6 +170,19 @@ router.post('/get_qr_code', apiMiddleware.authenticate, async (req, res) => {
         else {
             res.send('No QR code found in the database');
         }
+    } catch (error) {
+        console.error('Error generating QR code:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/ln', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const result = await User.userLogin(req.body.username, req.body.password);
+
+        console.log(result);
+
+        res.send(result);
     } catch (error) {
         console.error('Error generating QR code:', error);
         res.status(500).send('Internal Server Error');

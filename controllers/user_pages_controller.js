@@ -190,10 +190,16 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
     }
     const user = await User.getUserFromBBTToken(access_token);
 
-    const newCoupon = await Coupon.createCoupon({
+    const newCoupon = await Coupon.couponUp({
         user_id: user.user_id,
-        reward: reward_selected
+        reward: reward_selected,
+        stars: star_selected
     });
+
+    // const newCoupon = await Coupon.createCoupon({
+    //     user_id: user.user_id,
+    //     reward: reward_selected
+    // });
 
     const user_coupons_list = await getUsersCoupons(user.user_id);
     const first_popup = newCoupon.coupon_uuid;

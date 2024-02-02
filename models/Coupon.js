@@ -3,7 +3,6 @@ const Reward_Claim_Logs = require('../entities/Reward_Claim_Logs');
 
 const Reward = require('../models/Reward');
 const User = require('../models/User');
-const Star = require('../models/Star');
 
 // Function to get all coupons
 async function getAllCoupons() {
@@ -88,6 +87,8 @@ async function getCouponsByReward(reward) {
 async function createCouponRequest(req) {
     try {
 
+        const Star = require('../models/Star');
+
         // Check if request is valid
         if(req.user_id == null || req.reward == null || req.stars == null || req.stars.length === 0) {
             return {
@@ -116,20 +117,20 @@ async function createCouponRequest(req) {
             }
         }
 
-        // Check if the reward is still in stock
-        const reward_stocks = Reward.getRewardStocks();
-        const coupon_that_claim_this_reward = await Coupons.sum('coupon', {
-            where: {
-                reward: req.reward
-            }
-        });
-        if (coupon_that_claim_this_reward >= reward_stocks[req.reward]) {
-            return {
-                is_success: false,
-                message: "Reward is out of stock",
-                content: null
-            }
-        }
+        // // Check if the reward is still in stock
+        // const reward_stocks = Reward.getRewardStocks();
+        // const coupon_that_claim_this_reward = await Coupons.sum('coupon', {
+        //     where: {
+        //         reward: req.reward
+        //     }
+        // });
+        // if (coupon_that_claim_this_reward >= reward_stocks[req.reward]) {
+        //     return {
+        //         is_success: false,
+        //         message: "Reward is out of stock",
+        //         content: null
+        //     }
+        // }
 
         // Check if the user really has the stars
         const star_inv = await Star.getStarInventoryByUserId(req.user_id);
@@ -212,6 +213,7 @@ async function couponUp(req) {
 // Function to create a coupon
 async function createCoupon(req) {
     try {
+        const Star = require('../models/Star');
         const Reward = require('../models/Reward');
 
         // Check reward is valid

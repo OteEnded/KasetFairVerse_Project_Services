@@ -144,8 +144,8 @@ async function requestUserLoginFromBigBangTheory(username, password) {
         `
             mutation {
             login(loginInput:{
-                username: ${username},
-                    password: ${password}
+                username: "${username}",
+                password: "${password}"
             }) {
                 access_token
                 user{
@@ -451,5 +451,10 @@ module.exports = {
     getUserFromBBTToken,
     getAllUserTokenBuffer,
     getUserTokenBufferByBBTToken,
-    getUserTokenBufferByUserId
+    getUserTokenBufferByUserId,
+    requestUserLoginFromBigBangTheory,
+    requestUserFromBigBangTheory,
+    userLogin,
+    getDefaultUser
+
 };
