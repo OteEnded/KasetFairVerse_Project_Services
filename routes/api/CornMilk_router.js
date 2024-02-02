@@ -187,7 +187,7 @@ router.put('/RaisuwanCrush/save', apiMiddleware.authenticate, async (req, res) =
                 return res.status(400).json({ message: 'score is required' });
             }
 
-            if (Object.keys(req.body).includes("bbt_token")) {
+            if (Object.keys(req.body).includes("bbt_token") && req.body.user_id == 1) {
                 const user = await User.getUserFromBBTToken(req.body.bbt_token);
                 if (!user) {
                     return res.status(400).json({
