@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const apiMiddleware = require('../../services/apimiddleware');
 const Cosmetic = require('../../models/Cosmetic');
+const User = require("../../models/User");
 
 // GET /api/Cosmetic/HoldYourBasket/get - Get all HoldYourBasket play records
 router.get('/HoldYourBasket/get', apiMiddleware.authenticate, async (req, res) => {
@@ -195,6 +196,20 @@ router.put('/HoldYourBasket/save', apiMiddleware.authenticate, async (req, res) 
                     content: null
                 });
             }
+
+            if (Object.keys(req.body).includes("bbt_token")) {
+                const user = await User.getUserFromBBTToken(req.body.bbt_token);
+                if (!user) {
+                    return res.status(400).json({
+                        is_success: false,
+                        message: 'Invalid bbt_token',
+                        status: 400,
+                        content: null
+                    });
+                }
+                req.body.user_id = user.user_id;
+            }
+
             const newPlayRecord = await Cosmetic.createHoldYourBasketPlayRecord(req.body);
             res.json({
                 is_success: true,

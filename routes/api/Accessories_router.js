@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const apiMiddleware = require('../../services/apimiddleware');
 const Accessories = require('../../models/Accessories');
+const User = require("../../models/User");
 
 // GET /api/Accessories/ColorMatching/get - Get all ColorMatching play records
 router.get('/ColorMatching/get', apiMiddleware.authenticate, async (req, res) => {
@@ -198,6 +199,20 @@ router.put('/ColorMatching/save', apiMiddleware.authenticate, async (req, res) =
                     content: null
                 });
             }
+
+            if (Object.keys(req.body).includes("bbt_token")) {
+                const user = await User.getUserFromBBTToken(req.body.bbt_token);
+                if (!user) {
+                    return res.status(400).json({
+                        is_success: false,
+                        message: 'Invalid bbt_token',
+                        status: 400,
+                        content: null
+                    });
+                }
+                req.body.user_id = user.user_id;
+            }
+
             const newPlayRecord = await Accessories.createColorMatchingPlayRecord(req.body);
             res.json({
                 is_success: true,

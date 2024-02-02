@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const apiMiddleware = require('../../services/apimiddleware');
 const Hemp = require('../../models/Hemp');
+const User = require('../../models/User');
 
 // GET /api/Hemp/TheDrink/get - Get all Hemp TheDrink play records
 router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {
@@ -161,6 +162,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
                     content: null
                 });
             }
+
             if (!Object.keys(req.body).includes("ending")) {
                 return res.status(400).json({
                     is_success: false,
@@ -169,6 +171,20 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
                     content: null
                 });
             }
+
+            if (Object.keys(req.body).includes("bbt_token")) {
+                const user = await User.getUserFromBBTToken(req.body.bbt_token);
+                if (!user) {
+                    return res.status(400).json({
+                        is_success: false,
+                        message: 'Invalid bbt_token',
+                        status: 400,
+                        content: null
+                    });
+                }
+                req.body.user_id = user.user_id;
+            }
+
             const newPlayRecord = await Hemp.createTheDrinkPlayRecord(req.body);
             res.json({
                 is_success: true,

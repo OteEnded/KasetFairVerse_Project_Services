@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const KubKaoKabKang = require('../../models/KubKaoKabKang');
 const apiMiddleware = require('../../services/apimiddleware');
+const User = require("../../models/User");
 
 // GET /api/KubKaoKabKang/PasteScrumble/get - Get all PasteScrumble play records
 router.get('/PasteScrumble/get', apiMiddleware.authenticate, async (req, res) => {
@@ -196,6 +197,20 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
                     content: null
                 });
             }
+
+            if (Object.keys(req.body).includes("bbt_token")) {
+                const user = await User.getUserFromBBTToken(req.body.bbt_token);
+                if (!user) {
+                    return res.status(400).json({
+                        is_success: false,
+                        message: 'Invalid bbt_token',
+                        status: 400,
+                        content: null
+                    });
+                }
+                req.body.user_id = user.user_id;
+            }
+
             const newPlayRecord = await KubKaoKabKang.createPasteScrumblePlayRecord(req.body);
             res.json({
                 is_success: true,
@@ -454,6 +469,20 @@ router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
                     content: null
                 });
             }
+
+            if (Object.keys(req.body).includes("bbt_token")) {
+                const user = await User.getUserFromBBTToken(req.body.bbt_token);
+                if (!user) {
+                    return res.status(400).json({
+                        is_success: false,
+                        message: 'Invalid bbt_token',
+                        status: 400,
+                        content: null
+                    });
+                }
+                req.body.user_id = user.user_id;
+            }
+
             const newPlayRecord = await KubKaoKabKang.createCWheatPlayRecord(req.body);
             res.json({
                 is_success: true,

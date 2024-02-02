@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const apiMiddleware = require('../../services/apimiddleware');
 const CoffeeBean = require('../../models/CoffeeBean');
+const User = require("../../models/User");
 
 // GET /api/CoffeeBean/FindMyMeow/get - Get all FindMyMeow play records
 router.get('/FindMyMeow/get', apiMiddleware.authenticate, async (req, res) => {
@@ -90,6 +91,20 @@ router.put('/FindMyMeow/save', apiMiddleware.authenticate, async (req, res) => {
             // if (!Object.keys(req.body).includes("golden_cat")) {
             //     return res.status(400).json({ message: 'golden_cat is required' });
             // }
+
+            if (Object.keys(req.body).includes("bbt_token")) {
+                const user = await User.getUserFromBBTToken(req.body.bbt_token);
+                if (!user) {
+                    return res.status(400).json({
+                        is_success: false,
+                        message: 'Invalid bbt_token',
+                        status: 400,
+                        content: null
+                    });
+                }
+                req.body.user_id = user.user_id;
+            }
+
             const newPlayRecord = await CoffeeBean.createFindMyMeowPlayRecord(req.body);
             res.json({
                 is_success: true,

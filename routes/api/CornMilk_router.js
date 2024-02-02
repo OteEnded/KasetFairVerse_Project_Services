@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const apiMiddleware = require('../../services/apimiddleware');
 const CornMilk = require('../../models/CornMilk');
+const User = require("../../models/User");
 
 // GET /api/CornMilk/RaisuwanCrush/get - Get all RaisuwanCrush play records
 router.get('/RaisuwanCrush/get', apiMiddleware.authenticate, async (req, res) => {
@@ -185,6 +186,20 @@ router.put('/RaisuwanCrush/save', apiMiddleware.authenticate, async (req, res) =
             if (!Object.keys(req.body).includes("score")) {
                 return res.status(400).json({ message: 'score is required' });
             }
+
+            if (Object.keys(req.body).includes("bbt_token")) {
+                const user = await User.getUserFromBBTToken(req.body.bbt_token);
+                if (!user) {
+                    return res.status(400).json({
+                        is_success: false,
+                        message: 'Invalid bbt_token',
+                        status: 400,
+                        content: null
+                    });
+                }
+                req.body.user_id = user.user_id;
+            }
+
             const newPlayRecord = await CornMilk.createRaisuwanCrushPlayRecord(req.body);
             res.json({
                 is_success: true,
