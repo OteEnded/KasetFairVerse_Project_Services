@@ -239,5 +239,4 @@ exports.login_submit = async (req, res) => {
     }
 
     res.redirect('/reward?access_token=' + access_token);
-
 }

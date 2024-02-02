@@ -98,6 +98,11 @@ function authenticate(req, res, next) {
 
 async function logRequest(req, res, next) {
     // Logging logic here
+    if (req.originalUrl.startsWith("/login")) {
+        next();
+        return;
+    }
+
 
     // check if there is table RequestLogs in database
     let dbconnection = dbconnector.getConnection();
