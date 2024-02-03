@@ -98,11 +98,8 @@
                     <button id="selectStar" type="button" class=" text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
                         ⬇ เลือกของรางวัล ⬇
                     </button>
-                    <button hidden id="selectStarConFirm" type="submit" class=" p-1 text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-                        ✔ ยืนยัน
-                    </button>
-                    <button hidden id="selectStarCancel" type="button" class=" p-1 text-xl bg-rose-600 hover:bg-rose-400 hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-                        ❌ ยกเลิก
+                    <button hidden id="selectStarConFirm" type="submit" class=" p-1 text-xl bg-orange-300 text-white font-semibold py-2 px-4 rounded-3xl shadow cursor-wait">
+                        กำลังโหลดรายการของรางวัล...
                     </button>
                 </div>
 
@@ -147,9 +144,18 @@
 
             <label for="passingSelectedStar" hidden><input type="text" id="passingSelectedStar" name="passingSelectedStar" hidden></label>
 
-                <div class="flex items-center justify-center pt-8">
-                    <button type="submit" class=" text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                <div class="gap-2 flex items-center justify-center pt-8">
+                    <button id="selectReward" type="button" class=" text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
                         แลกคูปอง
+                    </button>
+                    <button hidden id="selectRewardConFirm" type="button" class=" p-1 text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                        ✔ ยืนยัน
+                    </button>
+                    <button hidden id="selectRewardCancel" type="button" class=" p-1 text-xl bg-rose-600 hover:bg-rose-400 hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                        ❌ ยกเลิก
+                    </button>
+                    <button hidden id="selectRewardSubmit" type="submit" class=" p-1 text-xl bg-orange-300 text-white font-semibold py-2 px-4 rounded-3xl shadow cursor-wait">
+                        กำลังแลกคูปอง...
                     </button>
                 </div>
             </form>
@@ -234,12 +240,53 @@
 
         selectStar.hidden = true;
         selectStarConFirm.hidden = false;
-        selectStarCancel.hidden = false;
+        selectStarConFirm.click();
     });
 
-    selectStarCancel.addEventListener('click', function() {
-        // reload the page
-        window.location.reload();
+    const rewardCheckBoxList = [<%= reward_check_box_list %>];
+
+    selectReward.addEventListener('click', function() {
+
+        // check if any reward checkbox is checked
+        let isAnyStarChecked = false;
+        for (let i in rewardCheckBoxList){
+            console.log(rewardCheckBoxList[i])
+            if (rewardCheckBoxList[i].checked){
+                isAnyStarChecked = true;
+                break;
+            }
+        }
+        if (!isAnyStarChecked){
+            window.alert("โปรดเลือกรางวัลที่ต้องการแลก!");
+            return;
+        }
+
+        selectReward.hidden = true;
+        selectRewardConFirm.hidden = false;
+        selectRewardCancel.hidden = false;
+    });
+
+    selectRewardConFirm.addEventListener('click', function() {
+
+        // check if any reward checkbox is checked
+        let isAnyStarChecked = false;
+        for (let i in rewardCheckBoxList){
+            console.log(rewardCheckBoxList[i])
+            if (rewardCheckBoxList[i].checked){
+                isAnyStarChecked = true;
+                break;
+            }
+        }
+        if (!isAnyStarChecked){
+            window.alert("โปรดเลือกรางวัลที่ต้องการแลก!");
+            return;
+        }
+
+        selectRewardConFirm.hidden = true;
+        selectRewardCancel.hidden = true;
+        selectRewardSubmit.hidden = false;
+        selectRewardSubmit.click();
+
     });
 
     selected_star = [<%= selected_star %>];
@@ -271,6 +318,12 @@
     cancelSelected.href = "/trade_coupon?access_token=" + accessToken;
     selectStarForm.action = "/trade_coupon?access_token=" + accessToken;
     selectRewardForm.action = "/my_coupon?access_token=" + accessToken;
+
+    selectRewardCancel.addEventListener('click', function() {
+        // reload the page
+        window.location.href = "/trade_coupon?access_token=" + accessToken;
+    });
+
 
 </script>
 
