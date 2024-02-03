@@ -325,8 +325,8 @@ exports.login = async (req, res) => {
 
 exports.login_submit = async (req, res) => {
 
-    const username = req.body.username;
-    const password = req.body.password;
+    const username = req.body.userword;
+    const password = req.body.passname;
 
     console.log("user_page_controller[login_submit]: there is a login req with username -> " + username + " and password -> " + password);
 
