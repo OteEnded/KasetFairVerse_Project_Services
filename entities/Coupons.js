@@ -22,7 +22,7 @@ const Coupons = connection.define('Coupons', {
     reward: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
 }, {
     hooks: {
         beforeCreate: async (coupon, options) => {

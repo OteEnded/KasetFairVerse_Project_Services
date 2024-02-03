@@ -1,5 +1,3 @@
-
-
 const reward_config = {
     EstCola_Oishi_drinks: {
         stars_use: 1,
@@ -233,10 +231,10 @@ function getSponsorsList() {
 //     Major_ticket_2: 5
 // };
 async function getRewardLeft() {
-    const { getSumOfCouponsByUserId } = require('../models/Coupon');
+    const { getSumOfCouponsByReward } = require("../models/Coupon");
     const reward_left = {};
     for (let i in reward_config) {
-        let coupon_that_claim_this_reward = await getSumOfCouponsByUserId(i)
+        let coupon_that_claim_this_reward = await getSumOfCouponsByReward(i)
         reward_left[i] = reward_config[i].stock - coupon_that_claim_this_reward;
     }
     return reward_left;

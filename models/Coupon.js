@@ -203,6 +203,7 @@ async function createCouponRequest(req) {
 // Function to create a coupon
 async function couponUp(req) {
     try {
+        console.log("Coupon[couponUp] -> req: ", req);
         return await createCouponRequest(req);
     }
     catch (error) {
@@ -275,22 +276,23 @@ async function majorCouponUp(user_id) {
 // Function to get sum of coupons by reward
 async function getSumOfCouponsByReward(reward) {
     try {
-        const sum_of_coupons = await Coupons.sum('coupon', {
+        const amount_of_coupons = await Coupons.count({
             where: {
                 reward: reward
             }
         });
-        return sum_of_coupons;
+        return amount_of_coupons;
     }
     catch (error) {
         throw error;
     }
 }
 
-// Function to get all coupon from a user that didn't use yet
+// Function to get all available coupon by user_id
 async function getAllAvailableCouponByUserId(user_id){
     try {
         const all_coupon = await getCouponsByUserId(user_id);
+        console.log("all_coupon: ", all_coupon);
         const available_coupon_list = [];
 
         const all = await Reward_Claim_Logs.findAll();
@@ -301,10 +303,11 @@ async function getAllAvailableCouponByUserId(user_id){
         }
 
         for (let i in all_coupon){
-            if (column_uuid.includes(all_coupon[i].coupon_uuid)){
+            if (!column_uuid.includes(all_coupon[i].coupon_uuid)){
                 available_coupon_list.push(all_coupon[i]);
             }
         }
+
         return available_coupon_list;
     }
     catch (error) {
@@ -328,6 +331,39 @@ async function isCouponAvailable(coupon_uuid){
     }
 }
 
+// Function to redeem a coupon
+async function redeemCoupon(coupon_uuid, staff){
+    try {
+        const coupon = await getCouponByCouponUuid(coupon_uuid);
+        if (!coupon) {
+            return {
+                is_success: false,
+                message: "Coupon not found with the given coupon_uuid -> " + coupon_uuid,
+                content: null
+            }
+        }
+        if (!isCouponAvailable(coupon_uuid)) {
+            return {
+                is_success: false,
+                message: "Coupon is not available",
+                content: null
+            }
+        }
+        const reward_claim_log = await Reward_Claim_Logs.create({
+            coupon_uuid: coupon_uuid,
+            staff: staff
+        });
+        return {
+            is_success: true,
+            message: "Coupon is redeemed",
+            content: reward_claim_log
+        };
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     getAllCoupons,
     getCouponsByUserId,
@@ -341,5 +377,6 @@ module.exports = {
     getCouponsByReward,
     getAllAvailableCouponByUserId,
     isCouponAvailable,
+    redeemCoupon
 
 }

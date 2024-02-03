@@ -15,7 +15,7 @@ const Reward_Claim_Logs = connection.define('Reward_Claim_Logs', {
         unique: true,
     },
     staff: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
         unique: false,
     },

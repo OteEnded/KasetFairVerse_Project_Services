@@ -29,6 +29,7 @@ router.post('/my_coupon', user_pages_controller.trade_coupon_submit_select_rewar
 router.get('/my_coupon', user_pages_controller.my_coupon);
 router.get('/login', user_pages_controller.login);
 router.post('/login', user_pages_controller.login_submit);
+router.get('/game_middleware', user_pages_controller.game_middleware);
 
 
 

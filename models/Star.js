@@ -98,13 +98,22 @@ async function getStarsByUserId(user_id, include_used = false) {
         console.log("Stars[getStarsByUserId]: stars ->", stars);
 
         if (!include_used) {
+
+            const unused_stars = [];
+
             for (let i in stars) {
-                if (stars[i].dataValues.coupon_uuid != null) {
-                    stars.splice(i, 1);
+                console.log(stars[i])
+                console.log(stars[i].coupon_uuid)
+                console.log(stars[i].coupon_uuid != null)
+                if (stars[i].coupon_uuid == null) {
+                    unused_stars.push(stars[i].dataValues);
                 }
             }
+            console.log("There", unused_stars)
+            return unused_stars;
         }
 
+        console.log("There", stars)
         return stars;
     }
     catch (error) {
@@ -244,11 +253,11 @@ async function getStarInventoryByUserId(user_id, include_used = false) {
         const users_stars = await getStarsByUserId(user_id, include_used);
         
         for (let i in users_stars) {
-            if (!Object.keys(star_inv).includes(users_stars[i].dataValues.source)) {
-                console.warn("Stars[getStarInventoryByUserId]: Invalid star source ->", users_stars[i].dataValues.source, "for user_id ->", user_id);
-                star_inv[users_stars[i].dataValues.source] = 0;
+            if (!Object.keys(star_inv).includes(users_stars[i].source)) {
+                console.warn("Stars[getStarInventoryByUserId]: Invalid star source ->", users_stars[i].source, "for user_id ->", user_id);
+                star_inv[users_stars[i].source] = 0;
             }
-            star_inv[users_stars[i].dataValues.source] += 1;
+            star_inv[users_stars[i].source] += 1;
         }
 
         return star_inv;
@@ -318,8 +327,9 @@ async function findStarToUse(user_id, source) {
     try {
         const stars = await getStarsByUserId(user_id);
         for (let i in stars) {
-            if (stars[i].dataValues.source === source) {
-                return stars[i].dataValues;
+            if (stars[i].source === source && stars[i].coupon_uuid == null) {
+                console.log("Stars[findStarToUse]: Found a star to use ->", stars[i])
+                return stars[i];
             }
         }
         return null;

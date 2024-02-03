@@ -58,11 +58,15 @@ exports.coupon_validation = async (req, res) => {
 
 exports.coupon_redeemed = async (req, res) => {
 
+    console.log(req.body);
+
     const redeem_coupon = req.body.coupon_uuid;
     const redeem_staff = req.body.staff;
 
     console.log(redeem_coupon);
     console.log(redeem_staff);
+
+    await Coupon.redeemCoupon(redeem_coupon, redeem_staff);
 
     res.redirect('/claim_reward')
 }

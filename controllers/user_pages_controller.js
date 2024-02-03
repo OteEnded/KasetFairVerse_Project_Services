@@ -19,7 +19,6 @@ function getRewardDiv(){
     const reward_div = [];
     const reward_config = Reward.getRewardConfig();
     for (let i in reward_config) {
-        console.log(reward_config.i)
         let stars_use_msg = "";
         if (reward_config[i].stars_use > 0) {
             stars_use_msg = "ใช้ดาว " + reward_config[i].stars_use + " ดวง";
@@ -84,7 +83,7 @@ async function getTradeAbleRewardList(star_amount){
 }
 
 async function getUsersCoupons(user_id){
-    const user_coupons = await Coupon.getCouponsByUserId(user_id);
+    const user_coupons = await Coupon.getAllAvailableCouponByUserId(user_id);
     const user = await User.getUser(user_id);
     const user_coupons_list = [];
     for (let i in user_coupons){
@@ -109,59 +108,49 @@ const game_list = [
         url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
     },
     {
-        name: "BigBangTheory",
-        description: "เข้าสำรวจโลก Metaverse ของเรา",
-        icon: "/images/games/BigBangTheory.png",
-        url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
+        name: "ColorMatching",
+        description: "เกมจับคู่สีเสื้อให้ตรงกับสีกระเป๋า",
+        icon: "/images/stars/Accessories_ColorMatching.png",
+        url: "https://test-ae1f2.web.app/"
     },
     {
-        name: "BigBangTheory",
-        description: "เข้าสำรวจโลก Metaverse ของเรา",
-        icon: "/images/games/BigBangTheory.png",
-        url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
+        name: "FindMyMeow",
+        description: "เกมหาแมวในห้องนั่งเล่นให้ได้จำนวนมาก",
+        icon: "/images/stars/CoffeeBean_FindMyMeow.png",
+        url: "https://coffee-game-meow.web.app/"
     },
     {
-        name: "BigBangTheory",
-        description: "เข้าสำรวจโลก Metaverse ของเรา",
-        icon: "/images/games/BigBangTheory.png",
-        url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
+        name: "RaisuwanCrush",
+        description: "เกมเรียงผลไม้ให้ได้ 3 ชิ้นขึ้นไปเพื่อเก็บคะแนน",
+        icon: "/images/stars/CornMilk_RaisuwanCrush.png",
+        url: "https://rswtest1-fbc20.web.app/"
     },
     {
-        name: "BigBangTheory",
-        description: "เข้าสำรวจโลก Metaverse ของเรา",
-        icon: "/images/games/BigBangTheory.png",
-        url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
+        name: "HoldYourBasket",
+        description: "ถือตระกร้ารับของที่ตกลงมาให้ได้มากที่สุด",
+        icon: "/images/stars/Cosmetic_HoldYourBasket.png",
+        url: "https://hold-your-basket.web.app/"
     },
     {
-        name: "BigBangTheory",
-        description: "เข้าสำรวจโลก Metaverse ของเรา",
-        icon: "/images/games/BigBangTheory.png",
-        url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
+        name: "TheDrink",
+        description: "ผสมเครื่องดื่มและชากันชงให้ได้หลากหลายสูตร",
+        icon: "/images/stars/Hemp_TheDrink.png",
+        url: "https://the-drink.web.app/"
     },
     {
-        name: "BigBangTheory",
-        description: "เข้าสำรวจโลก Metaverse ของเรา",
-        icon: "/images/games/BigBangTheory.png",
-        url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
+        name: "CWheat",
+        description: "ดูแลข้าวให้เติบโตและเก็บเกี่ยวให้ได้มากที่สุด",
+        icon: "/images/stars/KubKaoKabGang_CWheat.png",
+        url: "https://c-wheat.web.app/"
     },
     {
-        name: "BigBangTheory",
-        description: "เข้าสำรวจโลก Metaverse ของเรา",
-        icon: "/images/games/BigBangTheory.png",
-        url: "https://play.w4kc8xiyb4.bigbangtheory.io/"
-    },
-
-    // {
-    //     name: "",
-    //     description: "",
-    //     icon: "/images/games/",
-    //     url: ""
-    // },
+        name: "PasteScrumble",
+        description: "เลือกวัตถุดิบสำหรับเครื่องแกงต่างๆ ให้ถูกต้อง",
+        icon: "/images/stars/KubKaoKabGang_PasteScrumble.png",
+        url: "https://paste-scrumble.web.app/"
+    }
 ]
 
-function getGamesDiv(){
-
-}
 
 // // define route handler (with export)
 // export.<<controllerSubName>> = (req, res) => {
@@ -176,13 +165,19 @@ exports.reward = async (req, res) => {
     let access_token = req.query.access_token;
     console.log("access_token", access_token)
 
+
     const user = await User.getUserFromBBTToken(access_token);
     console.log("user", user)
-    logged_in = !(user.dataValues.user_id === 2);
+    logged_in = !(user.user_id === 2);
+
+    const game_button_list = [];
+    for (let i in game_list){
+        game_button_list.push(game_list[i].name);
+    }
 
     const nonce = generateNonce();
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
-    res.render('user/reward', { reward_div_list, sponsor_div_list, logged_in, username: user.username, game_div_list: game_list, nonce });
+    res.render('user/reward', { reward_div_list, sponsor_div_list, logged_in, username: user.username, game_div_list: game_list, nonce, game_button_list });
 }
 
 exports.trade_coupon = async (req, res) => {
@@ -285,6 +280,7 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
         reward: reward_selected,
         stars: star_selected
     });
+    console.log("NEW COUPON ->", newCoupon);
 
     // const newCoupon = await Coupon.createCoupon({
     //     user_id: user.user_id,
@@ -335,7 +331,7 @@ exports.login_submit = async (req, res) => {
     console.log("user_page_controller[login_submit]: there is a login req with username -> " + username + " and password -> " + password);
 
     let access_token = await User.userLogin(username, password);
-    if (username == 1) access_token = "1";
+    if (username === 1) access_token = "1";
 
     if (access_token == null){
         res.redirect('/login');
@@ -343,4 +339,35 @@ exports.login_submit = async (req, res) => {
     }
 
     res.redirect('/reward?access_token=' + access_token);
+}
+
+exports.game_middleware = async (req, res) => {
+
+    let access_token = req.query.access_token;
+    access_token = access_token.split("?")[0];
+    console.log("access_token", access_token)
+    console.log("game_id", req.query.game_id)
+    if (access_token === undefined || access_token === null){
+        access_token = "1";
+    }
+    const user = await User.getUserFromBBTToken(access_token);
+    console.log("user", user);
+    if (user.user_id === 2){
+        res.redirect('/login');
+        return;
+    }
+
+    let game_url = null;
+    for (let i in game_list){
+        if (game_list[i].name === req.query.game_id){
+            game_url = i;
+            break;
+        }
+    }
+    if (game_url === null){
+        res.redirect('/reward?access_token=' + access_token);
+        return;
+    }
+
+    res.redirect(game_url + "?access_token=" + access_token);
 }

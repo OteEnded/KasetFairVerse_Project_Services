@@ -22,25 +22,43 @@
 </nav>
 
 <!-- content -->
-<div class="flex flex-col mx-auto pt-12 lg:px-16 container">
+<div class="flex flex-col mx-auto pt-12 lg:px-16 container pt-16">
     <div class="flex flex-col lg:flex-row items-center justify-center w-full ">
         <h1 class="text-4xl lg:text-6xl text-blue font-bold">
             คูปองของฉัน
         </h1>
     </div>
 
-
+    <div class="flex flex-col lg:flex-row items-center justify-center w-full pb-0 my-0">
+        <div class="flex flex-col lg:flex-row items-end justify-end gap-2 w-full my-0 py-0">
+            <div class="flex flex-col">
+                <a id="refreshButton">
+                    <button class="text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-1 px-2 border border-gray-400 rounded-xl shadow">
+                        รีเฟรช 🕔
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <div class="bg-white lg:pt-6 lg:py-6 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center flex-wrap">
+
+        <% if (user_coupons_list.length < 1) { %>
+        <div class="flex flex-col items-center justify-center w-full pb-0 my-0">
+            <h2 class="text-xl lg:text-2xl text-orange-700 font-bold">
+                คุณไม่มีคูปอง
+            </h2>
+        </div>
+        <% } %>
 
         <% for (let i in user_coupons_list) {%>
 
         <section class="p-1">
             <!--card-->
             <div class="container mx-auto">
-                <div class="flex flex-col lg:flex-row bg-secondary text-white text-center py-4 px-20 rounded-lg shadow-xl relative">
+                <div class="flex flex-col lg:flex-row <% if (i % 2 == 1) { %>bg-secondary<% } else { %> bg-teal-500 <% } %> text-white text-center py-4 px-20 rounded-lg shadow-xl relative">
 
-                    <div class="flex flex-col">
+                    <div class="flex flex-col sm:px-4 md:px-8 lg:mx-12">
                         <h3 class="text-md sm:text-xl font-semibold "> <%= user_coupons_list[i].reward.name %> </h3>
                         <h4 class="text-sm font-semibold mb-2"> <%= user_coupons_list[i].reward.from %> </h4>
 
@@ -68,7 +86,7 @@
                 role="dialog">
             <div data-te-modal-dialog-ref
                  class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[600px]">
-                <div class="pointer-events-auto relative p-2 flex w-full flex-col rounded-md border-none bg-secondary bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+                <div class="pointer-events-auto relative p-2 flex w-full flex-col rounded-md border-none bg-secondary bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600 mx-12">
                     <!-- coupon -->
                     <div class="flex flex-shrink-0 justify-between rounded-t-md border-neutral-100 border-opacity-100 p-4">
                         <div class="container mx-auto">
@@ -91,7 +109,7 @@
 
                                 <section class="pt-8 sm:pt-0 flex flex-col text-gray-900 items-center">
                                     <div class="">
-                                        <img src="data:image/png;base64,<%= user_coupons_list[i].qr_code.toString('base64') %>" class="w-40 mx-auto rounded-lg">
+                                        <img src="data:image/png;base64,<%= user_coupons_list[i].qr_code.toString('base64') %>" class="w-40 mx-auto rounded-lg drop-shadow shadow-inner">
                                     </div>
                                     <div class="font-semibold">
                                         <br> รหัสคูปอง
@@ -122,9 +140,12 @@
 <script nonce="<%= nonce %>">
 
     btn = document.getElementById("button_<%= first_popup %>");
-    document.addEventListener('DOMContentLoaded', function() {
-        btn.click();
-    });
+    if (btn !== null) {
+        document.addEventListener('DOMContentLoaded', function() {
+            btn.click();
+        });
+    }
+
 
     // Get the current URL
     const currentUrl = window.location.href;
@@ -145,6 +166,12 @@
     console.log(currentUrl, accessToken);
 
     rewardPage.href = "/reward?access_token=" + accessToken;
+    refreshButton.href = "/my_coupon?access_token=" + accessToken;
+
+    // make the page reload every 10 seconds
+    setTimeout(function() {
+        location.href = "/my_coupon?access_token=" + accessToken;
+    }, 10000);
 
 </script>
 
