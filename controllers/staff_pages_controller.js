@@ -1,5 +1,7 @@
 // // import
 // const <<moduleNickname>> = require('<<modulePath>>')
+const crypto = require('crypto');
+
 const Coupon = require('../models/coupon');
 const User = require('../models/user');
 const Reward = require('../models/reward');
@@ -8,7 +10,9 @@ const Reward = require('../models/reward');
 // function <<functionName>>(<<functionParam>>) {
 // <<functionBody, return>>
 // }
-
+function generateNonce() {
+    return crypto.randomBytes(16).toString('base64');
+}
 
 
 // // define route handler (with export)
@@ -19,7 +23,10 @@ exports.claim_reward = async (req, res) => {
     let staff = {
         name: "Ote"
     }
-    res.render('staff/claim_reward', { staff })
+
+    const nonce = generateNonce();
+    res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
+    res.render('staff/claim_reward', { staff, nonce })
 }
 
 exports.coupon_validation = async (req, res) => {
@@ -44,7 +51,9 @@ exports.coupon_validation = async (req, res) => {
         reward = Reward.getRewardConfig()[coupon.reward];
     }
 
-    res.render('staff/coupon_validation', { error, user, reward, coupon, extra_reward })
+    const nonce = generateNonce();
+    res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
+    res.render('staff/coupon_validation', { error, user, reward, coupon, extra_reward, nonce })
 }
 
 exports.coupon_redeemed = async (req, res) => {
@@ -55,5 +64,5 @@ exports.coupon_redeemed = async (req, res) => {
     console.log(redeem_coupon);
     console.log(redeem_staff);
 
-    res.redirect('/claim_coupon')
+    res.redirect('/claim_reward')
 }

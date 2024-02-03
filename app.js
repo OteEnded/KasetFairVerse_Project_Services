@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
 const cors = require('cors');
+const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 
@@ -33,6 +34,7 @@ const kubkaokabgangRouter = require('./routes/api/KubKaoKabGang_router');
 const app = express();
 app.use(cors());
 app.use(favicon('./public/images/tab-icon.ico'));
+app.use(helmet());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

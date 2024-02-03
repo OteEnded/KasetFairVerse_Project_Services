@@ -456,5 +456,4 @@ module.exports = {
     requestUserFromBigBangTheory,
     userLogin,
     getDefaultUser
-
 };

@@ -148,6 +148,38 @@
 
     </section>
 
+    <!-- เมนูเกม -->
+    <section class="bg-white lg:p-16 lg:py-16 p-6 border rounded-md  mb-4 mt-1 flex flex-col lg:flex-col items-center flex-wrap">
+        <div>
+            <h2 class="text-2xl underline pb-10 pt-4 text-blue font-semibold">
+                เล่นเกมต่าง ๆ
+            </h2>
+        </div>
+        <div class="grid grid-cols-2 gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-4 lg:gap-12 lg:grid-cols-4 shadow-sm p-2">
+            <% for (let i = 0; i < game_div_list.length; i++) { %>
+            <a href="<%= game_div_list[i].url %>">
+                <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-inner p-2 hover:shadow-secondary hover:shadow-xl">
+
+                    <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
+                        <img src="<%= game_div_list[i].icon %>" width="75" >
+                    </div>
+
+                    <div>
+                        <h3 class=" text-[14px] lg:text-[18px] text-blue">
+                            <%= game_div_list[i].name %>
+                        </h3>
+                    </div>
+
+                    <p class="text-xs lg:text-[12px] text-blue text-center">
+                        <%= game_div_list[i].description %>
+                    </p>
+                </div>
+            </a>
+            <% } %>
+        </div>
+
+    </section>
+
     <!-- สปอน -->
     <section class="bg-white p-6 border rounded-md my-4 flex flex-col lg:flex-col items-center pb-10">
         <div>
@@ -156,7 +188,7 @@
             </h2>
         </div>
 
-        <div class="grid grid-cols-2  gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5 p-2">
+        <div class="grid grid-cols-2  gap-6 sm:gap-x-10 sm:grid-cols-4 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5 p-2">
             <% for (let i = 0; i < sponsor_div_list.length; i++) { %>
             <div class="flex flex-col flex-wrap items-center justify-center w-full ">
                 <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
@@ -179,7 +211,7 @@
     </div>
 </section>
 
-<script>
+<script nonce="<%= nonce %>">
 
     // Get the current URL
     const currentUrl = window.location.href;
