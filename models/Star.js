@@ -393,8 +393,10 @@ async function fetchUpStarToBBT() {
 
     for (let i in stars_to_send) {
         const respond = await sendStarToBBT(stars_to_send[i]);
-        const respond_err = respond.body.errors;
-        const respond_data = respond.body.data;
+        let respond_err = respond.body.errors;
+        if (respond_err === undefined || respond_err == null) respond_err = null;
+        let respond_data = respond.body.data;
+        if (respond_data === undefined || respond_data == null) respond_data = null;
 
         await Point_Send_Logs.create({
             star_id: stars_to_send[i].star_id,
