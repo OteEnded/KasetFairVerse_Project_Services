@@ -387,7 +387,7 @@ async function fetchUpStarToBBT() {
     const all_stars = await getAllStars();
     for (let i in all_stars) {
         if (!star_ids_that_sent_successfully.includes(all_stars[i].star_id)) {
-            stars_to_send.push(all_stars[i]);
+            if (![1,2,3].includes(all_stars[i].user_id)) stars_to_send.push(all_stars[i]);
         }
     }
 
