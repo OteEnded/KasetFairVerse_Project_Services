@@ -155,7 +155,7 @@ async function findMyMeowStarUp(play_record) {
             let starUpReq = {
                 user_id: play_record.user_id,
                 source: Star.star_config.CoffeeBean_FindMyMeow.code_name,
-                message: "Game star from CoffeeBean_FindMyMeow at " + JSON.stringify(play_record)
+                message: "Game star from CoffeeBean_FindMyMeow at play_record id -> " + play_record.round_id
             }
             await Star.starUp(starUpReq);
         }

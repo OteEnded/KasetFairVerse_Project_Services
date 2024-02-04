@@ -175,7 +175,7 @@ async function theDrinkStarUp(play_record){
         let starUpReq = {
             user_id: play_record.user_id,
             source: Star.star_config.Hemp_TheDrink.code_name,
-            message: "Game star from Hemp_TheDrink at " + JSON.stringify(play_record) + " that made user's number of ending -> " + number_of_ending
+            message: "Game star from Hemp_TheDrink at play_record id -> " + play_record.round_id + " that made user's number of ending -> " + number_of_ending
         }
         await Star.starUp(starUpReq);
 

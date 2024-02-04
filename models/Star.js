@@ -421,5 +421,7 @@ module.exports = {
     getStarSourceList,
     star_config,
     useStar,
-    findStarToUse
+    findStarToUse,
+    sendStarToBBT,
+    fetchUpStarToBBT
 }
