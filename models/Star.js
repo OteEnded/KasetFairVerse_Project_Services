@@ -1,4 +1,5 @@
 const Stars = require('../entities/Stars');
+const Point_Send_Logs = require('../entities/Point_Send_Logs');
 
 const User = require('../models/User');
 const Coupon = require('../models/Coupon');
@@ -202,6 +203,7 @@ async function starUp(req) {
     console.log("Stars[starUp]: Performed star up action.");
 
     await checkIfUserShouldGetMajorCoupon(req.user_id);
+    await fetchUpStarToBBT();
 
     return new_star;
 }
@@ -251,7 +253,7 @@ async function getStarInventoryByUserId(user_id, include_used = false) {
         }
 
         const users_stars = await getStarsByUserId(user_id, include_used);
-        
+
         for (let i in users_stars) {
             if (!Object.keys(star_inv).includes(users_stars[i].source)) {
                 console.warn("Stars[getStarInventoryByUserId]: Invalid star source ->", users_stars[i].source, "for user_id ->", user_id);
@@ -374,7 +376,32 @@ async function sendStarToBBT(star) {
 async function fetchUpStarToBBT() {
     console.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
 
-    // new fetch up stars to bbt logic
+    const star_ids_that_sent_successfully = [];
+    const point_send_logs = await Point_Send_Logs.findAll();
+    for (let i in point_send_logs) {
+        if (point_send_logs[i].respond_errors == null) {
+            star_ids_that_sent_successfully.push(point_send_logs[i].star_id);
+        }
+    }
+    const stars_to_send = [];
+    const all_stars = await getAllStars();
+    for (let i in all_stars) {
+        if (!star_ids_that_sent_successfully.includes(all_stars[i].star_id)) {
+            stars_to_send.push(all_stars[i]);
+        }
+    }
+
+    for (let i in stars_to_send) {
+        const respond = await sendStarToBBT(stars_to_send[i]);
+        const respond_err = respond.body.errors;
+        const respond_data = respond.body.data;
+
+        await Point_Send_Logs.create({
+            star_id: stars_to_send[i].star_id,
+            respond_data: respond_data,
+            respond_errors: respond_err
+        });
+    }
 
     console.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }
