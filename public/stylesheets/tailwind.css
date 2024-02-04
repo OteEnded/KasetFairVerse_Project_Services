@@ -1,10 +1,12 @@
 /* TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 @tailwind base;
 
 @layer base {
     html {
         @apply text-[#4f4f4f];
+        font-family: 'Kanit', sans-serif;
     }
     html.dark {
         @apply text-neutral-50;

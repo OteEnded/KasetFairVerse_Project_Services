@@ -9,9 +9,6 @@ module.exports = {
   darkMode: "class",
   plugins: [require("tw-elements/dist/plugin.cjs")],
   theme: {
-    // fontFamily {
-    //   '',
-    // },
     extend: {
       colors: {
         'primary': '#30845C',
@@ -21,6 +18,10 @@ module.exports = {
         'red' : '#FF0000',
         'blue' : '#024073'
 
+      },
+      fontFamily: {
+        customFont: ['"Custom Font"', "sans-serif"],
+        // Add more custom font families as needed
       },
     },
   },

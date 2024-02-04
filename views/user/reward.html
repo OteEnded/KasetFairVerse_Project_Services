@@ -25,12 +25,16 @@
 
 
 <!-- content -->
-<div class="flex flex-col mx-auto pt-16 lg:px-16 container">
+<div class="flex flex-col mx-auto pt-24 lg:px-16 container">
 
-    <div class="flex flex-col lg:flex-row items-center justify-center w-full pb-0 my-0">
-        <h1 class="text-4xl lg:text-6xl text-blue font-bold">
-            แลกของรางวัล
+    <div class="flex flex-col items-center justify-center w-full pb-0 my-0">
+        <h1 class="text-4xl lg:text-6xl text-blue font-bold text-center">
+            ร่วมสนุกกับกิจกรรม
         </h1>
+        <h2 class="text-2xl lg:text-4xl text-blue font-bold pt-2">
+            แลกรับของรางวัล
+        </h2>
+
     </div>
 
     <div class="flex flex-col lg:flex-row items-center justify-center w-full pb-0 my-0">
@@ -104,7 +108,7 @@
             <% for (let i = 0; i < reward_div_list.length; i++) { %>
             <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-lg p-2">
 
-                <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
+                <div class="bg-white flex flex-col lg:flex-col items-center h-24">
                     <img src="<%= reward_div_list[i].image %>" width="75" >
                 </div>
 
@@ -157,15 +161,15 @@
         </div>
         <div class="grid grid-cols-2 gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-4 lg:gap-12 lg:grid-cols-4 shadow-sm p-2">
             <% for (let i = 0; i < game_div_list.length; i++) { %>
-            <a id="<%= game_div_list[i].name %>" href="<%= game_div_list[i].url %>">
-                <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-inner p-2 hover:shadow-secondary hover:shadow-xl">
+            <a id="<%= game_div_list[i].name %>" href="<%= game_div_list[i].url %>" class="hover:shadow-secondary hover:shadow-xl transition-all duration-300">
+                <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-inner p-2 ">
 
-                    <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
-                        <img src="<%= game_div_list[i].icon %>" width="75" >
+                    <div class="bg-white flex flex-col lg:flex-col items-center h-24">
+                        <img src="<%= game_div_list[i].icon %>" class="drop-shadow-lg" width="75" >
                     </div>
 
                     <div>
-                        <h3 class=" text-[14px] lg:text-[18px] text-blue">
+                        <h3 class=" text-[14px] lg:text-[18px] text-blue hover:text-red transition-all duration-500">
                             <%= game_div_list[i].name %>
                         </h3>
                     </div>

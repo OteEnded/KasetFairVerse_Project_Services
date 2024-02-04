@@ -1,5 +1,6 @@
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
 const Star = require('../models/Star');
+const {JSON} = require("sequelize");
 
 // Function to get all Hemp TheDrink play records
 function getTheDrinkEndingList() {
@@ -116,6 +117,7 @@ async function findTheDrinkPlayRecords(column, value) {
 async function createTheDrinkPlayRecord(req) {
     try {
         const play_record = await Hemp_TheDrink_PlayRecords.create(req);
+        await theDrinkStarUp(play_record);
         return play_record;
     } catch (error) {
         throw error;
@@ -173,7 +175,7 @@ async function theDrinkStarUp(play_record){
         let starUpReq = {
             user_id: play_record.user_id,
             source: Star.star_config.Hemp_TheDrink.code_name,
-            message: "Game star from Hemp_TheDrink at " + play_record + " that made user's number of ending -> " + number_of_ending
+            message: "Game star from Hemp_TheDrink at " + play_record.toString() + " that made user's number of ending -> " + number_of_ending
         }
         await Star.starUp(starUpReq);
 
