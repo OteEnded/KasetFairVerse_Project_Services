@@ -296,7 +296,7 @@ async function holdYourBasketStarUp(play_record){
         let starUpReq = {
             user_id: play_record.user_id,
             source: Star.star_config.Cosmetic_HoldYourBasket.code_name,
-            message: "Game star from Cosmetic_HoldYourBasket at " + play_record.toString() + " that made user's sum score -> " + sum_score
+            message: "Game star from Cosmetic_HoldYourBasket at " + JSON.stringify(play_record) + " that made user's sum score -> " + sum_score
         }
         await Star.starUp(starUpReq);
 

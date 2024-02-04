@@ -304,7 +304,7 @@ async function pasteScrumbleStarUp(play_record){
             let starUpReq = {
                 user_id: play_record.user_id,
                 source: Star.star_config.KubKaoKabGang_PasteScrumble.code_name,
-                message: "Game star from KubKaoKabGang_CWheat at " + play_record.toString()
+                message: "Game star from KubKaoKabGang_CWheat at " + JSON.stringify(play_record)
             }
             await Star.starUp(starUpReq);
         }
@@ -321,7 +321,7 @@ async function CWheatStarUp(play_record){
             let starUpReq = {
                 user_id: play_record.user_id,
                 source: Star.star_config.KubKaoKabGang_CWheat.code_name,
-                message: "Game star from KubKaoKabGang_CWheat at " + play_record.toString()
+                message: "Game star from KubKaoKabGang_CWheat at " + JSON.stringify(play_record)
             }
             await Star.starUp(starUpReq);
         }
