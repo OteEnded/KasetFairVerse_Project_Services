@@ -393,8 +393,13 @@ async function fetchUpStarToBBT() {
 
     for (let i in stars_to_send) {
         const respond = await sendStarToBBT(stars_to_send[i]);
+        console.log("Star[fetchUpStarToBBT]: respond ->", respond)
         let respond_err = null;
-        if (Object.keys(respond.body).includes("errors")) respond_err = respond.body.errors;
+        if (Object.keys(respond.body).includes("errors")) {
+            if (respond.body.errors != null){
+                respond_err = respond.body.errors
+            }
+        }
         let respond_data = respond.body.data;
         if (respond_data === undefined || respond_data == null) respond_data = null;
 
