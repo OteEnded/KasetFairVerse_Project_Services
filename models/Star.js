@@ -379,7 +379,7 @@ async function fetchUpStarToBBT() {
     const star_ids_that_sent_successfully = [];
     const point_send_logs = await Point_Send_Logs.findAll();
     for (let i in point_send_logs) {
-        if (point_send_logs[i].respond_errors == {}) {
+        if (point_send_logs[i].respond_errors == null) {
             star_ids_that_sent_successfully.push(point_send_logs[i].star_id);
         }
     }
@@ -394,14 +394,14 @@ async function fetchUpStarToBBT() {
     for (let i in stars_to_send) {
         const respond = await sendStarToBBT(stars_to_send[i]);
         console.log("Star[fetchUpStarToBBT]: respond ->", respond)
-        let respond_err = {};
+        let respond_err = null;
         if (Object.keys(respond).includes("errors")) {
             if (respond.errors != null){
                 respond_err = respond.errors
             }
         }
         let respond_data = respond.data;
-        if (respond_data === undefined || respond_data == null) respond_data = {};
+        if (respond_data === undefined || respond_data == null) respond_data = null;
 
         await Point_Send_Logs.create({
             star_id: stars_to_send[i].star_id,
