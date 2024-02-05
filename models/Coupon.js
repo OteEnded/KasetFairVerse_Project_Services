@@ -243,6 +243,7 @@ async function createCoupon(req) {
 // Function to create major coupons
 async function majorCouponUp(user_id) {
     try {
+        console.log("Coupon[majorCouponUp] -> user_id: ", user_id);
         const { getNumberOfDifferentStarSourcesByUserId } = require('../models/Star');
         const number_of_different_star_of_user = await getNumberOfDifferentStarSourcesByUserId(user_id, true);
         if (number_of_different_star_of_user < 7) {

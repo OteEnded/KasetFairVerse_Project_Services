@@ -212,7 +212,7 @@ async function starUp(req) {
 async function checkIfUserShouldGetMajorCoupon(user_id) {
     try {
         const number_of_different_star_sources = await getNumberOfDifferentStarSourcesByUserId(user_id);
-        if (number_of_different_star_sources === 7) {
+        if (number_of_different_star_sources > 6) {
 
             // Check if the user has already got the major coupon
             const users_coupons = await Coupon.getCouponsByUserId(user_id);
