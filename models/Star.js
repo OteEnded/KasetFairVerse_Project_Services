@@ -203,7 +203,7 @@ async function starUp(req) {
     console.log("Stars[starUp]: Performed star up action.");
 
     await checkIfUserShouldGetMajorCoupon(req.user_id);
-    await fetchUpStarToBBT();
+    // await fetchUpStarToBBT(new_star);
 
     return new_star;
 }
@@ -373,42 +373,42 @@ async function sendStarToBBT(star) {
 }
 
 // Function sent (fetchUp) unsent star to bbt
-async function fetchUpStarToBBT() {
+async function fetchUpStarToBBT(star) {
     console.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
 
-    const star_ids_that_sent_successfully = [];
-    const point_send_logs = await Point_Send_Logs.findAll();
-    for (let i in point_send_logs) {
-        if (point_send_logs[i].respond_errors == null) {
-            star_ids_that_sent_successfully.push(point_send_logs[i].star_id);
-        }
-    }
-    const stars_to_send = [];
-    const all_stars = await getAllStars();
-    for (let i in all_stars) {
-        if (!star_ids_that_sent_successfully.includes(all_stars[i].star_id)) {
-            if (![1,2,3].includes(all_stars[i].user_id)) stars_to_send.push(all_stars[i]);
-        }
-    }
+    // const star_ids_that_sent_successfully = [];
+    // const point_send_logs = await Point_Send_Logs.findAll();
+    // for (let i in point_send_logs) {
+    //     if (point_send_logs[i].respond_errors == null) {
+    //         star_ids_that_sent_successfully.push(point_send_logs[i].star_id);
+    //     }
+    // }
+    // const stars_to_send = [];
+    // const all_stars = await getAllStars();
+    // for (let i in all_stars) {
+    //     if (!star_ids_that_sent_successfully.includes(all_stars[i].star_id)) {
+    //         if (![1,2,3].includes(all_stars[i].user_id)) stars_to_send.push(all_stars[i]);
+    //     }
+    // }
 
-    for (let i in stars_to_send) {
-        const respond = await sendStarToBBT(stars_to_send[i]);
-        console.log("Star[fetchUpStarToBBT]: respond ->", respond)
-        let respond_err = null;
-        if (Object.keys(respond).includes("errors")) {
-            if (respond.errors != null){
-                respond_err = respond.errors
-            }
+    // for (let i in stars_to_send) {
+    const respond = await sendStarToBBT(star);
+    console.log("Star[fetchUpStarToBBT]: respond ->", respond)
+    let respond_err = null;
+    if (Object.keys(respond).includes("errors")) {
+        if (respond.errors != null){
+            respond_err = respond.errors
         }
-        let respond_data = respond.data;
-        if (respond_data === undefined || respond_data == null) respond_data = null;
-
-        await Point_Send_Logs.create({
-            star_id: stars_to_send[i].star_id,
-            respond_data: respond_data,
-            respond_errors: respond_err
-        });
     }
+    let respond_data = respond.data;
+    if (respond_data === undefined || respond_data == null) respond_data = null;
+
+    await Point_Send_Logs.create({
+        star_id: stars_to_send[i].star_id,
+        respond_data: respond_data,
+        respond_errors: respond_err
+    });
+    // }
 
     console.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }

@@ -286,7 +286,7 @@ async function holdYourBasketStarUp(play_record){
     try {
 
         const sum_score = await getSumOfHoldYourBasketScoresByUserId(play_record.user_id);
-        if (sum_score < 10000) return;
+        if (sum_score < 30000) return;
 
         const is_starred = await Star.getStarsByUserId(play_record.user_id, true);
         for (let i in is_starred) {

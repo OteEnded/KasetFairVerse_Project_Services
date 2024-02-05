@@ -151,7 +151,7 @@ async function findMyMeowStarUp(play_record) {
     try {
         const normal_cat = play_record.normal_cat;
         const golden_cat = play_record.golden_cat;
-        if (normal_cat >= 100 || golden_cat >= 5) {
+        if (normal_cat >= 80 || golden_cat >= 5) {
             let starUpReq = {
                 user_id: play_record.user_id,
                 source: Star.star_config.CoffeeBean_FindMyMeow.code_name,

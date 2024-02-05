@@ -63,7 +63,7 @@ router.post('/star_up/user_id/:user_id', apiMiddleware.authenticate, async (req,
     try {
         let starUpReq = {
             user_id: parseInt(req.params.user_id),
-            source: "Hemp_TheDrink"
+            source: req.body.source
         }
         await star.starUp(starUpReq);
         res.json({

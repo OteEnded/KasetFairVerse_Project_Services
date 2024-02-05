@@ -300,7 +300,7 @@ async function deleteCWheatPlayRecord(round_id) {
 async function pasteScrumbleStarUp(play_record){
     try {
         const score = play_record.score;
-        if (score >= 1500) {
+        if (score >= 800) {
             let starUpReq = {
                 user_id: play_record.user_id,
                 source: Star.star_config.KubKaoKabGang_PasteScrumble.code_name,
@@ -317,7 +317,7 @@ async function pasteScrumbleStarUp(play_record){
 async function CWheatStarUp(play_record){
     try {
         const score = play_record.score;
-        if (score >= 10) {
+        if (score >= 8) {
             let starUpReq = {
                 user_id: play_record.user_id,
                 source: Star.star_config.KubKaoKabGang_CWheat.code_name,

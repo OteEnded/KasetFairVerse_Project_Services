@@ -20,7 +20,7 @@ const Cosmetic_HoldYourBasket_PlayLifes = connection.define('Cosmetic_HoldYourBa
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: false,
-        defaultValue: 5,
+        defaultValue: 2,
     }
 });
 
