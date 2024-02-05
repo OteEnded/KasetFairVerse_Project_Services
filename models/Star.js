@@ -379,7 +379,7 @@ async function fetchUpStarToBBT() {
     const star_ids_that_sent_successfully = [];
     const point_send_logs = await Point_Send_Logs.findAll();
     for (let i in point_send_logs) {
-        if (point_send_logs[i].respond_errors == null) {
+        if (point_send_logs[i].respond_errors === "") {
             star_ids_that_sent_successfully.push(point_send_logs[i].star_id);
         }
     }
