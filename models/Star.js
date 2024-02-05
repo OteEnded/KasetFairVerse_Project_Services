@@ -395,12 +395,12 @@ async function fetchUpStarToBBT() {
         const respond = await sendStarToBBT(stars_to_send[i]);
         console.log("Star[fetchUpStarToBBT]: respond ->", respond)
         let respond_err = {};
-        if (Object.keys(respond.body).includes("errors")) {
-            if (respond.body.errors != null){
-                respond_err = respond.body.errors
+        if (Object.keys(respond).includes("errors")) {
+            if (respond.errors != null){
+                respond_err = respond.errors
             }
         }
-        let respond_data = respond.body.data;
+        let respond_data = respond.data;
         if (respond_data === undefined || respond_data == null) respond_data = {};
 
         await Point_Send_Logs.create({
