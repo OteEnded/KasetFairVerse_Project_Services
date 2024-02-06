@@ -254,10 +254,10 @@ async function majorCouponUp(user_id) {
             }
         }
 
-        const all_major_coupon = await getCouponsByReward("Major_ticket_2");
-        console.log("all_major_coupon: ", all_major_coupon)
-        for (let i in all_major_coupon) {
-            if (all_major_coupon.dataValues.user_id == user_id) {
+        const coupon_user_has = await getCouponsByUserId(user_id);
+        console.log("coupon_user_has: ", coupon_user_has);
+        for (let i in coupon_user_has) {
+            if (coupon_user_has[i].dataValues.reward === "Major_ticket_2") {
                 return {
                     is_success: false,
                     message: "User already has Major_ticket_2 coupon",
