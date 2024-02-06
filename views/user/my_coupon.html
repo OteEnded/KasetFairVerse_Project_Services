@@ -51,12 +51,20 @@
         </div>
         <% } %>
 
+        <div class="flex flex-col items-center justify-center w-full py-4 my-0">
+            <h2 class="text-mg lg:text-lg text-orange-700 font-bold text-center">
+                คุณสามารถถือคูปองได้ชนิดละ 1 ใบเท่านั้น<br>
+                (เช่น สามารถมีคูปองสำหรับแรกรางวัลบัตรกำนัล KFC ได้แค่ 1 ใบ)<br>
+                แต่คุณสามารถแลกคูปองซ้ำได้หลังจากที่ใช้คูปองเดิมไปแล้ว
+            </h2>
+        </div>
+
         <% for (let i in user_coupons_list) {%>
 
         <section class="p-1">
             <!--card-->
             <div class="container mx-auto">
-                <div class="flex flex-col lg:flex-row <% if (i % 2 == 1) { %>bg-secondary<% } else { %> bg-teal-500 <% } %> text-white text-center py-4 px-20 rounded-lg shadow-xl relative">
+                <div class="flex flex-col lg:flex-row <% if (i % 2 == 1) { %>bg-secondary<% } else { %> bg-[RGB(118,190,210)] <% } %> text-white text-center py-4 px-20 rounded-lg shadow-xl relative">
 
                     <div class="flex flex-col sm:px-4 md:px-8 lg:mx-12">
                         <h3 class="text-md sm:text-xl font-semibold "> <%= user_coupons_list[i].reward.name %> </h3>

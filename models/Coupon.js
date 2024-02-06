@@ -204,6 +204,17 @@ async function createCouponRequest(req) {
 async function couponUp(req) {
     try {
         console.log("Coupon[couponUp] -> req: ", req);
+        const coupon_user_has = await getCouponsByUserId(req.user_id);
+        console.log("coupon_user_has: ", coupon_user_has);
+        for (let i in coupon_user_has) {
+            if (coupon_user_has[i].dataValues.reward === req.reward) {
+                return {
+                    is_success: false,
+                    message: "User already has " + req.reward + " coupon",
+                    content: null
+                }
+            }
+        }
         return await createCouponRequest(req);
     }
     catch (error) {
