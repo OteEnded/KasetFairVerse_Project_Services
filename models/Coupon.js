@@ -254,7 +254,7 @@ async function majorCouponUp(user_id) {
             }
         }
 
-        const is_user_has_major_coupon = await getCouponsByReward("major");
+        const is_user_has_major_coupon = await getCouponsByReward("Major_ticket_2");
         if (is_user_has_major_coupon.length > 0) {
             return {
                 is_success: false,
@@ -263,7 +263,7 @@ async function majorCouponUp(user_id) {
             }
         }
 
-        const major_coupon = await createCoupon({
+        return await createCoupon({
             user_id: user_id,
             reward: "major",
             stars_to_use: []

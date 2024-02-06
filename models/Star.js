@@ -231,7 +231,7 @@ async function checkIfUserShouldGetMajorCoupon(user_id) {
             // Check if the user has already got the major coupon
             const users_coupons = await Coupon.getCouponsByUserId(user_id);
             for (let i in users_coupons) {
-                if (users_coupons[i].dataValues.reward === "major") {
+                if (users_coupons[i].reward === "major") {
                     return;
                 }
             }
