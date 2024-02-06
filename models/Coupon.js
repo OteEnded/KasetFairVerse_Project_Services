@@ -254,12 +254,14 @@ async function majorCouponUp(user_id) {
             }
         }
 
-        const is_user_has_major_coupon = await getCouponsByReward("Major_ticket_2");
-        if (is_user_has_major_coupon.length > 0) {
-            return {
-                is_success: false,
-                message: "User already has Major_ticket_2 coupon",
-                content: null
+        const all_major_coupon = await getCouponsByReward("Major_ticket_2");
+        for (let i in all_major_coupon) {
+            if (all_major_coupon.user_id == user_id) {
+                return {
+                    is_success: false,
+                    message: "User already has Major_ticket_2 coupon",
+                    content: null
+                }
             }
         }
 
