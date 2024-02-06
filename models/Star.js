@@ -386,26 +386,26 @@ async function sendStarToBBT(star) {
 
 // Function sent (fetchUp) unsent star to bbt
 async function fetchUpStarToBBT(star) {
-    console.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
-
-    const respond = await sendStarToBBT(star);
-    console.log("Star[fetchUpStarToBBT]: respond ->", respond)
-    let respond_err = null;
-    if (Object.keys(respond).includes("errors")) {
-        if (respond.errors != null){
-            respond_err = respond.errors
-        }
-    }
-    let respond_data = respond.data;
-    if (respond_data === undefined || respond_data == null) respond_data = null;
-
-    await Point_Send_Logs.create({
-        star_id: stars_to_send[i].star_id,
-        respond_data: respond_data,
-        respond_errors: respond_err
-    });
-
-    console.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
+    // console.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
+    //
+    // const respond = await sendStarToBBT(star);
+    // console.log("Star[fetchUpStarToBBT]: respond ->", respond)
+    // let respond_err = null;
+    // if (Object.keys(respond).includes("errors")) {
+    //     if (respond.errors != null){
+    //         respond_err = respond.errors
+    //     }
+    // }
+    // let respond_data = respond.data;
+    // if (respond_data === undefined || respond_data == null) respond_data = null;
+    //
+    // await Point_Send_Logs.create({
+    //     star_id: stars_to_send[i].star_id,
+    //     respond_data: respond_data,
+    //     respond_errors: respond_err
+    // });
+    //
+    // console.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
 module.exports = {
@@ -422,6 +422,6 @@ module.exports = {
     star_config,
     useStar,
     findStarToUse,
-    sendStarToBBT,
-    fetchUpStarToBBT
+    // sendStarToBBT,
+    // fetchUpStarToBBT
 }
