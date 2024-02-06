@@ -1,9 +1,5 @@
 const file_sys = require('fs');
 
-function debug (...msgs) {
-    console.log(msgs)
-}
-
 function readJSONFile(filePath){
     console.log("projectutility[readJSONFile]: Reading JSON file from", filePath)
     try {
@@ -22,7 +18,7 @@ function getConfig(){
     console.log("projectutility[getConfig]: Getting config data:")
     configData = readJSONFile('./config.json')
     console.log("projectutility[getConfig]: ☆★ CONFIG DATA IS GOTTEN! ★☆.")
-    // console.log(configData)
+    // console.log.txt(configData)
     return configData
 }
 
@@ -46,11 +42,26 @@ function getRandomIntInRange(min = null, max = null){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const logToTextFile = (...args) => {
+    // Get the current time
+    const currentTime = new Date().toLocaleTimeString();
+
+    // Combine all log arguments into a single string
+    const logMessage = `[${currentTime}] ${args.join(' ')}`;
+
+    // Append the log message with the current time to a text file
+    file_sys.appendFileSync('./log/log.txt', logMessage + '\n');
+
+    // Log the message with the current time to the console
+    console.log(logMessage);
+};
+
+
 module.exports = {
-    debug,
     readJSONFile,
     getConfig,
     getPort,
     objLen,
     getRandomIntInRange,
+    logToTextFile
 }

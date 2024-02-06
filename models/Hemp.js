@@ -170,7 +170,7 @@ async function theDrinkStarUp(play_record){
         let starUpReq = {
             user_id: play_record.user_id,
             source: Star.star_config.Hemp_TheDrink.code_name,
-            message: "Game star from Hemp_TheDrink at play_record -> " + play_record.toString()
+            message: "Game star from Hemp_TheDrink at play_record id -> " + play_record.round_id
         }
         await Star.starUp(starUpReq);
 

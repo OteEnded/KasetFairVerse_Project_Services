@@ -407,7 +407,7 @@ async function fetchUpStarToBBT(star) {
     //     respond_errors: respond_err
     // });
     //
-    // console.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
+    // console.log.txt("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
 module.exports = {

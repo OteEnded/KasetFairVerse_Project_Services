@@ -151,11 +151,11 @@ async function deleteRaisuwanCrushPlayRecord(round_id) {
 async function raisuwanStarUp(play_record){
     try {
         const score = play_record.score;
-        if (score >= 170) {
+        if (score >= 180) {
             let starUpReq = {
                 user_id: play_record.user_id,
                 source: Star.star_config.CornMilk_RaisuwanCrush.code_name,
-                message: "Game star from CornMilk_RaisuwanCrush at play_record -> " + play_record.toString()
+                message: "Game star from CornMilk_RaisuwanCrush at play_record id -> " + play_record.round_id
             }
             await Star.starUp(starUpReq);
         }

@@ -33,8 +33,6 @@ function load_api_permission_groups(){
 
 function find_matching_group(key){
     for (let i in api_permission_groups){
-        // console.log(i)
-        // console.log("apimiddleware[find_matching_group]: Checking if key ->", key, "matches with ->", api_permission_groups[i]['keys'])
         if (api_permission_groups[i]['keys'].includes(key)){
             return i
         }
@@ -50,7 +48,7 @@ function is_allowed(req){
     if (permission_group === ""){
         return false
     }
-    // console.log("api_permission_groups", api_permission_groups)
+    // console.log.txt("api_permission_groups", api_permission_groups)
     if (Object.keys(api_permission_groups[permission_group]["permissions"]).includes("*")){
         if (req.method === "GET" && api_permission_groups[permission_group]["permissions"]["*"]["read"]){
             return true
@@ -111,7 +109,7 @@ async function logRequest(req, res, next) {
         return result[Object.keys(result)[0]]
     });
     console.log("apimiddleware[logRequest]: Checking if RequestLogs table exists...")
-    // console.log(existing_tables)
+    // console.log.txt(existing_tables)
     if (existing_tables.includes('requestlogs')) {
         console.log("apimiddleware[logRequest]: RequestLogs table exists, logging request...")
         let log = {
@@ -126,7 +124,7 @@ async function logRequest(req, res, next) {
         await RequestLog.createRequestLogs(log)
     }
     else {
-        console.log("apimiddleware[logRequest]: Cannot log request, RequestLogs table does not exist.")
+        console.log("apimiddleware[logRequest]: Cannot log.txt request, RequestLogs table does not exist.")
     }
 
     next();
