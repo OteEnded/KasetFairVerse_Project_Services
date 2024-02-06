@@ -24,11 +24,17 @@
 <div class="flex flex-col mx-auto pt-12 lg:px-16 container ">
   <div class="flex flex-col  items-center justify-center w-full ">
 
-    <div class=" bg-white lg:pt-6 lg:py-6 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center flex-wrap drop-shadow-lg">
-      <section>
+    <div class="flex flex-col lg:flex-row items-center justify-center w-full pb-2">
+      <h2 class="text-3xl lg:text-4xl text-blue font-bold drop-shadow-xl text-center">
+        คูปองถูกต้อง สามารถแลกของรางวัลได้
+      </h2>
+    </div>
+
+    <section>
+    <div class=" bg-secondary lg:pt-6 lg:py-6 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center flex-wrap drop-shadow-lg">
         <!--card-->
         <div class="container mx-auto">
-          <div class="flex flex-col lg:flex-row bg-secondary text-white text-center py-4 px-20 rounded-lg shadow-md relative">
+          <div class="flex flex-col lg:flex-row bg-white text-white text-center py-4 px-20 rounded-lg shadow-md relative">
             <div class="container mx-auto">
               <div class="flex flex-col">
                 <section class="flex flex-col text-gray-900">
@@ -38,44 +44,42 @@
                   <div class="font-semibold"> <br> รหัสคูปอง </div>
                   <div><%= coupon.coupon_uuid %></div>
                   <!-- coupon shape -->
-                  <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
-                  <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
+                  <div class="w-12 h-12 bg-secondary rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
+                  <div class="w-12 h-12 bg-secondary rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
                 </section>
-
               </div>
           </div>
         </div>
         </div>
-      </section>
-
     </div>
-<!--ปุ่ม-->
+    </section>
+
     <div class="flex flex-col items-center justify-center pt-5 ">
       <form action="/coupon_validation" method="post">
 
         <label for="coupon_uuid"><input type="text" value="<%= coupon.coupon_uuid %>" name="coupon_uuid" id="coupon_uuid" hidden></label>
         <div class="flex flex-col items-center justify-center">
         <div class="flex flex-col items-center justify-center">
-          <label for="staff" class="text-center"> กรุณากรอกชื่อ หรือรหัสนิสิตของผู้มอบรางวัล </label>
+          <label for="staff" class="text-center"> กรุณากรอกชื่อ หรือรหัสนิสิตของ Staff ผู้มอบรางวัล </label>
         </div>
         </div>
-        <div class="flex flex-col items-center justify-center">
+        <div class="flex flex-col items-center justify-center gap-2">
           <input type="text" value="" name="staff" id="staff" placeholder="โปรดกรอกข้อมูล..." class="text-center border-primary border-2 rounded" >
-        </div>
-        <div class="mt-4">
-        <button id="accept" type="submit"
-                class="flex items-center justify-center text-sm bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-          มอบรางวัลแล้ว
-        </button>
-<!--        </div>-->
-<!--        <div class="mt-1">-->
-<!--          <button hidden id="accepted" type="submit"-->
-<!--                  class="flex items-center justify-center text-sm bg-secondary text-gray-900 cursor-wait font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow ">-->
-<!--            กำลังบันทึกข้อมูล...-->
-<!--          </button>-->
-<!--        </div>-->
+          <div id="acceptButtonDiv">
+          <button id="accept" type="button"
+                  class="flex items-center justify-center text-sm bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+            มอบรางวัลแล้ว
+          </button>
+          </div>
+          <div id="acceptedButtonDiv" hidden>
+          <button id="accepted" type="submit"
+                  class="flex items-center justify-center text-sm bg-orange-300 text-gray-900 cursor-wait font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+            กำลังบันทึกข้อมูล...
+          </button>
+          </div>
         </div>
       </form>
+    </div>
 
       <a href="/claim_reward">
         <br>
@@ -116,12 +120,18 @@
   // }
 
   accept.onclick = function() {
-      alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+      if (!staff.value || staff.value === "") {
+          alert("กรุณากรอกชื่อ staff ผู้มอบรางวัล");
+      } else {
+          acceptButtonDiv.hidden = true;
+          acceptedButtonDiv.hidden = false;
+          accepted.click();
+      }
   }
 
-  // accept.hidden = true;
-
-
+  accepted.onclick = function() {
+      alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+  }
 
 </script>
 

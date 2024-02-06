@@ -13,9 +13,6 @@
 <!-- TW Elements JavaScript -->
 <script src="/tw-elements/dist/js/tw-elements.umd.min.js" type="text/javascript"></script>
 
-<!-- qr code reader -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <!-- Navbar-->
 
 <nav class="bg-transparent">
@@ -27,50 +24,53 @@
 
 <div class="flex flex-col mx-auto pt-12 lg:px-16 container ">
   <div class="flex flex-col  items-center justify-center w-full ">
+      <div class="flex flex-col lg:flex-row items-center justify-center w-full pb-2">
+        <h2 class="text-3xl lg:text-4xl text-red font-bold drop-shadow-xl text-center">
+          <%= error_msg.split("->")[0] %><br><%= error_msg.split("->")[1] %>
+        </h2>
+      </div>
 
-    <div class=" bg-white lg:pt-6 lg:py-6 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center flex-wrap drop-shadow-lg">
-      <section>
+    <% if (error == "Not available") { %>
+    <section>
+      <div class=" bg-red lg:pt-6 lg:py-6 p-6 border rounded-md  my-4 flex flex-col lg:flex-col items-center flex-wrap drop-shadow-lg">
         <!--card-->
         <div class="container mx-auto">
-          <div class="flex flex-col lg:flex-row bg-secondary text-white text-center py-4 px-20 rounded-lg shadow-md relative">
+          <div class="flex flex-col lg:flex-row bg-white text-gray-900 text-center py-4 px-20 rounded-lg shadow-md relative">
             <div class="container mx-auto">
               <div class="flex flex-col">
-                <section class="flex flex-col text-gray-900">
-                  <div class="text-lg font-semibold"> คูปองแลกของรางวัล </div>
+                <section class="flex flex-col text-orange-600">
+                  <div class="text-lg font-semibold"> คูปองแลกของรางวัล (ใช้งานไม่ได้!) </div>
                   <div> <u>เจ้าของคูปอง:</u> <br> <%= user.username %></div>
                   <div> <u>ของรางวัล:</u> <br> <%= reward.display.name %> <%= reward.display.from %> </div>
                   <div class="font-semibold"> <br> รหัสคูปอง </div>
                   <div><%= coupon.coupon_uuid %></div>
                   <!-- coupon shape -->
-                  <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
-                  <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
+                  <div class="w-12 h-12 bg-red rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
+                  <div class="w-12 h-12 bg-red rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
                 </section>
-
               </div>
+            </div>
           </div>
         </div>
+      </div>
+    </section>
+    <% } else { %>
+    <section>
+      <div class="container mx-auto pt-4">
+        <div class="bg-background flex flex-col lg:flex-col items-center h-24">
+          <img src="/images/AMOGUS.jpg" width="75" >
         </div>
-      </section>
+      </div>
+    </section>
+    <% } %>
 
-    </div>
-<!--ปุ่ม-->
     <div class="flex flex-col items-center justify-center pt-5 ">
-      <form action="/coupon_validation" method="post">
-
-        <label for="coupon_uuid"><input type="text" value="" name="coupon_uuid" id="coupon_uuid" hidden></label>
-        <label for="staff"><input type="text" value="" name="staff" id="staff" hidden></label>
-
-        <button id="accept" type="submit"
-                class="flex items-center justify-center text-sm bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-          มอบรางวัลแล้ว
-        </button>
-      </form>
 
       <a href="/claim_reward">
         <br>
         <button
                 class="flex items-center justify-center text-sm bg-[#de0a26] hover:bg-[#f94449] hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
-          ยกเลิก
+          กลับ
         </button>
       </a>
     </div>

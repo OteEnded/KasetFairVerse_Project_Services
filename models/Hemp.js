@@ -1,6 +1,5 @@
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
 const Star = require('../models/Star');
-const {JSON} = require("sequelize");
 
 // Function to get all Hemp TheDrink play records
 function getTheDrinkEndingList() {
@@ -164,20 +163,27 @@ async function deleteTheDrinkPlayRecord(round_id) {
 async function theDrinkStarUp(play_record){
     try {
 
-        const number_of_ending = await getNumberOfDifferentTheDrinkEndingsPlayed(play_record.user_id);
-        if (number_of_ending < 6) return;
-
-        const is_starred = await Star.getStarsByUserId(play_record.user_id, true);
-        for (let i in is_starred) {
-            if (is_starred[i].source === Star.star_config.Hemp_TheDrink.code_name) return;
-        }
+        // Check if last ending user played was the new ending for the user
+        const player_progress = await getTheDrinkProgressByUserId(play_record.user_id);
+        if (player_progress[play_record.ending] > 1) return;
 
         let starUpReq = {
             user_id: play_record.user_id,
             source: Star.star_config.Hemp_TheDrink.code_name,
-            message: "Game star from Hemp_TheDrink at play_record id -> " + play_record.round_id + " that made user's number of ending -> " + number_of_ending
+            message: "Game star from Hemp_TheDrink at play_record -> " + play_record.toString() + " that made user's number of ending -> " + number_of_ending
         }
         await Star.starUp(starUpReq);
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function resetTheDrinkPlayLifes() {
+    try {
+
+        // reset logic here
+        console.log("Hemp[resetTheDrinkPlayLifes] -> resetTheDrinkPlayLifes() called, work in progress...");
 
     } catch (error) {
         throw error;
@@ -195,5 +201,7 @@ module.exports = {
     findTheDrinkPlayRecords,
     createTheDrinkPlayRecord,
     updateTheDrinkPlayRecord,
-    deleteTheDrinkPlayRecord
+    deleteTheDrinkPlayRecord,
+    theDrinkStarUp,
+    resetTheDrinkPlayLifes
 };

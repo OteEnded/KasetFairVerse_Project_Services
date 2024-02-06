@@ -388,22 +388,6 @@ async function sendStarToBBT(star) {
 async function fetchUpStarToBBT(star) {
     console.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
 
-    // const star_ids_that_sent_successfully = [];
-    // const point_send_logs = await Point_Send_Logs.findAll();
-    // for (let i in point_send_logs) {
-    //     if (point_send_logs[i].respond_errors == null) {
-    //         star_ids_that_sent_successfully.push(point_send_logs[i].star_id);
-    //     }
-    // }
-    // const stars_to_send = [];
-    // const all_stars = await getAllStars();
-    // for (let i in all_stars) {
-    //     if (!star_ids_that_sent_successfully.includes(all_stars[i].star_id)) {
-    //         if (![1,2,3].includes(all_stars[i].user_id)) stars_to_send.push(all_stars[i]);
-    //     }
-    // }
-
-    // for (let i in stars_to_send) {
     const respond = await sendStarToBBT(star);
     console.log("Star[fetchUpStarToBBT]: respond ->", respond)
     let respond_err = null;
@@ -420,7 +404,6 @@ async function fetchUpStarToBBT(star) {
         respond_data: respond_data,
         respond_errors: respond_err
     });
-    // }
 
     console.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }

@@ -101,12 +101,18 @@ app.use('/Api/KubKaoKabGang', kubkaokabgangRouter);
 app.use('/Api/Hemp', hempRouter);
 
 // special - cosmetic add play lifes function
-const Cosmetic = require('./models/Cosmetic');
 const cron = require('node-cron');
 
-cron.schedule('0 0 * * *', async () => { // every day at 00:00 (UTC+7) add play lifes to every user in play lifes table
+cron.schedule('0 0 * * *', async () => { // every day at 00:00 (UTC+7)
+    // add play lifes to every user in play lifes table
+    const Cosmetic = require('./models/Cosmetic');
     console.log("app[cron]: Adding play lifes to every user in Cosmetic_HoldYourBasket_PlayLifes table...");
     await Cosmetic.addSpinWheelPlayLifesToAllUsers();
+
+    // reset the play lifes table
+    const Hemp = require('./models/Hemp');
+    console.log("app[cron]: Resetting the play record for 6 ending user in Hemp_TheDrink_PlayLifes...");
+    await Hemp.resetTheDrinkPlayLifes();
 });
 
 // catch 404 and forward to error handler

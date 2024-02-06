@@ -20,6 +20,7 @@ const user_pages_controller = require('../controllers/user_pages_controller')
 
 router.get('/claim_reward', staff_pages_controller.claim_reward);
 router.get('/coupon_validation', staff_pages_controller.coupon_validation);
+router.get('/coupon_validation_fail', staff_pages_controller.coupon_validation_fail);
 router.post('/coupon_validation', staff_pages_controller.coupon_redeemed);
 
 router.get('/reward', user_pages_controller.reward);
