@@ -258,14 +258,14 @@ async function majorCouponUp(user_id) {
         if (is_user_has_major_coupon.length > 0) {
             return {
                 is_success: false,
-                message: "User already has a major coupon",
+                message: "User already has Major_ticket_2 coupon",
                 content: null
             }
         }
 
         return await createCoupon({
             user_id: user_id,
-            reward: "major",
+            reward: "Major_ticket_2",
             stars_to_use: []
         });
 
