@@ -223,7 +223,9 @@ async function starUp(req) {
 // Function to check if a user has 7 difference stars for the first time so that he/she can get a major coupon
 async function checkIfUserShouldGetMajorCoupon(user_id) {
     try {
+        console.log("Stars[checkIfUserShouldGetMajorCoupon]: checking for user_id ->", user_id)
         const number_of_different_star_sources = await getNumberOfDifferentStarSourcesByUserId(user_id);
+        console.log("Stars[checkIfUserShouldGetMajorCoupon]: User ->", user_id, "has", number_of_different_star_sources, "different stars.")
         if (number_of_different_star_sources > 6) {
 
             // Check if the user has already got the major coupon
