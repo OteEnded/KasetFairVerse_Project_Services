@@ -21,9 +21,9 @@ function getRewardDiv(){
     for (let i in reward_config) {
         let stars_use_msg = "";
         if (reward_config[i].stars_use > 0) {
-            stars_use_msg = "ใช้ดาว " + reward_config[i].stars_use + " ดวง";
+            stars_use_msg = "ใช้ดาว " + reward_config[i].stars_use + " ดวง*";
         } else {
-            stars_use_msg = "ได้รับทันทีเมื่อเก็บดาวครบ " + (-reward_config[i].stars_use) + "ดวง";
+            stars_use_msg = "ได้รับทันทีเมื่อเก็บดาวครบ " + (-reward_config[i].stars_use) + " ดวง*";
         }
         reward_div.push({
             image: reward_config[i].display.image,
