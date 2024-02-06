@@ -257,7 +257,7 @@ async function majorCouponUp(user_id) {
         const all_major_coupon = await getCouponsByReward("Major_ticket_2");
         console.log("all_major_coupon: ", all_major_coupon)
         for (let i in all_major_coupon) {
-            if (all_major_coupon.user_id == user_id) {
+            if (all_major_coupon.dataValues.user_id == user_id) {
                 return {
                     is_success: false,
                     message: "User already has Major_ticket_2 coupon",
