@@ -199,6 +199,18 @@ async function starUp(req) {
 
     console.log("Stars[starUp]: There is a star up request ->", req);
 
+    const user_star_inv = await getStarInventoryByUserId(req.user_id);
+
+    // check if user has already ten stars for the source
+    if (user_star_inv[req.source] >= 10) {
+        console.log("Stars[starUp]: User ->", req.user_id, "has already 10 stars for the source ->", req.source);
+        return {
+            is_success: false,
+            message: "User has already 10 stars for the source ->" + req.source,
+            content: null
+        }
+    }
+
     const new_star = await createStar(req);
     console.log("Stars[starUp]: Performed star up action.");
 
