@@ -53,20 +53,27 @@ function ensureDirectoryExistence(filePath) {
 }
 
 const log = (...args) => {
-    // Get the current time
-    const currentTime = new Date().toLocaleTimeString();
+    try {
+        // Get the current time
+        const currentTime = new Date().toLocaleTimeString();
 
-    // Combine all log arguments into a single string
-    const logMessage = `[${currentTime}] ${args.join(' ')}`;
+        // Combine all log arguments into a single string
+        const logMessage = `[${currentTime}] ${args.join(' ')}`;
 
-    // Ensure the log directory exists
-    ensureDirectoryExistence('./log/log.txt');
+        // Ensure the log directory exists
+        ensureDirectoryExistence('./log/log.txt');
 
-    // Append the log message with the current time to a text file
-    file_sys.appendFileSync('./log/log.txt', logMessage + '\n');
+        // Append the log message with the current time to a text file
+        file_sys.appendFileSync('./log/log.txt', logMessage + '\n');
 
-    // Log the message with the current time to the console
-    console.log(logMessage);
+        // Log the message with the current time to the console
+        console.log(logMessage);
+    }
+    catch (err) {
+        console.error('projectutility[log]: ERROR, cannot log message to file');
+        console.error(err);
+        console.log(...args);
+    }
 };
 
 module.exports = {
