@@ -84,8 +84,8 @@ const reward_config = {
         }
     },
     NK_cat_food: {
-        stars_use: 3,
-        stock: 7,
+        stars_use: 6,
+        stock: 4,
         display: {
             name: "อาหารแมว",
             from: "จาก N&K",
