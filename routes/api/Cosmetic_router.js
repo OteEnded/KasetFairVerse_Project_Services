@@ -4,11 +4,13 @@ const apiMiddleware = require('../../services/apimiddleware');
 const Cosmetic = require('../../models/Cosmetic');
 const User = require("../../models/User");
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/Cosmetic/HoldYourBasket/get - Get all HoldYourBasket play records
 router.get('/HoldYourBasket/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getAllHoldYourBasketPlayRecords();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all Cosmetic_HoldYourBasket_PlayRecords",
@@ -32,7 +34,7 @@ router.get('/HoldYourBasket/get', apiMiddleware.authenticate, async (req, res) =
 router.get('/HoldYourBasket/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketPlayRecordsByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Cosmetic_HoldYourBasket_PlayRecords with user_id: " + req.params.user_id,
@@ -56,7 +58,7 @@ router.get('/HoldYourBasket/get/user_id/:user_id', apiMiddleware.authenticate, a
 router.get('/HoldYourBasket/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketPlayRecordsByRoundId(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Cosmetic_HoldYourBasket_PlayRecords with round_id: " + req.params.round_id,
@@ -80,7 +82,7 @@ router.get('/HoldYourBasket/get/round_id/:round_id', apiMiddleware.authenticate,
 router.get('/HoldYourBasket/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getSumOfHoldYourBasketScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Sum of Cosmetic_HoldYourBasket_PlayRecords scores with user_id: " + req.params.user_id,
@@ -104,7 +106,7 @@ router.get('/HoldYourBasket/get_sum_score/user_id/:user_id', apiMiddleware.authe
 router.get('/HoldYourBasket/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketHighScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "High scores of Cosmetic_HoldYourBasket_PlayRecords with user_id: " + req.params.user_id,
@@ -128,7 +130,7 @@ router.get('/HoldYourBasket/get_high_score/user_id/:user_id', apiMiddleware.auth
 router.get('/HoldYourBasket/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketHighestScoresRecord();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Highest score record of Cosmetic_HoldYourBasket_PlayRecords",
@@ -153,7 +155,7 @@ router.get('/HoldYourBasket/get_highest_score', apiMiddleware.authenticate, asyn
 router.get('/HoldYourBasket/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.findHoldYourBasketPlayRecords(req.params.column, req.params.value);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Cosmetic_HoldYourBasket_PlayRecords with " + req.params.column + ": " + req.params.value,
@@ -256,7 +258,7 @@ router.put('/HoldYourBasket/save', apiMiddleware.authenticate, async (req, res) 
 router.delete('/HoldYourBasket/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.deleteHoldYourBasketPlayRecord(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Tried to delete Cosmetic_HoldYourBasket_PlayRecord",
@@ -281,7 +283,7 @@ router.delete('/HoldYourBasket/delete/round_id/:round_id', apiMiddleware.authent
 router.get('/HoldYourBasket/get_playlife', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getAllHoldYourBasketPlayLifes();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all Cosmetic_ColorMatching_PlayLifes",
@@ -307,7 +309,7 @@ router.get('/HoldYourBasket/get_playlife', apiMiddleware.authenticate, async (re
 router.get('/HoldYourBasket/get_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getHoldYourBasketPlayLifesByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Cosmetic_HoldYourBasket_PlayLifes with user_id: " + req.params.user_id,
@@ -332,7 +334,7 @@ router.get('/HoldYourBasket/get_playlife/user_id/:user_id', apiMiddleware.authen
 router.get('/SpinWheel/get_playlife/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Cosmetic.getSpinWheelPlayLifesByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Cosmetic_SpinWheel_PlayLifes with user_id: " + req.params.user_id,
@@ -366,7 +368,7 @@ router.put('/HoldYourBasket/offset_playlife/user_id/:user_id', apiMiddleware.aut
             });
         }
         const result = await Cosmetic.updateHoldYourBasketPlayLifes(req.params.user_id, req.body.offset);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Cosmetic_HoldYourBasket_PlayLifes with user_id: " + req.params.user_id + " offset by " + req.body.offset,
@@ -400,7 +402,7 @@ router.put('/SpinWheel/offset_playlife/user_id/:user_id', apiMiddleware.authenti
             });
         }
         const result = await Cosmetic.updateSpinWheelPlayLifes(req.params.user_id, req.body.offset);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Cosmetic_SpinWheel_PlayLifes with user_id: " + req.params.user_id + " offset by " + req.body.offset,

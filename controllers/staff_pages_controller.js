@@ -6,6 +6,8 @@ const Coupon = require('../models/coupon');
 const User = require('../models/user');
 const Reward = require('../models/reward');
 
+const putil = require('../utilities/projectutility')
+
 // // define view function
 // function <<functionName>>(<<functionParam>>) {
 // <<functionBody, return>>
@@ -91,13 +93,13 @@ exports.coupon_validation_fail = async (req, res) => {
 
 exports.coupon_redeemed = async (req, res) => {
 
-    console.log(req.body);
+    putil.log(req.body);
 
     const redeem_coupon = req.body.coupon_uuid;
     const redeem_staff = req.body.staff;
 
-    console.log(redeem_coupon);
-    console.log(redeem_staff);
+    putil.log(redeem_coupon);
+    putil.log(redeem_staff);
 
     const is_coupon_available = await Coupon.isCouponAvailable(redeem_coupon);
     if (!is_coupon_available) {

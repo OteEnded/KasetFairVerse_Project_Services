@@ -7,6 +7,8 @@ const Star = require('../models/Star');
 const User = require('../models/User');
 const Coupon = require('../models/Coupon');
 
+const putil = require('../utilities/projectutility')
+
 // // define view function
 // function <<functionName>>(<<functionParam>>) {
 // <<functionBody, return>>
@@ -163,11 +165,11 @@ exports.reward = async (req, res) => {
     let logged_in;
 
     let access_token = req.query.access_token;
-    console.log("access_token", access_token)
+    putil.log("access_token", access_token)
 
 
     const user = await User.getUserFromBBTToken(access_token);
-    console.log("user", user)
+    putil.log("user", user)
     logged_in = !(user.user_id === 2);
 
     const game_button_list = [];
@@ -183,7 +185,7 @@ exports.reward = async (req, res) => {
 exports.trade_coupon = async (req, res) => {
 
     let access_token = req.query.access_token;
-    console.log("access_token", access_token)
+    putil.log("access_token", access_token)
     if (access_token === undefined || access_token === null){
         access_token = "1";
     }
@@ -210,7 +212,7 @@ exports.trade_coupon = async (req, res) => {
         res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: [], reward_div_list: getRewardDiv(), nonce })
     }
     catch (error) {
-        console.error(error);
+        putil.error(error);
     }
 }
 
@@ -218,11 +220,11 @@ exports.trade_coupon_submit_select_star = async (req, res) => {
 
     const submittedForm = req.body;
 
-    console.log("Here", submittedForm);
-    console.log("Here2", Object.keys(submittedForm));
+    putil.log("Here", submittedForm);
+    putil.log("Here2", Object.keys(submittedForm));
 
     let access_token = req.query.access_token;
-    console.log("access_token", access_token)
+    putil.log("access_token", access_token)
     if (access_token === undefined || access_token === null){
         access_token = "1";
     }
@@ -234,7 +236,7 @@ exports.trade_coupon_submit_select_star = async (req, res) => {
         if (Object.keys(submittedForm).includes(star_div_list[i].code_name)){
             star_div_list[i].force_checked = true;
             star_selected += 1;
-            console.log(star_div_list[i]);
+            putil.log(star_div_list[i]);
         }
     }
 
@@ -260,16 +262,16 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
 
     const submittedForm = req.body;
 
-    console.log("Here", submittedForm);
+    putil.log("Here", submittedForm);
 
     const star_selected = submittedForm["passingSelectedStar"].split(",");
     star_selected.pop();
-    console.log("Here3", star_selected);
+    putil.log("Here3", star_selected);
 
     const reward_selected = Object.keys(submittedForm)[0];
 
     let access_token = req.query.access_token;
-    console.log("access_token", access_token)
+    putil.log("access_token", access_token)
     if (access_token === undefined || access_token === null){
         access_token = "1";
     }
@@ -280,7 +282,7 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
         reward: reward_selected,
         stars: star_selected
     });
-    console.log("NEW COUPON ->", newCoupon);
+    putil.log("NEW COUPON ->", newCoupon);
 
     // const newCoupon = await Coupon.createCoupon({
     //     user_id: user.user_id,
@@ -298,12 +300,12 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
 exports.my_coupon = async (req, res) => {
 
     let access_token = req.query.access_token;
-    console.log("access_token", access_token)
+    putil.log("access_token", access_token)
     if (access_token === undefined || access_token === null){
         access_token = "1";
     }
     const user = await User.getUserFromBBTToken(access_token);
-    console.log("user", user);
+    putil.log("user", user);
     if (user.user_id === 2){
         res.redirect('/login');
         return;
@@ -328,7 +330,7 @@ exports.login_submit = async (req, res) => {
     const username = req.body.userword;
     const password = req.body.passname;
 
-    console.log("user_page_controller[login_submit]: there is a login req with username -> " + username + " and password -> " + password);
+    putil.log("user_page_controller[login_submit]: there is a login req with username -> " + username + " and password -> " + password);
 
     let access_token = await User.userLogin(username, password);
     if (username === 1) access_token = "1";
@@ -345,13 +347,13 @@ exports.game_middleware = async (req, res) => {
 
     let access_token = req.query.access_token;
     access_token = access_token.split("?")[0];
-    console.log("access_token", access_token)
-    console.log("game_id", req.query.game_id)
+    putil.log("access_token", access_token)
+    putil.log("game_id", req.query.game_id)
     if (access_token === undefined || access_token === null){
         access_token = "1";
     }
     const user = await User.getUserFromBBTToken(access_token);
-    console.log("user", user);
+    putil.log("user", user);
     if (user.user_id === 2){
         res.redirect('/login');
         return;

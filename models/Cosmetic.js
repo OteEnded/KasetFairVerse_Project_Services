@@ -2,6 +2,8 @@ const Cosmetic_HoldYourBasket_PlayRecords = require('../entities/Cosmetic_HoldYo
 const Cosmetic_HoldYourBasket_PlayLifes = require("../entities/Cosmetic_HoldYourBasket_PlayLifes");
 const Star = require('../models/Star');
 
+const putil = require('../utilities/projectutility')
+
 // Function to get all HoldYourBasket play records
 async function getAllHoldYourBasketPlayRecords() {
     try {
@@ -232,9 +234,9 @@ async function createSpinWheelPlayLifes(req) {
 // Function to update HoldYourBasket play lifes
 async function updateHoldYourBasketPlayLifes(user_id, offset) {
     try {
-        console.log(user_id, offset)
+        putil.log(user_id, offset)
         let current_play_lifes = await getHoldYourBasketPlayLifesByUserId(user_id);
-        console.log(current_play_lifes)
+        putil.log(current_play_lifes)
 
         let new_play_lifes = {
             hold_your_basket: current_play_lifes + offset
@@ -243,7 +245,7 @@ async function updateHoldYourBasketPlayLifes(user_id, offset) {
         if (new_play_lifes.hold_your_basket < 0) new_play_lifes.hold_your_basket = 0;
         if (new_play_lifes.hold_your_basket > 20) new_play_lifes.hold_your_basket = 20;
 
-        console.log(new_play_lifes)
+        putil.log(new_play_lifes)
         await Cosmetic_HoldYourBasket_PlayLifes.update(new_play_lifes, {
             where: {
                 user_id: user_id
@@ -309,7 +311,7 @@ async function holdYourBasketStarUp(play_record){
 async function addSpinWheelPlayLifesToAllUsers() {
     try {
 
-        console.log("Cosmetic[addSpinWheelPlayLifesToAllUsers]: Adding spinwheel play lifes to every user in Cosmetic_HoldYourBasket_PlayLifes table...");
+        putil.log("Cosmetic[addSpinWheelPlayLifesToAllUsers]: Adding spinwheel play lifes to every user in Cosmetic_HoldYourBasket_PlayLifes table...");
 
         const all_play_lifes = await getAllHoldYourBasketPlayLifes();
         for (let i in all_play_lifes) {

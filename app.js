@@ -9,11 +9,12 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 
-// const putil = require('./utilities/projectutility')
+const putil = require('./utilities/projectutility')
 // const dbconnector = require('./services/dbconnector')
 const dbrelationdefiner = require('./services/dbrelationdefiner')
 
-console.log("app[main]: imported every primary module, starting the app...")
+putil.log("###--------------------------------------------------###")
+putil.log("app[main]: imported every primary module, starting the app...")
 
 // dbconnector.connect()
 dbrelationdefiner.defineRelationships();
@@ -106,12 +107,12 @@ const cron = require('node-cron');
 cron.schedule('0 0 * * *', async () => { // every day at 00:00 (UTC+7)
     // add play lifes to every user in play lifes table
     const Cosmetic = require('./models/Cosmetic');
-    console.log("app[cron]: Adding play lifes to every user in Cosmetic_HoldYourBasket_PlayLifes table...");
+    putil.log("app[cron]: Adding play lifes to every user in Cosmetic_HoldYourBasket_PlayLifes table...");
     await Cosmetic.addSpinWheelPlayLifesToAllUsers();
 
     // reset the play lifes table
     const Hemp = require('./models/Hemp');
-    console.log("app[cron]: Resetting the play record for 6 ending user in Hemp_TheDrink_PlayLifes...");
+    putil.log("app[cron]: Resetting the play record for 6 ending user in Hemp_TheDrink_PlayLifes...");
     await Hemp.resetTheDrinkPlayLifes();
 });
 

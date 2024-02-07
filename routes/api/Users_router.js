@@ -3,11 +3,13 @@ var router = express.Router();
 const user = require('../../models/User');
 const apiMiddleware = require('../../services/apimiddleware');
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/Users/get - Get all users
 router.get('/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await user.getAllUsers();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all users",
@@ -30,7 +32,7 @@ router.get('/get', apiMiddleware.authenticate, async (req, res) => {
 router.get('/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await user.getUser(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "User with user_id: " + req.params.user_id,
@@ -160,7 +162,7 @@ router.get('/get_bbt_user/token/:token', apiMiddleware.authenticate, async (req,
     try {
         const result = await user.getUserFromBBTToken(req.params.token);
         // const result = await user.getUserFromBBTToken(req.body.token);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "User with token: " + req.params.token,

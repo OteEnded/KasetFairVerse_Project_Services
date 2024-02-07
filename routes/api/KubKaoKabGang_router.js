@@ -4,11 +4,13 @@ const KubKaoKabKang = require('../../models/KubKaoKabKang');
 const apiMiddleware = require('../../services/apimiddleware');
 const User = require("../../models/User");
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/KubKaoKabKang/PasteScrumble/get - Get all PasteScrumble play records
 router.get('/PasteScrumble/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getAllPasteScrumblePlayRecords();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all KubKaoKabKang_PasteScrumble_PlayRecords",
@@ -33,7 +35,7 @@ router.get('/PasteScrumble/get', apiMiddleware.authenticate, async (req, res) =>
 router.get('/PasteScrumble/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumblePlayRecordsByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "KubKaoKabKang_PasteScrumble_PlayRecords with user_id: " + req.params.user_id,
@@ -57,7 +59,7 @@ router.get('/PasteScrumble/get/user_id/:user_id', apiMiddleware.authenticate, as
 router.get('/PasteScrumble/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumblePlayRecordsByRoundId(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "KubKaoKabKang_PasteScrumble_PlayRecords with round_id: " + req.params.round_id,
@@ -81,7 +83,7 @@ router.get('/PasteScrumble/get/round_id/:round_id', apiMiddleware.authenticate, 
 router.get('/PasteScrumble/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getSumOfPasteScrumbleScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Sum of KubKaoKabKang_PasteScrumble_PlayRecords scores with user_id: " + req.params.user_id,
@@ -105,7 +107,7 @@ router.get('/PasteScrumble/get_sum_score/user_id/:user_id', apiMiddleware.authen
 router.get('/PasteScrumble/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumbleHighScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "High scores of KubKaoKabKang_PasteScrumble_PlayRecords with user_id: " + req.params.user_id,
@@ -129,7 +131,7 @@ router.get('/PasteScrumble/get_high_score/user_id/:user_id', apiMiddleware.authe
 router.get('/PasteScrumble/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getPasteScrumbleHighestScoresRecord();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Highest score record of KubKaoKabKang_PasteScrumble_PlayRecords",
@@ -154,7 +156,7 @@ router.get('/PasteScrumble/get_highest_score', apiMiddleware.authenticate, async
 router.get('/PasteScrumble/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.findPasteScrumblePlayRecords(req.params.column, req.params.value);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "KubKaoKabKang_PasteScrumble_PlayRecords with " + req.params.column + ": " + req.params.value,
@@ -257,7 +259,7 @@ router.put('/PasteScrumble/save', apiMiddleware.authenticate, async (req, res) =
 router.delete('/PasteScrumble/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.deletePasteScrumblePlayRecord(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Tried to delete KubKaoKabKang_PasteScrumble_PlayRecord",
@@ -281,7 +283,7 @@ router.delete('/PasteScrumble/delete/round_id/:round_id', apiMiddleware.authenti
 router.get('/CWheat/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getAllCWheatPlayRecords();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all KubKaoKabKang_CWheat_PlayRecords",
@@ -305,7 +307,7 @@ router.get('/CWheat/get', apiMiddleware.authenticate, async (req, res) => {
 router.get('/CWheat/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatPlayRecordsByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "KubKaoKabKang_CWheat_PlayRecords with user_id: " + req.params.user_id,
@@ -329,7 +331,7 @@ router.get('/CWheat/get/user_id/:user_id', apiMiddleware.authenticate, async (re
 router.get('/CWheat/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatPlayRecordsByRoundId(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "KubKaoKabKang_CWheat_PlayRecords with round_id: " + req.params.round_id,
@@ -353,7 +355,7 @@ router.get('/CWheat/get/round_id/:round_id', apiMiddleware.authenticate, async (
 router.get('/CWheat/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getSumOfCWheatScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Sum of KubKaoKabKang_CWheat_PlayRecords scores with user_id: " + req.params.user_id,
@@ -377,7 +379,7 @@ router.get('/CWheat/get_sum_score/user_id/:user_id', apiMiddleware.authenticate,
 router.get('/CWheat/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatHighScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "High scores of KubKaoKabKang_CWheat_PlayRecords with user_id: " + req.params.user_id,
@@ -401,7 +403,7 @@ router.get('/CWheat/get_high_score/user_id/:user_id', apiMiddleware.authenticate
 router.get('/CWheat/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.getCWheatHighestScoresRecord();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Highest score record of KubKaoKabKang_CWheat_PlayRecords",
@@ -426,7 +428,7 @@ router.get('/CWheat/get_highest_score', apiMiddleware.authenticate, async (req, 
 router.get('/CWheat/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.findCWheatPlayRecords(req.params.column, req.params.value);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "KubKaoKabKang_CWheat_PlayRecords with " + req.params.column + ": " + req.params.value,
@@ -529,7 +531,7 @@ router.put('/CWheat/save', apiMiddleware.authenticate, async (req, res) => {
 router.delete('/CWheat/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await KubKaoKabKang.deleteCWheatPlayRecord(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Tried to delete KubKaoKabKang_CWheat_PlayRecord",

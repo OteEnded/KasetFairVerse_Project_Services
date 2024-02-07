@@ -1,11 +1,12 @@
 const file_sys = require('fs');
+const path = require('path');
 
 function readJSONFile(filePath){
-    console.log("projectutility[readJSONFile]: Reading JSON file from", filePath)
+    log("projectutility[readJSONFile]: Reading JSON file from", filePath)
     try {
         const jsonData = file_sys.readFileSync(filePath, 'utf8');
         const data = JSON.parse(jsonData);
-        console.log("projectutility[readJSONFile]: Data from", filePath, "can be read successfully and will be return.")
+        log("projectutility[readJSONFile]: Data from", filePath, "can be read successfully and will be return.")
         return data
     } catch (err) {
         console.error('projectutility[readJSONFile]: ERROR, cannot read file from', filePath);
@@ -15,9 +16,9 @@ function readJSONFile(filePath){
 }
 
 function getConfig(){
-    console.log("projectutility[getConfig]: Getting config data:")
+    log("projectutility[getConfig]: Getting config data:")
     configData = readJSONFile('./config.json')
-    console.log("projectutility[getConfig]: ☆★ CONFIG DATA IS GOTTEN! ★☆.")
+    log("projectutility[getConfig]: ☆★ CONFIG DATA IS GOTTEN! ★☆.")
     // console.log.txt(configData)
     return configData
 }
@@ -42,12 +43,24 @@ function getRandomIntInRange(min = null, max = null){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const logToTextFile = (...args) => {
+function ensureDirectoryExistence(filePath) {
+    const dirname = path.dirname(filePath);
+    if (file_sys.existsSync(dirname)) {
+        return true;
+    }
+    ensureDirectoryExistence(dirname);
+    file_sys.mkdirSync(dirname);
+}
+
+const log = (...args) => {
     // Get the current time
     const currentTime = new Date().toLocaleTimeString();
 
     // Combine all log arguments into a single string
     const logMessage = `[${currentTime}] ${args.join(' ')}`;
+
+    // Ensure the log directory exists
+    ensureDirectoryExistence('./log/log.txt');
 
     // Append the log message with the current time to a text file
     file_sys.appendFileSync('./log/log.txt', logMessage + '\n');
@@ -56,12 +69,11 @@ const logToTextFile = (...args) => {
     console.log(logMessage);
 };
 
-
 module.exports = {
     readJSONFile,
     getConfig,
     getPort,
     objLen,
     getRandomIntInRange,
-    logToTextFile
+    log
 }

@@ -1,8 +1,10 @@
 const request = require('request');
 
+const putil = require('../utilities/projectutility')
+
 async function requestToBBT(access_token, query, variables = {}) {
 
-    console.log("apirequester[requestToBBT]: sending request with access_token =", access_token, "query =", query, "variables =", variables);
+    putil.log("apirequester[requestToBBT]: sending request with access_token =", access_token, "query =", query, "variables =", variables);
 
     try {
         const options = {
@@ -23,7 +25,7 @@ async function requestToBBT(access_token, query, variables = {}) {
                     reject(error);
                 } else {
                     try {
-                        console.log("apirequester[requestToBBT]: response.body =", response.body)
+                        putil.log("apirequester[requestToBBT]: response.body =", response.body)
                         const responseData = JSON.parse(response.body);
                         resolve(responseData);
                     } catch (parseError) {

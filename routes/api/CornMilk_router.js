@@ -4,11 +4,13 @@ const apiMiddleware = require('../../services/apimiddleware');
 const CornMilk = require('../../models/CornMilk');
 const User = require("../../models/User");
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/CornMilk/RaisuwanCrush/get - Get all RaisuwanCrush play records
 router.get('/RaisuwanCrush/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getAllRaisuwanCrushPlayRecords();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all CornMilk_RaisuwanCrush_PlayRecords",
@@ -32,7 +34,7 @@ router.get('/RaisuwanCrush/get', apiMiddleware.authenticate, async (req, res) =>
 router.get('/RaisuwanCrush/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushPlayRecordsByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "CornMilk_RaisuwanCrush_PlayRecords with user_id: " + req.params.user_id,
@@ -56,7 +58,7 @@ router.get('/RaisuwanCrush/get/user_id/:user_id', apiMiddleware.authenticate, as
 router.get('/RaisuwanCrush/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushPlayRecordsByRoundId(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "CornMilk_RaisuwanCrush_PlayRecords with round_id: " + req.params.round_id,
@@ -80,7 +82,7 @@ router.get('/RaisuwanCrush/get/round_id/:round_id', apiMiddleware.authenticate, 
 router.get('/RaisuwanCrush/get_sum_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getSumOfRaisuwanCrushScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Sum of CornMilk_RaisuwanCrush_PlayRecords scores with user_id: " + req.params.user_id,
@@ -104,7 +106,7 @@ router.get('/RaisuwanCrush/get_sum_score/user_id/:user_id', apiMiddleware.authen
 router.get('/RaisuwanCrush/get_high_score/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushHighScoresByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "High scores of CornMilk_RaisuwanCrush_PlayRecords with user_id: " + req.params.user_id,
@@ -128,7 +130,7 @@ router.get('/RaisuwanCrush/get_high_score/user_id/:user_id', apiMiddleware.authe
 router.get('/RaisuwanCrush/get_highest_score', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.getRaisuwanCrushHighestScoresRecord();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Highest score record of CornMilk_RaisuwanCrush_PlayRecords",
@@ -153,7 +155,7 @@ router.get('/RaisuwanCrush/get_highest_score', apiMiddleware.authenticate, async
 router.get('/RaisuwanCrush/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.findRaisuwanCrushPlayRecords(req.params.column, req.params.value);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "CornMilk_RaisuwanCrush_PlayRecords with " + req.params.column + ": " + req.params.value,
@@ -246,7 +248,7 @@ router.put('/RaisuwanCrush/save', apiMiddleware.authenticate, async (req, res) =
 router.delete('/RaisuwanCrush/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CornMilk.deleteRaisuwanCrushPlayRecord(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Tried to delete CornMilk_RaisuwanCrush_PlayRecord",

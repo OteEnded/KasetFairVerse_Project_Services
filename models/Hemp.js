@@ -1,6 +1,8 @@
 const Hemp_TheDrink_PlayRecords = require('../entities/Hemp_TheDrink_PlayRecords');
 const Star = require('../models/Star');
 
+const putil = require('../utilities/projectutility')
+
 // Function to get all Hemp TheDrink play records
 function getTheDrinkEndingList() {
     return ["Chocolate", "Coffee", "Plain", "Skim", "Strawberry", "Sweet"];
@@ -183,7 +185,7 @@ async function resetTheDrinkPlayLifes() {
     try {
 
         // reset logic here
-        console.log("Hemp[resetTheDrinkPlayLifes] -> resetTheDrinkPlayLifes() called, work in progress...");
+        putil.log("Hemp[resetTheDrinkPlayLifes] -> resetTheDrinkPlayLifes() called, work in progress...");
 
     } catch (error) {
         throw error;

@@ -4,11 +4,13 @@ const apiMiddleware = require('../../services/apimiddleware');
 const CoffeeBean = require('../../models/CoffeeBean');
 const User = require("../../models/User");
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/CoffeeBean/FindMyMeow/get - Get all FindMyMeow play records
 router.get('/FindMyMeow/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.getAllFindMyMeowPlayRecords();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all CoffeeBean_FindMyMeow_PlayRecords",
@@ -32,7 +34,7 @@ router.get('/FindMyMeow/get', apiMiddleware.authenticate, async (req, res) => {
 router.get('/FindMyMeow/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.getFindMyMeowPlayRecordsByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "CoffeeBean_FindMyMeow_PlayRecords with user_id: " + req.params.user_id,
@@ -56,7 +58,7 @@ router.get('/FindMyMeow/get/user_id/:user_id', apiMiddleware.authenticate, async
 router.get('/FindMyMeow/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.getFindMyMeowPlayRecordsByRoundId(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "CoffeeBean_FindMyMeow_PlayRecords with round_id: " + req.params.round_id,
@@ -151,7 +153,7 @@ router.put('/FindMyMeow/save', apiMiddleware.authenticate, async (req, res) => {
 router.delete('/FindMyMeow/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await CoffeeBean.deleteFindMyMeowPlayRecord(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Tried to delete CoffeeBean_FindMyMeow_PlayRecord",

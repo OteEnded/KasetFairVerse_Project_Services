@@ -6,7 +6,7 @@ const dbconnector = require('../services/dbconnector');
 api_permission_groups = null
 
 function validate_api_permission_groups_config_structure(checking_api_permission_groups){
-    console.log("apimiddleware[validate_api_permission_groups_config_structure]: Checking api_permission_groups config structure...")
+    putil.log("apimiddleware[validate_api_permission_groups_config_structure]: Checking api_permission_groups config structure...")
     if (checking_api_permission_groups == null) { return false }
     if (Object.keys(checking_api_permission_groups).length === 0) { return false }
     for (let i in checking_api_permission_groups){
@@ -41,14 +41,14 @@ function find_matching_group(key){
 }
 
 function is_allowed(req){
-    console.log("apimiddleware[is_allowed]: Checking if request is allowed...")
+    putil.log("apimiddleware[is_allowed]: Checking if request is allowed...")
     load_api_permission_groups()
     let permission_group = find_matching_group(req.headers['api-key'])
-    console.log("apimiddleware[is_allowed]: permission_group ->", permission_group)
+    putil.log("apimiddleware[is_allowed]: permission_group ->", permission_group)
     if (permission_group === ""){
         return false
     }
-    // console.log.txt("api_permission_groups", api_permission_groups)
+    // putil.log.txt("api_permission_groups", api_permission_groups)
     if (Object.keys(api_permission_groups[permission_group]["permissions"]).includes("*")){
         if (req.method === "GET" && api_permission_groups[permission_group]["permissions"]["*"]["read"]){
             return true
@@ -74,7 +74,7 @@ function authenticate(req, res, next) {
     // Your authentication logic here
     if (!is_allowed(req)) {
 
-        console.log("apimiddleware[authenticate]: These is a unauthorized request from ->", req.ip,
+        putil.log("apimiddleware[authenticate]: These is a unauthorized request from ->", req.ip,
         "\nwith header ->", req.headers,
         "\nwith body ->", req.body,
         "\nrequest to url ->", req.originalUrl)
@@ -108,10 +108,10 @@ async function logRequest(req, res, next) {
     let existing_tables = results.map((result) => {
         return result[Object.keys(result)[0]]
     });
-    console.log("apimiddleware[logRequest]: Checking if RequestLogs table exists...")
-    // console.log.txt(existing_tables)
+    putil.log("apimiddleware[logRequest]: Checking if RequestLogs table exists...")
+    // putil.log.txt(existing_tables)
     if (existing_tables.includes('requestlogs')) {
-        console.log("apimiddleware[logRequest]: RequestLogs table exists, logging request...")
+        putil.log("apimiddleware[logRequest]: RequestLogs table exists, logging request...")
         let log = {
             requester_ip: req.ip,
             request_to: req.hostname + req.originalUrl,
@@ -120,11 +120,11 @@ async function logRequest(req, res, next) {
             request_header: req.headers,
             request_body: req.body
         }
-        console.log("apimiddleware[logRequest]: Logging request ->", log)
+        putil.log("apimiddleware[logRequest]: Logging request ->", log)
         await RequestLog.createRequestLogs(log)
     }
     else {
-        console.log("apimiddleware[logRequest]: Cannot log.txt request, RequestLogs table does not exist.")
+        putil.log("apimiddleware[logRequest]: Cannot log.txt request, RequestLogs table does not exist.")
     }
 
     next();

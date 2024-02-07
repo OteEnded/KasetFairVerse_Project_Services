@@ -4,6 +4,8 @@ const Reward_Claim_Logs = require('../entities/Reward_Claim_Logs');
 const Reward = require('../models/Reward');
 const User = require('../models/User');
 
+const putil = require('../utilities/projectutility')
+
 // Function to get all coupons
 async function getAllCoupons() {
     try {
@@ -203,9 +205,9 @@ async function createCouponRequest(req) {
 // Function to create a coupon
 async function couponUp(req) {
     try {
-        console.log("Coupon[couponUp] -> req: ", req);
+        putil.log("Coupon[couponUp] -> req: ", req);
         const coupon_user_has = await getCouponsByUserId(req.user_id);
-        console.log("coupon_user_has: ", coupon_user_has);
+        putil.log("coupon_user_has: ", coupon_user_has);
         for (let i in coupon_user_has) {
             if (coupon_user_has[i].dataValues.reward === req.reward) {
                 return {
@@ -254,7 +256,7 @@ async function createCoupon(req) {
 // Function to create major coupons
 async function majorCouponUp(user_id) {
     try {
-        console.log("Coupon[majorCouponUp] -> user_id: ", user_id);
+        putil.log("Coupon[majorCouponUp] -> user_id: ", user_id);
         const { getNumberOfDifferentStarSourcesByUserId } = require('../models/Star');
         const number_of_different_star_of_user = await getNumberOfDifferentStarSourcesByUserId(user_id, true);
         if (number_of_different_star_of_user < 7) {
@@ -266,7 +268,7 @@ async function majorCouponUp(user_id) {
         }
 
         const coupon_user_has = await getCouponsByUserId(user_id);
-        console.log("coupon_user_has: ", coupon_user_has);
+        putil.log("coupon_user_has: ", coupon_user_has);
         for (let i in coupon_user_has) {
             if (coupon_user_has[i].dataValues.reward === "Major_ticket_2") {
                 return {
@@ -308,7 +310,7 @@ async function getSumOfCouponsByReward(reward) {
 async function getAllAvailableCouponByUserId(user_id){
     try {
         const all_coupon = await getCouponsByUserId(user_id);
-        console.log("all_coupon: ", all_coupon);
+        putil.log("all_coupon: ", all_coupon);
         const available_coupon_list = [];
 
         const all = await Reward_Claim_Logs.findAll();

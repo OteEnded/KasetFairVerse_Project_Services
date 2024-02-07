@@ -2,6 +2,8 @@ const sequelize = require('sequelize');
 const Accessories_ColorMatching_PlayRecords = require('../entities/Accessories_ColorMatching_PlayRecords');
 const Star = require('../models/Star');
 
+const putil = require('../utilities/projectutility')
+
 // Function to get all ColorMatching play records
 async function getAllColorMatchingPlayRecords() {
     try {
@@ -88,7 +90,7 @@ async function getUserWinAmount(user_id){
                 break;
             }
         }
-        console.log("Here", leader_board);
+        putil.log("Here", leader_board);
         return win_amount;
     } catch (error) {
         throw error;

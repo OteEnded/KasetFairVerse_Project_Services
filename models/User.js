@@ -4,6 +4,8 @@ const BigBangTheory_Token_Buffer = require('../entities/BigBangTheory_Token_Buff
 const dbmigrateandseed = require('../services/dbmigrateandseed');
 const apirequester = require('../services/apirequester');
 
+const putil = require('../utilities/projectutility')
+
 // Function to get all users
 async function getAllUsers() {
     try {
@@ -105,7 +107,7 @@ async function deleteUser(user_id) {
 async function requestUserFromBigBangTheory(access_token) {
     try {
 
-        console.log("User[requestUserFromBigBangTheory]: Getting user from big bang theory with token -> " + access_token);
+        putil.log("User[requestUserFromBigBangTheory]: Getting user from big bang theory with token -> " + access_token);
 
         let query =
         `query {
@@ -138,7 +140,7 @@ async function requestUserFromBigBangTheory(access_token) {
 async function requestUserLoginFromBigBangTheory(username, password) {
     try {
 
-        console.log("User[requestUserFromBigBangTheory]: Logging in user from big bang theory with username -> " + username + " and password -> " + password);
+        putil.log("User[requestUserFromBigBangTheory]: Logging in user from big bang theory with username -> " + username + " and password -> " + password);
 
         let query =
         `
@@ -178,12 +180,12 @@ async function requestUserLoginFromBigBangTheory(username, password) {
 async function userLogin(username, password) {
     try {
 
-        console.log("User[userLogin]: Logging in user with username -> " + username + " and password -> " + password);
+        putil.log("User[userLogin]: Logging in user with username -> " + username + " and password -> " + password);
 
         const res_from_bbt = await requestUserLoginFromBigBangTheory(username, password);
 
         if (Object.keys(res_from_bbt).includes("errors") || res_from_bbt.data == null) {
-            console.log("User[userLogin]: ERROR! Cannot login user from big bang theory with the username and password");
+            putil.log("User[userLogin]: ERROR! Cannot login user from big bang theory with the username and password");
             return null;
         }
 
@@ -198,7 +200,7 @@ async function userLogin(username, password) {
 // Function to get default user
 async function getDefaultUser(which_type = "tester") {
 
-    console.log("User[getDefaultUser]: Getting default user ->", which_type);
+    putil.log("User[getDefaultUser]: Getting default user ->", which_type);
 
     // check if default user is already in database
     const user_in_db = await users.findAll();
@@ -246,26 +248,26 @@ async function getUserFromBBTToken(access_token) {
 
     try {
 
-        console.log("User[getUserFromBBTToken]: Getting user from big bang theory with token -> " + access_token);
+        putil.log("User[getUserFromBBTToken]: Getting user from big bang theory with token -> " + access_token);
 
         if (access_token === "1") {
-            console.log("User[getUserFromBBTToken]: access_token is 1, return tester user");
+            putil.log("User[getUserFromBBTToken]: access_token is 1, return tester user");
             return await getDefaultUser("tester");
         }
 
 
         if (access_token == null) {
-            console.log("User[getUserFromBBTToken]: access_token is null, return error user");
+            putil.log("User[getUserFromBBTToken]: access_token is null, return error user");
             return await getDefaultUser("error");
         }
 
         if (access_token === "1") {
-            console.log("User[getUserFromBBTToken]: access_token is 1, return tester user");
+            putil.log("User[getUserFromBBTToken]: access_token is 1, return tester user");
             return await getDefaultUser("tester");
         }
 
         if (access_token.toUpperCase().startsWith("guest".toUpperCase())) {
-            console.log("User[getUserFromBBTToken]: access_token is guest, return guest user");
+            putil.log("User[getUserFromBBTToken]: access_token is guest, return guest user");
             return await getDefaultUser("guest");
         }
 
@@ -283,13 +285,13 @@ async function getUserFromBBTToken(access_token) {
                     user_id: data_from_buffer.user_id
                 }
             });
-            console.log("User[getUserFromBBTToken]: found token in buffer, set target_user to ->", target_user);
+            putil.log("User[getUserFromBBTToken]: found token in buffer, set target_user to ->", target_user);
         }
 
         const res_from_bbt = await requestUserFromBigBangTheory(access_token);
 
         if (Object.keys(res_from_bbt).includes("errors") || res_from_bbt.data == null) {
-            console.log("User[getUserFromBBTToken]: ERROR! Cannot get user from big bang theory with the token");
+            putil.log("User[getUserFromBBTToken]: ERROR! Cannot get user from big bang theory with the token");
             return await getDefaultUser("error");
         }
 
@@ -344,7 +346,7 @@ async function getUserFromBBTToken(access_token) {
 
 // Function to save big bang theory user profile to database
 async function saveBBTUserProfile(mode = "update", res_from_bbt, user_id){
-    console.log("User[saveBBTUserProfile]: Saving user profile to database");
+    putil.log("User[saveBBTUserProfile]: Saving user profile to database");
     let save_data_body = {
         user_id: user_id,
         bbt_user_id: res_from_bbt.data.user.id,
@@ -360,7 +362,7 @@ async function saveBBTUserProfile(mode = "update", res_from_bbt, user_id){
     if (mode === "create") {
         save_data_body.bbt_user_uuid = res_from_bbt.data.user.uuid;
         await BigBangTheory_User_Profiles.create(save_data_body);
-        console.log("User[saveBBTUserProfile]: saved in create mode ->", save_data_body);
+        putil.log("User[saveBBTUserProfile]: saved in create mode ->", save_data_body);
     }
     else if (mode === "update") {
         await BigBangTheory_User_Profiles.update(save_data_body, {
@@ -368,7 +370,7 @@ async function saveBBTUserProfile(mode = "update", res_from_bbt, user_id){
                 bbt_user_uuid: res_from_bbt.data.user.uuid
             }
         });
-        console.log("User[saveBBTUserProfile]: saved in update mode ->", save_data_body, "\nwhere bbt_user_uuid ->", res_from_bbt.data.user.uuid);
+        putil.log("User[saveBBTUserProfile]: saved in update mode ->", save_data_body, "\nwhere bbt_user_uuid ->", res_from_bbt.data.user.uuid);
     }
     else {
         throw new Error("User[saveBBTUserProfile]: mode is not defined");
@@ -436,7 +438,7 @@ async function getUserTokenBufferByUserId(user_id) {
                 ['createdAt', 'DESC']
             ]
         });
-        console.log(token_buffer)
+        putil.log(token_buffer)
         return token_buffer;
     }
     catch (error) {

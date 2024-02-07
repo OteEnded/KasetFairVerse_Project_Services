@@ -1,5 +1,7 @@
 const RequestLogs = require('../entities/RequestLogs');
 
+const putil = require('../utilities/projectutility')
+
 // Function to get all Request Logs
 async function getAllRequestLogs() {
     try {

@@ -4,11 +4,13 @@ const apiMiddleware = require('../../services/apimiddleware');
 const Hemp = require('../../models/Hemp');
 const User = require('../../models/User');
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/Hemp/TheDrink/get - Get all Hemp TheDrink play records
 router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getAllTheDrinkPlayRecords();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all Hemp_TheDrink_PlayRecords",
@@ -32,7 +34,7 @@ router.get('/TheDrink/get', apiMiddleware.authenticate, async (req, res) => {
 router.get('/TheDrink/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkPlayRecordsByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Hemp_TheDrink_PlayRecords with user_id: " + req.params.user_id,
@@ -56,7 +58,7 @@ router.get('/TheDrink/get/user_id/:user_id', apiMiddleware.authenticate, async (
 router.get('/TheDrink/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkPlayRecordsByRoundId(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Hemp_TheDrink_PlayRecords with round_id: " + req.params.round_id,
@@ -80,7 +82,7 @@ router.get('/TheDrink/get/round_id/:round_id', apiMiddleware.authenticate, async
 router.get('/TheDrink/get_number_of_ending/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getNumberOfDifferentTheDrinkEndingsPlayed(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Number of different Hemp_TheDrink endings played by user_id: " + req.params.user_id,
@@ -104,7 +106,7 @@ router.get('/TheDrink/get_number_of_ending/user_id/:user_id', apiMiddleware.auth
 router.get('/TheDrink/get_progress/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.getTheDrinkProgressByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Hemp TheDrink progress played by user_id: " + req.params.user_id,
@@ -128,7 +130,7 @@ router.get('/TheDrink/get_progress/user_id/:user_id', apiMiddleware.authenticate
 router.get('/TheDrink/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.findTheDrinkPlayRecords(req.params.column, req.params.value);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Hemp_TheDrink_PlayRecords with " + req.params.column + ": " + req.params.value,
@@ -231,7 +233,7 @@ router.put('/TheDrink/save', apiMiddleware.authenticate, async (req, res) => {
 router.delete('/TheDrink/delete/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Hemp.deleteTheDrinkPlayRecord(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Tried to delete Hemp_TheDrink_PlayRecord",

@@ -4,11 +4,13 @@ const apiMiddleware = require('../../services/apimiddleware');
 const Accessories = require('../../models/Accessories');
 const User = require("../../models/User");
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/Accessories/ColorMatching/get - Get all ColorMatching play records
 router.get('/ColorMatching/get', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.getAllColorMatchingPlayRecords();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "List of all Accessories_ColorMatching_PlayRecords",
@@ -32,7 +34,7 @@ router.get('/ColorMatching/get', apiMiddleware.authenticate, async (req, res) =>
 router.get('/ColorMatching/get/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.getColorMatchingPlayRecordsByUserId(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Accessories_ColorMatching_PlayRecords with user_id: " + req.params.user_id,
@@ -57,7 +59,7 @@ router.get('/ColorMatching/get/user_id/:user_id', apiMiddleware.authenticate, as
 router.get('/ColorMatching/get/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.getColorMatchingPlayRecordsByRoundId(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Accessories_ColorMatching_PlayRecords with round_id: " + req.params.round_id,
@@ -81,7 +83,7 @@ router.get('/ColorMatching/get/round_id/:round_id', apiMiddleware.authenticate, 
 router.get('/ColorMatching/get_leaderboard', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.getLeaderBoard();
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Accessories_ColorMatching_PlayRecords leaderboard",
@@ -106,7 +108,7 @@ router.get('/ColorMatching/get_leaderboard', apiMiddleware.authenticate, async (
 router.get('/ColorMatching/get_leaderboard/range/:range', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.getLeaderBoard(req.params.range);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Accessories_ColorMatching_PlayRecords leaderboard with range: " + req.params.range,
@@ -131,7 +133,7 @@ router.get('/ColorMatching/get_leaderboard/range/:range', apiMiddleware.authenti
 router.get('/ColorMatching/get_win_amount/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.getUserWinAmount(req.params.user_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Accessories_ColorMatching_PlayRecords win amount with user_id: " + req.params.user_id,
@@ -156,7 +158,7 @@ router.get('/ColorMatching/get_win_amount/user_id/:user_id', apiMiddleware.authe
 router.get('/ColorMatching/get_find/:column/:value', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.findColorMatchingPlayRecords(req.params.column, req.params.value);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Accessories_ColorMatching_PlayRecords with " + req.params.column + ": " + req.params.value,
@@ -259,7 +261,7 @@ router.put('/ColorMatching/save', apiMiddleware.authenticate, async (req, res) =
 router.delete('/ColorMatching/delete/round_id/:round_id', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await Accessories.deleteColorMatchingPlayRecord(req.params.round_id);
-        console.log(result);
+        putil.log(result);
         res.json({
             is_success: true,
             message: "Tried to delete Accessories_ColorMatching_PlayRecord",

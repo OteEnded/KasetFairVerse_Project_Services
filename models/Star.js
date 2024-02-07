@@ -6,6 +6,8 @@ const Coupon = require('../models/Coupon');
 
 const apirequester = require('../services/apirequester');
 
+const putil = require('../utilities/projectutility')
+
 const star_config = {
     Accessories_ColorMatching: {
         code_name: "Accessories_ColorMatching",
@@ -96,25 +98,23 @@ async function getStarsByUserId(user_id, include_used = false) {
             }
         });
 
-        console.log("Stars[getStarsByUserId]: stars ->", stars);
+        putil.log("Stars[getStarsByUserId]: stars ->", stars);
 
         if (!include_used) {
 
             const unused_stars = [];
 
             for (let i in stars) {
-                console.log(stars[i])
-                console.log(stars[i].coupon_uuid)
-                console.log(stars[i].coupon_uuid != null)
+                putil.log(stars[i])
+                putil.log(stars[i].coupon_uuid)
+                putil.log(stars[i].coupon_uuid != null)
                 if (stars[i].coupon_uuid == null) {
                     unused_stars.push(stars[i].dataValues);
                 }
             }
-            console.log("There", unused_stars)
             return unused_stars;
         }
 
-        console.log("There", stars)
         return stars;
     }
     catch (error) {
@@ -174,7 +174,7 @@ async function getSumOfStarsByUserId(user_id) {
 // Function to create a new star
 async function createStar(req) {
 
-    console.log("Stars[createStar]: There is a create star request ->", req);
+    putil.log("Stars[createStar]: There is a create star request ->", req);
 
     const user_id = req.user_id;
     const source = req.source;
@@ -189,7 +189,7 @@ async function createStar(req) {
         message: message
     });
 
-    console.log("Stars[createStar]: Star created ->", new_star)
+    putil.log("Stars[createStar]: Star created ->", new_star)
 
     return new_star.dataValues;
 }
@@ -197,13 +197,13 @@ async function createStar(req) {
 // Function to set up a star to the buffer
 async function starUp(req) {
 
-    console.log("Stars[starUp]: There is a star up request ->", req);
+    putil.log("Stars[starUp]: There is a star up request ->", req);
 
     const user_star_inv = await getStarInventoryByUserId(req.user_id);
 
     // check if user has already ten stars for the source
     if (user_star_inv[req.source] >= 10) {
-        console.log("Stars[starUp]: User ->", req.user_id, "has already 10 stars for the source ->", req.source);
+        putil.log("Stars[starUp]: User ->", req.user_id, "has already 10 stars for the source ->", req.source);
         return {
             is_success: false,
             message: "User has already 10 stars for the source ->" + req.source,
@@ -212,7 +212,7 @@ async function starUp(req) {
     }
 
     const new_star = await createStar(req);
-    console.log("Stars[starUp]: Performed star up action.");
+    putil.log("Stars[starUp]: Performed star up action.");
 
     await checkIfUserShouldGetMajorCoupon(req.user_id);
     // await fetchUpStarToBBT(new_star);
@@ -223,9 +223,9 @@ async function starUp(req) {
 // Function to check if a user has 7 difference stars for the first time so that he/she can get a major coupon
 async function checkIfUserShouldGetMajorCoupon(user_id) {
     try {
-        console.log("Stars[checkIfUserShouldGetMajorCoupon]: checking for user_id ->", user_id)
+        putil.log("Stars[checkIfUserShouldGetMajorCoupon]: checking for user_id ->", user_id)
         const number_of_different_star_sources = await getNumberOfDifferentStarSourcesByUserId(user_id, true);
-        console.log("Stars[checkIfUserShouldGetMajorCoupon]: User ->", user_id, "has", number_of_different_star_sources, "different stars.")
+        putil.log("Stars[checkIfUserShouldGetMajorCoupon]: User ->", user_id, "has", number_of_different_star_sources, "different stars.")
         if (number_of_different_star_sources > 6) {
 
             // Check if the user has already got the major coupon
@@ -236,11 +236,11 @@ async function checkIfUserShouldGetMajorCoupon(user_id) {
                 }
             }
 
-            console.log("Stars[checkIfUserShouldGetMajorCoupon]: User ->", user_id, "has 7 different stars for the first time. Creating a major coupon for the user.");
+            putil.log("Stars[checkIfUserShouldGetMajorCoupon]: User ->", user_id, "has 7 different stars for the first time. Creating a major coupon for the user.");
 
             // Create a major coupon for the user
             const result = await Coupon.majorCouponUp(user_id);
-            console.log("Stars[checkIfUserShouldGetMajorCoupon]: Invoked Coupon.majorCouponUp() ->", result);
+            putil.log("Stars[checkIfUserShouldGetMajorCoupon]: Invoked Coupon.majorCouponUp() ->", result);
 
         }
     } catch (error) {
@@ -344,7 +344,7 @@ async function findStarToUse(user_id, source) {
         const stars = await getStarsByUserId(user_id);
         for (let i in stars) {
             if (stars[i].source === source && stars[i].coupon_uuid == null) {
-                console.log("Stars[findStarToUse]: Found a star to use ->", stars[i])
+                putil.log("Stars[findStarToUse]: Found a star to use ->", stars[i])
                 return stars[i];
             }
         }
@@ -357,11 +357,11 @@ async function findStarToUse(user_id, source) {
 // Function sent star to bbt
 async function sendStarToBBT(star) {
 
-    console.log("Star[sentStarToBBT]: sending star to bbt ->", star);
+    putil.log("Star[sentStarToBBT]: sending star to bbt ->", star);
 
     // get access token from user_id
     let token_from_buffer = await User.getUserTokenBufferByUserId(star.user_id);
-    console.log("Star[sentStarToBBT]: token_from_buffer ->", token_from_buffer);
+    putil.log("Star[sentStarToBBT]: token_from_buffer ->", token_from_buffer);
     if (!token_from_buffer) throw new Error("Cannot find bbt token from bbt token buffer where user_id = " + star.user_id);
 
     token_from_buffer = token_from_buffer.bbt_token;
@@ -388,10 +388,10 @@ async function sendStarToBBT(star) {
 
 // Function sent (fetchUp) unsent star to bbt
 async function fetchUpStarToBBT(star) {
-    // console.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
+    // putil.log("Star[fetchUpStarToBBT]: fetching up star to bbt");
     //
     // const respond = await sendStarToBBT(star);
-    // console.log("Star[fetchUpStarToBBT]: respond ->", respond)
+    // putil.log("Star[fetchUpStarToBBT]: respond ->", respond)
     // let respond_err = null;
     // if (Object.keys(respond).includes("errors")) {
     //     if (respond.errors != null){
@@ -407,7 +407,7 @@ async function fetchUpStarToBBT(star) {
     //     respond_errors: respond_err
     // });
     //
-    // console.log.txt("Star[fetchUpStarToBBT]: done fetching up star to bbt");
+    // putil.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
 module.exports = {

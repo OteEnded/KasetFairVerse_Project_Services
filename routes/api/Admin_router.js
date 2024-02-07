@@ -10,6 +10,8 @@ const coupon = require('../../models/Coupon');
 const coupons = require('../../entities/Coupons');
 const User = require('../../models/User');
 
+const putil = require('../../utilities/projectutility')
+
 // GET /api/Admin/migrate
 router.post('/migrate', apiMiddleware.authenticate, async (req, res) => {
     try {
@@ -110,7 +112,7 @@ router.post('/coupon_up/user_id/:user_id', apiMiddleware.authenticate, async (re
             user_id: parseInt(req.params.user_id),
             reward: req.body.reward
         });
-        console.log(a);
+        putil.log(a);
         res.json({
             message: "done"
         })
@@ -180,7 +182,7 @@ router.post('/ln', apiMiddleware.authenticate, async (req, res) => {
     try {
         const result = await User.userLogin(req.body.username, req.body.password);
 
-        console.log(result);
+        putil.log(result);
 
         res.send(result);
     } catch (error) {
