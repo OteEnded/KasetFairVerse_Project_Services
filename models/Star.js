@@ -105,9 +105,6 @@ async function getStarsByUserId(user_id, include_used = false) {
             const unused_stars = [];
 
             for (let i in stars) {
-                putil.log(stars[i])
-                putil.log(stars[i].coupon_uuid)
-                putil.log(stars[i].coupon_uuid != null)
                 if (stars[i].coupon_uuid == null) {
                     unused_stars.push(stars[i].dataValues);
                 }
