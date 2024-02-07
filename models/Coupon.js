@@ -205,15 +205,16 @@ async function createCouponRequest(req) {
 // Function to create a coupon
 async function couponUp(req) {
     try {
-        putil.log("Coupon[couponUp] -> req: ", req);
+        putil.log("Coupon[couponUp]: req ->", req);
+
+        // Check if the user already has the coupon that has the same reward and is still available
         const coupon_user_has = await getCouponsByUserId(req.user_id);
-        putil.log("coupon_user_has: ", coupon_user_has);
         for (let i in coupon_user_has) {
             let is_coupon_available = await isCouponAvailable(coupon_user_has[i].coupon_uuid);
             if (coupon_user_has[i].dataValues.reward === req.reward && is_coupon_available) {
                 return {
                     is_success: false,
-                    message: "User already has " + req.reward + " coupon",
+                    message: "User already has " + req.reward + " available coupon",
                     content: null
                 }
             }

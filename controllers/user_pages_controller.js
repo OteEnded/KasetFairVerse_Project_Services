@@ -112,43 +112,43 @@ const game_list = [
     {
         name: "ColorMatching",
         description: "เกมจับคู่สีเสื้อให้ตรงกับสีกระเป๋า",
-        icon: "/images/stars/Accessories_ColorMatching.png",
+        icon: "/images/games/Accessories_ColorMatching.png",
         url: "https://test-ae1f2.web.app/"
     },
     {
         name: "FindMyMeow",
         description: "เกมหาแมวในห้องนั่งเล่นให้ได้จำนวนมาก",
-        icon: "/images/stars/CoffeeBean_FindMyMeow.png",
+        icon: "/images/games/CoffeeBean_FindMyMeow.png",
         url: "https://coffee-game-meow.web.app/"
     },
     {
         name: "RaisuwanCrush",
         description: "เกมเรียงผลไม้ให้ได้ 3 ชิ้นขึ้นไปเพื่อเก็บคะแนน",
-        icon: "/images/stars/CornMilk_RaisuwanCrush.png",
+        icon: "/images/games/CornMilk_RaisuwanCrush.png",
         url: "https://rswtest1-fbc20.web.app/"
     },
     {
         name: "HoldYourBasket",
         description: "ถือตระกร้ารับของที่ตกลงมาให้ได้มากที่สุด",
-        icon: "/images/stars/Cosmetic_HoldYourBasket.png",
+        icon: "/images/games/Cosmetic_HoldYourBasket.png",
         url: "https://hold-your-basket.web.app/"
     },
     {
         name: "TheDrink",
         description: "ผสมเครื่องดื่มและชากันชงให้ได้หลากหลายสูตร",
-        icon: "/images/stars/Hemp_TheDrink.png",
+        icon: "/images/games/Hemp_TheDrink.png",
         url: "https://the-drink.web.app/"
     },
     {
         name: "CWheat",
         description: "ดูแลข้าวให้เติบโตและเก็บเกี่ยวให้ได้มากที่สุด",
-        icon: "/images/stars/KubKaoKabGang_CWheat.png",
+        icon: "/images/games/KubKaoKabGang_CWheat.png",
         url: "https://c-wheat.web.app/"
     },
     {
         name: "PasteScrumble",
         description: "เลือกวัตถุดิบสำหรับเครื่องแกงต่างๆ ให้ถูกต้อง",
-        icon: "/images/stars/KubKaoKabGang_PasteScrumble.png",
+        icon: "/images/games/KubKaoKabGang_PasteScrumble.png",
         url: "https://paste-scrumble.web.app/"
     }
 ]

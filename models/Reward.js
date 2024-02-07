@@ -49,11 +49,20 @@ const reward_config = {
     },
     KFC_gift_voucher: {
         stars_use: 4,
-        stock: 95,
+        stock: 0,
         display: {
             name: "บัตรกำนัล",
             from: "จาก KFC",
             image: "/images/sponsors/kfc.png"
+        }
+    },
+    KuMilk_Coupon: {
+        stars_use: 4,
+        stock: 0,
+        display: {
+            name: "บัตรกำนัล",
+            from: "จาก Ku Milk",
+            image: "/images/sponsors/ku_milk.png"
         }
     },
     InfinitM_random_plushy: {
@@ -75,7 +84,7 @@ const reward_config = {
         }
     },
     NK_cat_food: {
-        stars_use: 6,
+        stars_use: 3,
         stock: 7,
         display: {
             name: "อาหารแมว",
