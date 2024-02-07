@@ -209,7 +209,8 @@ async function couponUp(req) {
         const coupon_user_has = await getCouponsByUserId(req.user_id);
         putil.log("coupon_user_has: ", coupon_user_has);
         for (let i in coupon_user_has) {
-            if (coupon_user_has[i].dataValues.reward === req.reward) {
+            let is_coupon_available = await isCouponAvailable(coupon_user_has[i].coupon_uuid);
+            if (coupon_user_has[i].dataValues.reward === req.reward && is_coupon_available) {
                 return {
                     is_success: false,
                     message: "User already has " + req.reward + " coupon",
