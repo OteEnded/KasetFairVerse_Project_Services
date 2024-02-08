@@ -408,7 +408,7 @@ async function fetchUpStarToBBT(star) {
 }
 
 // Function to get star leaderboard
-async function getStarLeaderboard(limit = 10) {
+async function getLeaderBoard(limit = 10) {
     try {
 
         const sequelize = require('sequelize');
@@ -478,5 +478,5 @@ module.exports = {
     findStarToUse,
     // sendStarToBBT,
     // fetchUpStarToBBT,
-    getStarLeaderboard
+    getLeaderBoard
 }

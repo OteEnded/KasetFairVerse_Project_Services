@@ -153,6 +153,12 @@ const game_list = [
     }
 ]
 
+async function getStarLeaderBoard(){
+    const leader_board = await Star.getLeaderBoard();
+    console.log(leader_board)
+    return leader_board;
+}
+
 
 // // define route handler (with export)
 // export.<<controllerSubName>> = (req, res) => {
@@ -177,9 +183,22 @@ exports.reward = async (req, res) => {
         game_button_list.push(game_list[i].name);
     }
 
+    const star_leaderboard = await getStarLeaderBoard();
+
     const nonce = generateNonce();
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
-    res.render('user/reward', { reward_div_list, sponsor_div_list, logged_in, username: user.username, game_div_list: game_list, nonce, game_button_list });
+    res.render('user/reward',
+        {
+            reward_div_list,
+            sponsor_div_list,
+            logged_in,
+            username: user.username,
+            game_div_list: game_list,
+            nonce,
+            game_button_list,
+            star_leaderboard
+        }
+    );
 }
 
 exports.trade_coupon = async (req, res) => {
@@ -209,7 +228,17 @@ exports.trade_coupon = async (req, res) => {
     const nonce = generateNonce();
     try{
         res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
-        res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: [], reward_div_list: getRewardDiv(), nonce })
+        res.render('user/trade_coupon',
+            {
+                mode,
+                star_div_list,
+                star_check_box_list,
+                trade_able_reward_list,
+                reward_check_box_list, selected_star: [],
+                reward_div_list: getRewardDiv(),
+                nonce
+            }
+        );
     }
     catch (error) {
         putil.error(error);
@@ -255,7 +284,18 @@ exports.trade_coupon_submit_select_star = async (req, res) => {
 
     const nonce = generateNonce();
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
-    res.render('user/trade_coupon', { mode, star_div_list, star_check_box_list, trade_able_reward_list, reward_check_box_list, selected_star: Object.keys(submittedForm), reward_div_list: getRewardDiv(), nonce });
+    res.render('user/trade_coupon',
+        {
+            mode,
+            star_div_list,
+            star_check_box_list,
+            trade_able_reward_list,
+            reward_check_box_list,
+            selected_star: Object.keys(submittedForm),
+            reward_div_list: getRewardDiv(),
+            nonce
+        }
+    );
 }
 
 exports.trade_coupon_submit_select_reward = async (req, res) => {
@@ -294,7 +334,13 @@ exports.trade_coupon_submit_select_reward = async (req, res) => {
 
     const nonce = generateNonce();
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
-    res.render('user/my_coupon', { first_popup, user_coupons_list, nonce });
+    res.render('user/my_coupon',
+        {
+            first_popup,
+            user_coupons_list,
+            nonce
+        }
+    );
 }
 
 exports.my_coupon = async (req, res) => {
@@ -322,7 +368,11 @@ exports.my_coupon = async (req, res) => {
 exports.login = async (req, res) => {
     const nonce = generateNonce();
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
-    res.render('user/login', { nonce });
+    res.render('user/login',
+        {
+            nonce
+        }
+    );
 }
 
 exports.login_submit = async (req, res) => {
