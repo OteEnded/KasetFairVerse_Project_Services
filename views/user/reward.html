@@ -112,8 +112,8 @@
             <% for (let i = 0; i < reward_div_list.length; i++) { %>
             <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-lg p-2 relative">
 
-                <div class="bg-white rounded-lg flex flex-col lg:flex-col items-center h-24">
-                    <img src="<%= reward_div_list[i].image %>" class="<% if (reward_div_list[i].reward_left <= 0) { %> grayscale <% } %>" width="75" >
+                <div class="bg-white rounded-lg flex flex-col lg:flex-col items-center h-24 ">
+                    <img draggable="false" src="<%= reward_div_list[i].image %>" class="<% if (reward_div_list[i].reward_left <= 0) { %> grayscale <% } %>" width="75" >
                 </div>
 
                 <div>
@@ -205,6 +205,81 @@
             <% } %>
         </div>
         </button>
+
+
+        <div class="flex flex-col pt-8 pb-2 ">
+            <button type="button"
+                    id="starCondition"
+                    data-te-toggle="modal"
+                    data-te-target="#modal"
+                    class="text-md lg:text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                    เงื่อนไขการได้รับดาวของแต่ละเกม
+            </button>
+        </div>
+
+        <a href="https://www.instagram.com/p/C3DafZ0pgD3/?img_index=1" target="_blank" class="text-md text-center content-center justify-center text-purple-600">
+            src: https://www.instagram.com/p/C3DafZ0pgD3/?img_index=1
+        </a>
+
+        <!--         Modal -->
+        <div data-te-modal-init
+             class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+             id="modal"
+             tabindex="-1"
+             aria-modal="true"
+             role="dialog">
+            <div data-te-modal-dialog-ref
+                 class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[600px]">
+                <div class="pointer-events-auto relative p-2 flex w-full flex-col rounded-md border-none bg-secondary bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600 mx-12">
+                    <div
+                            id="carouselExampleControls"
+                            class="relative"
+                            data-te-carousel-init
+                            data-te-ride="carousel">
+                        <!--Carousel items-->
+                        <div class="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
+                            <!--First item-->
+                            <div class="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+                                 data-te-carousel-item
+                                 data-te-carousel-active>
+                                <img src="/images/page1.jpg"
+                                     class="block w-full"/> </div>
+                            <!--Second item-->
+                            <div class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none" data-te-carousel-item>
+                                <img src="/images/page2.jpg"
+                                     class="block w-full"/>
+                            </div>
+                            <!--Third item-->
+                        </div>
+
+                        <!--Carousel controls - prev item-->
+                        <button
+                                class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+                                type="button"
+                                data-te-target="#carouselExampleControls"
+                                data-te-slide="prev">
+                            <span class="inline-block h-8 w-8"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg></span>
+                            <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Previous</span>
+                        </button>
+                        <!--Carousel controls - next item-->
+                        <button
+                                class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+                                type="button"
+                                data-te-target="#carouselExampleControls"
+                                data-te-slide="next">
+                        <span class="inline-block h-8 w-8"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                        </span>
+                            <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </section>
 
@@ -330,6 +405,10 @@
         // gameButtonList[i].href = "/game_middleware?access_token=" + accessToken + "?game_id=" + gameButtonList[i].id;
         gameButtonList[i].href += "?access_token=" + accessToken;
     }
+
+    // starCondition.onclick = function() {
+    //     window.open("https://www.instagram.com/p/C3DafZ0pgD3/?img_index=1", "_blank", "width=1000,height=1000");
+    // }
 
 </script>
 
