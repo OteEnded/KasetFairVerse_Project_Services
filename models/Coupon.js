@@ -281,6 +281,16 @@ async function majorCouponUp(user_id) {
             }
         }
 
+        // check if Major_ticket_2 is still in stock
+        const major_coupon_left = await Reward.getRewardLeftByReward("Major_ticket_2");
+        if (major_coupon_left <= 0) {
+            return {
+                is_success: false,
+                message: "Major_ticket_2 is out of stock",
+                content: null
+            }
+        }
+
         return await createCoupon({
             user_id: user_id,
             reward: "Major_ticket_2",
