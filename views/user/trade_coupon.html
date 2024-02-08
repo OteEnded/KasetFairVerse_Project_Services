@@ -37,6 +37,12 @@
             <form id="selectStarForm" method="post">
                 <h3 class="mb-5 text-lg font-semibold text-blue underline flex items-center justify-center font-semibold"> เลือกดาวที่ต้องการใช้ </h3>
 
+                <div class="flex items-center justify-center px-4 pb-4 text-orange-500 font-semibold">
+                    <p class="text-center">
+                        คุณสามารถถือดาวได้ไม่เกิน 10 ดวง ต่อชนิด หากคุณมีดาวครบ 10 ดวงแล้ว จะไม่สามารถได้รับดาวเพิ่มเติมได้อีก จนกว่าคุณจะใช้ดาวที่ถืออยู่
+                    </p>
+                </div>
+
                 <div class="grid grid-cols-2 gap-6 sm:grid-cols-4">
                     <% for (let i = 0; i < 4; i++) { %>
                     <div>
@@ -54,7 +60,7 @@
                                 <div class="flex justify-center items-center drop-shadow-xl <% if (star_div_list[i].amount < 1) { %>grayscale<% } %>"><img src="<%= star_div_list[i].display.image %>" width="75" class=""></div>
 
                                 <div class="text-md font-medium flex justify-center items-center
-                                <% if (star_div_list[i].amount == 0) { %> text-red <% } if (star_div_list[i].amount == 1) { %> text-yellow-600 <% } %>">
+                                <% if (star_div_list[i].amount < 1) { %> text-red <% } if (star_div_list[i].amount == 1) { %> text-yellow-600 <% } if (star_div_list[i].amount > 9) { %> text-orange-500 <% } %>">
                                     x<%= star_div_list[i].amount %>
                                 </div>
 
@@ -79,19 +85,13 @@
                                 <div class="text-lg font-semibold flex justify-center items-center"> <%= star_div_list[j].display.name %> </div>
                                 <div class="flex justify-center items-center drop-shadow-xl <% if (star_div_list[j].amount < 1) { %>grayscale<% } %>"><img src="<%= star_div_list[j].display.image %>" width="75" class=""></div>
                                 <div class="text-md font-medium flex justify-center items-center
-                                <% if (star_div_list[j].amount == 0) { %> text-red <% } if (star_div_list[j].amount == 1) { %> text-yellow-600 <% } %>">
+                                <% if (star_div_list[j].amount < 1) { %> text-red <% } if (star_div_list[j].amount == 1) { %> text-yellow-600 <% } if (star_div_list[j].amount > 9) { %> text-orange-500 <% } %>">
                                     x<%= star_div_list[j].amount %>
                                 </div>
                             </div>
                         </label>
                     </div>
                     <% } %>
-                </div>
-
-                <div class="flex items-center justify-center px-4 pt-4 text-orange-500 font-semibold">
-                    <p class="text-center">
-                        คุณสามารถถือดาวได้ไม่เกิน 10 ดวง ต่อชนิด หากคุณมีดาวครบ 10 ดวงแล้ว จะไม่สามารถได้รับดาวเพิ่มเติมได้อีก จนกว่าคุณจะใช้ดาวที่ถืออยู่
-                    </p>
                 </div>
 
                 <div class="flex items-center justify-center px-4 pb-4 text-red font-semibold">

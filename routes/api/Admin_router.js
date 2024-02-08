@@ -5,7 +5,7 @@ const dbmigrateandseed = require('../../services/dbmigrateandseed');
 
 const qrCode = require('qrcode');
 
-const star = require('../../models/Star');
+const Star = require('../../models/Star');
 const coupon = require('../../models/Coupon');
 const coupons = require('../../entities/Coupons');
 const User = require('../../models/User');
@@ -67,7 +67,7 @@ router.post('/star_up/user_id/:user_id', apiMiddleware.authenticate, async (req,
             user_id: parseInt(req.params.user_id),
             source: req.body.source
         }
-        await star.starUp(starUpReq);
+        await Star.starUp(starUpReq);
         res.json({
             message: "done"
         });
@@ -87,7 +87,7 @@ router.post('/star_up/user_id/:user_id', apiMiddleware.authenticate, async (req,
 // POST /api/Admin/get_star_inv/user_id/:user_id
 router.post('/get_star_inv/user_id/:user_id', apiMiddleware.authenticate, async (req, res) => {
     try {
-        let star_inv = await star.getStarInventoryByUserId(parseInt(req.params.user_id));
+        let star_inv = await Star.getStarInventoryByUserId(parseInt(req.params.user_id));
         res.json({
             message: "done",
             content: star_inv
@@ -186,8 +186,19 @@ router.post('/ln', apiMiddleware.authenticate, async (req, res) => {
 
         res.send(result);
     } catch (error) {
-        console.error('Error generating QR code:', error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/sl', apiMiddleware.authenticate, async (req, res) => {
+try {
+        const s = await Star.getStarLeaderboard();
+        putil.log(s);
+        res.send(s);
+    
+} catch (error) {
+        res.status(500).send('Internal Server Error');
+        throw error;
     }
 });
 

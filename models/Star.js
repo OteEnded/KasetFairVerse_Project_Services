@@ -407,6 +407,48 @@ async function fetchUpStarToBBT(star) {
     // putil.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
+let leaderboard = null;
+
+// Function to get star leaderboard
+async function getStarLeaderboard() {
+    try {
+        if (leaderboard != null) {
+            return leaderboard;
+        }
+
+        const sequelize = require('sequelize');
+
+        // in db @ star table there are columns: star_id, user_id, source, message, coupon_uuid, created_at, updated_at
+        // group by user_id and sum star map to an object in the shape of {user_id: [star_id, star_id, ...]} like this
+        // {user1: [4, 5, 6], user2: [7, 8, 9], ...}
+
+        // Group by user_id and get an array of star_ids for each user
+        const result = await Stars.findAll({
+            attributes: [
+                'user_id',
+                [sequelize.fn('GROUP_CONCAT', sequelize.col('star_id')), 'star_ids'],
+            ],
+            group: ['user_id'],
+            raw: true,
+        });
+
+        // Map the result to the desired format { user_id: [star_id, star_id, ...] }
+        leaderboard = result.reduce((acc, row) => {
+            acc[row.user_id] = row.star_ids.split(',').map(Number);
+            return acc;
+        }, {});
+
+        // sum the stars for each user
+
+
+        return leaderboard;
+
+
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     getAllStars,
     getStarsByUserId,
@@ -422,5 +464,6 @@ module.exports = {
     useStar,
     findStarToUse,
     // sendStarToBBT,
-    // fetchUpStarToBBT
+    // fetchUpStarToBBT,
+    getStarLeaderboard
 }
