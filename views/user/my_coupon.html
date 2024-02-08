@@ -22,7 +22,7 @@
 </nav>
 
 <!-- content -->
-<div class="flex flex-col mx-auto pt-12 lg:px-16 container pt-16">
+<div class="flex flex-col mx-auto pt-24 lg:px-16 container">
     <div class="flex flex-col lg:flex-row items-center justify-center w-full ">
         <h1 class="text-4xl lg:text-6xl text-blue font-bold">
             คูปองของฉัน
@@ -30,11 +30,19 @@
     </div>
 
     <div class="flex flex-col lg:flex-row items-center justify-center w-full pb-0 my-0">
-        <div class="flex flex-col lg:flex-row items-end justify-end gap-2 w-full my-0 py-0">
+        <div class="flex flex-col lg:flex-row lg:text-xl items-end justify-end gap-2 w-full my-0 py-0">
+            <div class="flex flex-col">
+                <a id="tradeCouponButton">
+                    <button class="flex justify-center items-center gap-2 text-md bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-1 px-2 border border-gray-400 rounded-xl shadow">
+                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 6.75L4.5 6H20.25L21 6.75V10.7812H20.25C19.5769 10.7812 19.0312 11.3269 19.0312 12C19.0312 12.6731 19.5769 13.2188 20.25 13.2188H21V17.25L20.25 18L4.5 18L3.75 17.25V13.2188H4.5C5.1731 13.2188 5.71875 12.6731 5.71875 12C5.71875 11.3269 5.1731 10.7812 4.5 10.7812H3.75V6.75ZM5.25 7.5V9.38602C6.38677 9.71157 7.21875 10.7586 7.21875 12C7.21875 13.2414 6.38677 14.2884 5.25 14.614V16.5L9 16.5L9 7.5H5.25ZM10.5 7.5V16.5L19.5 16.5V14.614C18.3632 14.2884 17.5312 13.2414 17.5312 12C17.5312 10.7586 18.3632 9.71157 19.5 9.38602V7.5H10.5Z" fill="#ffffff"></path> </g></svg>
+                        แลกคูปอง
+                    </button>
+                </a>
+            </div>
             <div class="flex flex-col">
                 <a id="refreshButton">
-                    <button class="text-xl bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-1 px-2 border border-gray-400 rounded-xl shadow">
-                        รีเฟรช 🕔
+                    <button class="text-md bg-primary hover:bg-secondary hover:text-gray-900 text-white font-semibold py-1 px-2 border border-gray-400 rounded-xl shadow">
+                        🕔 รีเฟรช
                     </button>
                 </a>
             </div>
@@ -198,6 +206,7 @@
     console.log(currentUrl, accessToken);
 
     rewardPage.href = "/reward?access_token=" + accessToken;
+    tradeCouponButton.href = "/trade_coupon?access_token=" + accessToken;
     refreshButton.href = "/my_coupon?access_token=" + accessToken;
 
     // make the page reload every 10 seconds
