@@ -4,7 +4,7 @@ const putil = require('../utilities/projectutility')
 const reward_config = {
     EstCola_Oishi_drinks: {
         stars_use: 1,
-        stock: 144,
+        stock: 77,
         display: {
             name: "เครื่องดื่ม",
             from: "จาก Est Cola และ Oishi",
@@ -13,42 +13,15 @@ const reward_config = {
     },
     DoiKham_gift_set: {
         stars_use: 2,
-        stock: 177,
+        stock: 150,
         display: {
             name: "ของที่ระลึก",
             from: "จาก ดอยคำ",
             image: "/images/sponsors/doikham.png"
         }
     },
-    SevenEleven_mug: {
-        stars_use: 3,
-        stock: 10,
-        display: {
-            name: "แก้วที่ระลึก",
-            from: "จาก 7-11",
-            image: "/images/sponsors/seven_eleven.png"
-        }
-    },
-    SevenEleven_folder: {
-        stars_use: 3,
-        stock: 37,
-        display: {
-            name: "แฟ้มที่ระลึก",
-            from: "จาก 7-11",
-            image: "/images/sponsors/seven_eleven.png"
-        }
-    },
-    InfinitM_keychain_2: {
-        stars_use: 3,
-        stock: 53,
-        display: {
-            name: "พวงกุญแจ ตุ๊กตาหมี",
-            from: "จาก Infinit M",
-            image: "/images/sponsors/infinite_m.png"
-        }
-    },
     KFC_gift_voucher: {
-        stars_use: 4,
+        stars_use: 3,
         stock: 0,
         display: {
             name: "บัตรกำนัล",
@@ -57,17 +30,44 @@ const reward_config = {
         }
     },
     KuMilk_Coupon: {
-        stars_use: 4,
-        stock: 0,
+        stars_use: 3,
+        stock: 200,
         display: {
             name: "บัตรกำนัล",
-            from: "จาก Ku Milk",
+            from: "จาก KU Milk",
             image: "/images/sponsors/ku_milk.png"
+        }
+    },
+    SevenEleven_mug: {
+        stars_use: 4,
+        stock: 10,
+        display: {
+            name: "แก้วที่ระลึก",
+            from: "จาก 7-11",
+            image: "/images/sponsors/seven_eleven.png"
+        }
+    },
+    SevenEleven_folder: {
+        stars_use: 4,
+        stock: 20,
+        display: {
+            name: "แฟ้มที่ระลึก",
+            from: "จาก 7-11",
+            image: "/images/sponsors/seven_eleven.png"
+        }
+    },
+    InfinitM_keychain_2: {
+        stars_use: 4,
+        stock: 40,
+        display: {
+            name: "พวงกุญแจ ตุ๊กตาหมี",
+            from: "จาก Infinit M",
+            image: "/images/sponsors/infinite_m.png"
         }
     },
     InfinitM_random_plushy: {
         stars_use: 5,
-        stock: 84,
+        stock: 55,
         display: {
             name: "ตุ๊กตาคละแบบ",
             from: "จาก Infinit M",
@@ -76,7 +76,7 @@ const reward_config = {
     },
     NK_dog_food: {
         stars_use: 6,
-        stock: 11,
+        stock: 3,
         display: {
             name: "อาหารสุนัข",
             from: "จาก N&K",
@@ -85,7 +85,7 @@ const reward_config = {
     },
     NK_cat_food: {
         stars_use: 6,
-        stock: 4,
+        stock: 3,
         display: {
             name: "อาหารแมว",
             from: "จาก N&K",
@@ -94,7 +94,7 @@ const reward_config = {
     },
     Oliver_dog_food: {
         stars_use: 6,
-        stock: 16,
+        stock: 6,
         display: {
             name: "อาหารสุนัข",
             from: "จาก Oliver",
@@ -103,7 +103,7 @@ const reward_config = {
     },
     Oliver_cat_food: {
         stars_use: 6,
-        stock: 29,
+        stock: 23,
         display: {
             name: "อาหารแมว",
             from: "จาก Oliver",
@@ -112,7 +112,7 @@ const reward_config = {
     },
     PaiHangOut_cat_food: {
         stars_use: 6,
-        stock: 7,
+        stock: 0,
         display: {
             name: "อาหารแมว",
             from: "จาก Pai Hangout",
@@ -121,7 +121,7 @@ const reward_config = {
     },
     PZCussons_gift_set: {
         stars_use: 7,
-        stock: 92,
+        stock: 30,
         display: {
             name: "ของที่ระลึก",
             from: "จาก PZ Cussons",
@@ -130,7 +130,7 @@ const reward_config = {
     },
     Major_ticket_2: {
         stars_use: -7,
-        stock: 80,
+        stock: 50,
         display: {
             name: "ตั๋วหนัง 2 ใบ",
             from: "จาก Major",

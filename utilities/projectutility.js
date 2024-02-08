@@ -58,16 +58,16 @@ const log = (...args) => {
         const currentTime = new Date().toLocaleTimeString();
 
         // Combine all log arguments into a single string
-        const logMessage = `[${currentTime}] ${args.join(' ')}`;
+        const logMessage = args.map(arg => (typeof arg === 'object' ? JSON.stringify(arg) : arg)).join(' ');
 
         // Ensure the log directory exists
         ensureDirectoryExistence('./log/log.txt');
 
         // Append the log message with the current time to a text file
-        file_sys.appendFileSync('./log/log.txt', logMessage + '\n');
+        file_sys.appendFileSync('./log/log.txt', `[${currentTime}] ${logMessage}\n`);
 
         // Log the message with the current time to the console
-        console.log(logMessage);
+        console.log(`[${currentTime}] ${logMessage}`);
     }
     catch (err) {
         console.error('projectutility[log]: ERROR, cannot log message to file');
