@@ -407,14 +407,9 @@ async function fetchUpStarToBBT(star) {
     // putil.log("Star[fetchUpStarToBBT]: done fetching up star to bbt");
 }
 
-let leaderboard = null;
-
 // Function to get star leaderboard
-async function getStarLeaderboard() {
+async function getStarLeaderboard(limit = 10) {
     try {
-        if (leaderboard != null) {
-            return leaderboard;
-        }
 
         const sequelize = require('sequelize');
 
@@ -433,16 +428,34 @@ async function getStarLeaderboard() {
         });
 
         // Map the result to the desired format { user_id: [star_id, star_id, ...] }
-        leaderboard = result.reduce((acc, row) => {
+        const leaderboard_list = result.reduce((acc, row) => {
             acc[row.user_id] = row.star_ids.split(',').map(Number);
             return acc;
         }, {});
 
-        // sum the stars for each user
+        // [{user_id: x, user_name: y, number_of_star: z}, ...]
+        const leaderboard = []
+        for (let i in leaderboard_list){
+            leaderboard.push({
+                user_id: i,
+                number_of_star: leaderboard_list[i].length
+            })
+        }
 
+        // sort the leaderboard by the number of stars
+        leaderboard.sort((a, b) => (a.number_of_star < b.number_of_star) ? 1 : -1)
 
-        return leaderboard;
-
+        if (limit > leaderboard.length || limit <= 0) limit = leaderboard.length;
+        let leaderboard_return = [];
+        for (let i in leaderboard.slice(0, limit)) {
+            let user = await User.getUser(leaderboard[i].user_id);
+            leaderboard_return.push({
+                user_id: leaderboard[i].user_id,
+                username: user.username,
+                number_of_star: leaderboard[i].number_of_star
+            });
+        }
+        return leaderboard_return;
 
     } catch (error) {
         throw error;
