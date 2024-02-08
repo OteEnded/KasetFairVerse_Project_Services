@@ -17,9 +17,11 @@ function generateNonce() {
     return crypto.randomBytes(16).toString('base64');
 }
 
-function getRewardDiv(){
+async function getRewardDiv(){
     const reward_div = [];
     const reward_config = Reward.getRewardConfig();
+    const reward_left = await Reward.getRewardLeft();
+    console.log("Here", reward_left);
     for (let i in reward_config) {
         let stars_use_msg = "";
         if (reward_config[i].stars_use > 0) {
@@ -31,6 +33,7 @@ function getRewardDiv(){
             image: reward_config[i].display.image,
             reward: [reward_config[i].display.name, reward_config[i].display.from],
             stars_use: stars_use_msg,
+            reward_left: reward_left[i]
         });
     }
     return reward_div;
@@ -166,7 +169,7 @@ async function getStarLeaderBoard(){
 // }
 exports.reward = async (req, res) => {
 
-    const reward_div_list = getRewardDiv();
+    const reward_div_list = await getRewardDiv();
     const sponsor_div_list = getSponsorDiv();
     let logged_in;
 
@@ -225,6 +228,8 @@ exports.trade_coupon = async (req, res) => {
 
     const mode = "select_star";
 
+    const reward_div_list = await getRewardDiv();
+
     const nonce = generateNonce();
     try{
         res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
@@ -235,7 +240,7 @@ exports.trade_coupon = async (req, res) => {
                 star_check_box_list,
                 trade_able_reward_list,
                 reward_check_box_list, selected_star: [],
-                reward_div_list: getRewardDiv(),
+                reward_div_list,
                 nonce
             }
         );
@@ -282,6 +287,8 @@ exports.trade_coupon_submit_select_star = async (req, res) => {
 
     const mode = "select_reward";
 
+    const reward_div_list = await getRewardDiv();
+
     const nonce = generateNonce();
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
     res.render('user/trade_coupon',
@@ -292,7 +299,7 @@ exports.trade_coupon_submit_select_star = async (req, res) => {
             trade_able_reward_list,
             reward_check_box_list,
             selected_star: Object.keys(submittedForm),
-            reward_div_list: getRewardDiv(),
+            reward_div_list,
             nonce
         }
     );

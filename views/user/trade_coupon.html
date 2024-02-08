@@ -94,7 +94,7 @@
                     <% } %>
                 </div>
 
-                <div class="flex items-center justify-center px-4 pb-4 text-red font-semibold">
+                <div class="flex items-center justify-center px-4 py-4 text-red font-semibold">
                     <p class="text-center">
                     โปรดระวัง: ดาว TheDrink สามารถได้รับเพียง 6 ครั้งเท่านั้น (ตามจำนวนฉากจบในเกม) <br> และ ดาว HoldYourBasket สามารถได้รับเพียง 1 ครั้งเท่านั้น
                     </p>
@@ -178,10 +178,10 @@
         </div>
         <div class="grid grid-cols-2 gap-6 sm:gap-x-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-12 lg:grid-cols-5 shadow-sm p-2">
             <% for (let i = 0; i < reward_div_list.length; i++) { %>
-            <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-lg p-2">
+            <div class="flex flex-col flex-wrap items-center justify-center w-full shadow-lg p-2 relative">
 
-                <div class="bg-white flex flex-col lg:flex-col items-center h-24 ">
-                    <img src="<%= reward_div_list[i].image %>" width="75" >
+                <div class="bg-white rounded-lg flex flex-col lg:flex-col items-center h-24">
+                    <img src="<%= reward_div_list[i].image %>" class="<% if (reward_div_list[i].reward_left <= 0) { %> grayscale <% } %>" width="75" >
                 </div>
 
                 <div>
@@ -194,15 +194,24 @@
                     <%= reward_div_list[i].reward[1] %>
                 </h4>
 
-                <h4 class="text-xs md:text-xs lg:text-[14px] text-red pt-2">
+                <h4 class="text-xs md:text-xs lg:text-[14px] text-orange-600 pt-2">
                     <%= reward_div_list[i].stars_use %>
                 </h4>
+
+                <% if (reward_div_list[i].reward_left <= 0) { %>
+                <div class="w-14 h-14 bg-rose-500 rounded-full absolute transform -translate-y-1/2 center-0 ">
+                    <div class="absolute justify-center items-center text-center text-white">
+                        ของหมด
+                    </div>
+                </div>
+                <% } %>
+
             </div>
             <% } %>
         </div>
 
         <p class="text-center text-[20px] font-semibold text-red  pt-10 ">
-            ผู้เล่นที่ขยันเก็บสะสมดาว จะมีของรางวัลพิเศษ(ของรางวัลมูลค่าสูง)ให้!!
+            ผู้เล่นที่ขยันเก็บสะสมดาว จะมีของรางวัลพิเศษให้!!
         </p>
 
     </section>
