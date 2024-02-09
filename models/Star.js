@@ -199,7 +199,7 @@ async function starUp(req) {
     const user_star_inv = await getStarInventoryByUserId(req.user_id);
 
     // check if user has already ten stars for the source
-    if (user_star_inv[req.source] >= 10) {
+    if (user_star_inv[req.source] >= 20) {
         putil.log("Stars[starUp]: User ->", req.user_id, "has already 10 stars for the source ->", req.source);
         return {
             is_success: false,
