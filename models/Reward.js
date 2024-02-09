@@ -121,7 +121,7 @@ const reward_config = {
     },
     PZCussons_gift_set: {
         stars_use: 7,
-        stock: 30,
+        stock: 12,
         display: {
             name: "ของที่ระลึก",
             from: "จาก PZ Cussons",
