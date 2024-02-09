@@ -198,15 +198,15 @@ async function starUp(req) {
 
     const user_star_inv = await getStarInventoryByUserId(req.user_id);
 
-    // check if user has already ten stars for the source
-    if (user_star_inv[req.source] >= 100) {
-        putil.log("Stars[starUp]: User ->", req.user_id, "has already 10 stars for the source ->", req.source);
-        return {
-            is_success: false,
-            message: "User has already 10 stars for the source ->" + req.source,
-            content: null
-        }
-    }
+    // // check if user has already ten stars for the source
+    // if (user_star_inv[req.source] >= 100) {
+    //     putil.log("Stars[starUp]: User ->", req.user_id, "has already 10 stars for the source ->", req.source);
+    //     return {
+    //         is_success: false,
+    //         message: "User has already 10 stars for the source ->" + req.source,
+    //         content: null
+    //     }
+    // }
 
     const new_star = await createStar(req);
     putil.log("Stars[starUp]: Performed star up action.");
