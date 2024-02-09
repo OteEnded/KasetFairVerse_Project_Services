@@ -40,7 +40,7 @@ const reward_config = {
     },
     SevenEleven_mug: {
         stars_use: 4,
-        stock: 10,
+        stock: 13,
         display: {
             name: "แก้วที่ระลึก",
             from: "จาก 7-11",
