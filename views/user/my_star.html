@@ -35,7 +35,7 @@
         <section>
             <form id="selectStarForm">
 
-                <h3 class="mb-5 text-lg font-semibold text-blue underline flex items-center justify-center font-semibold"> ดาวที่คูณมี </h3>
+                <h3 class="mb-5 text-xl font-semibold text-blue underline flex items-center justify-center font-semibold"> ดาวที่คูณยังไม่ใช้ </h3>
 
                 <div class="flex items-center justify-center px-4 pb-4 text-orange-500 font-semibold">
                     <p class="text-center">
@@ -84,15 +84,27 @@
                     <% } %>
                 </div>
 
-                <div class="flex items-center justify-center px-4 py-4 text-red font-semibold">
-                    <p class="text-center">
+                <div class="flex items-center justify-center px-4 py-4 font-semibold">
+                    <p class="text-center text-red">
                         ดาว TheDrink สามารถได้รับเพียง 6 ครั้งเท่านั้น (ตามจำนวนฉากจบในเกม) <br> และ ดาว HoldYourBasket สามารถได้รับเพียง 1 ครั้งเท่านั้น
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-center px-4 pt-6 font-semibold">
+                    <p class="text-center text-blue text-lg">
+                        และตอนนี้คุณมีดาวทั้งหมด <span class="text-orange-500 text-2xl font-semibold"> <%= total_star %> ⭐</span>
+                    </p>
+
+                </div>
+                <div class="flex items-center justify-center px-4 pb-6 font-semibold">
+                    <p class="text-center text-blue text-lg">
+                        (นับรวมดาวที่ใช้แล้ว)
                     </p>
                 </div>
 
                 <div class="flex flex-col pt-5 items-center justify-center">
                     <a id="rewardPageButton">
-                        <button type="button" class="text-xl bg-orange-500 hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                        <button type="button" class="text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
                             กลับหน้าหลัก
                         </button>
                     </a>

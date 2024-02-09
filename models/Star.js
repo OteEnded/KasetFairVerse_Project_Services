@@ -464,6 +464,19 @@ async function getLeaderBoard(limit = 10) {
         throw error;
     }
 }
+async function getTotalStarByUserId(user_id) {
+    try {
+        const total_star = await Stars.count({
+            where: {
+                user_id: user_id
+            }
+        });
+        return total_star;
+    }
+    catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
     getAllStars,
@@ -481,5 +494,6 @@ module.exports = {
     findStarToUse,
     // sendStarToBBT,
     // fetchUpStarToBBT,
-    getLeaderBoard
+    getLeaderBoard,
+    getTotalStarByUserId
 }

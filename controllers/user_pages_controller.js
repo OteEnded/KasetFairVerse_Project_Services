@@ -447,10 +447,14 @@ exports.my_star = async (req, res) => {
 
     const star_div_list = await getUserStars(user.user_id);
     const nonce = generateNonce();
+
+    const total_star = await Star.getTotalStarByUserId(user.user_id);
+
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
     res.render('user/my_star',
         {
             star_div_list,
+            total_star,
             nonce
         }
     );
