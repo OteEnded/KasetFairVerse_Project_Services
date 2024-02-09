@@ -143,6 +143,14 @@
             *หากเข้าเงื่อนไขที่ทีมงานกำหนด ทีมงานจะติดต่อไปหลังจบช่วงเวลาจัดกิจกรรม
         </p>
 
+        <div class="flex flex-col pt-5 ">
+            <a id="myStarButton">
+                <button class="text-xl bg-primary hover:bg-secondary hover:text-gray-900  text-white font-semibold py-2 px-4 border border-gray-400 rounded-3xl shadow">
+                    ดูดาวของฉัน
+                </button>
+            </a>
+        </div>
+
     </section>
 
     <!-- เมนูเกม -->
@@ -405,6 +413,7 @@
     // myCouponButton.href = "/my_coupon?access_token=" + accessToken;
     myCouponButtonNav.href = "/my_coupon?access_token=" + accessToken;
     tradeCouponButton.href = "/trade_coupon?access_token=" + accessToken;
+    myStarButton.href = "/my_star?access_token=" + accessToken;
 
     const gameButtonList = [<%= game_button_list %>]
     for (let i = 1; i < gameButtonList.length; i++) {

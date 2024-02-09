@@ -430,3 +430,28 @@ exports.game_middleware = async (req, res) => {
 
     res.redirect(game_url + "?access_token=" + access_token);
 }
+
+exports.my_star = async (req, res) => {
+
+    let access_token = req.query.access_token;
+    putil.log("access_token", access_token)
+    if (access_token === undefined || access_token === null){
+        access_token = "1";
+    }
+    const user = await User.getUserFromBBTToken(access_token);
+    putil.log("user", user);
+    if (user.user_id === 2){
+        res.redirect('/login');
+        return;
+    }
+
+    const star_div_list = await getUserStars(user.user_id);
+    const nonce = generateNonce();
+    res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
+    res.render('user/my_star',
+        {
+            star_div_list,
+            nonce
+        }
+    );
+}
