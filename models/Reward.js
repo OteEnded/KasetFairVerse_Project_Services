@@ -13,7 +13,7 @@ const reward_config = {
     },
     DoiKham_gift_set: {
         stars_use: 2,
-        stock: 150,
+        stock: 120,
         display: {
             name: "ของที่ระลึก",
             from: "จาก ดอยคำ",
