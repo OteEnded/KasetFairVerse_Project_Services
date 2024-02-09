@@ -20,6 +20,15 @@ const reward_config = {
             image: "/images/sponsors/doikham.png"
         }
     },
+    KuMilk_Coupon: {
+        stars_use: 2,
+        stock: 200,
+        display: {
+            name: "บัตรกำนัล",
+            from: "จาก KU Milk",
+            image: "/images/sponsors/ku_milk.png"
+        }
+    },
     KFC_gift_voucher: {
         stars_use: 3,
         stock: 0,
@@ -29,18 +38,9 @@ const reward_config = {
             image: "/images/sponsors/kfc.png"
         }
     },
-    KuMilk_Coupon: {
-        stars_use: 3,
-        stock: 200,
-        display: {
-            name: "บัตรกำนัล",
-            from: "จาก KU Milk",
-            image: "/images/sponsors/ku_milk.png"
-        }
-    },
     SevenEleven_mug: {
         stars_use: 4,
-        stock: 13,
+        stock: 10,
         display: {
             name: "แก้วที่ระลึก",
             from: "จาก 7-11",
@@ -49,7 +49,7 @@ const reward_config = {
     },
     SevenEleven_folder: {
         stars_use: 4,
-        stock: 20,
+        stock: 18,
         display: {
             name: "แฟ้มที่ระลึก",
             from: "จาก 7-11",
@@ -130,7 +130,7 @@ const reward_config = {
     },
     Major_ticket_2: {
         stars_use: -7,
-        stock: 50,
+        stock: 40,
         display: {
             name: "ตั๋วหนัง 2 ใบ",
             from: "จาก Major",
