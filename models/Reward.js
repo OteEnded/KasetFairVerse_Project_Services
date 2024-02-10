@@ -49,7 +49,7 @@ const reward_config = {
     },
     SevenEleven_folder: {
         stars_use: 4,
-        stock: 20,
+        stock: 18,
         display: {
             name: "แฟ้มที่ระลึก",
             from: "จาก 7-11",
