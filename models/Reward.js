@@ -22,7 +22,7 @@ const reward_config = {
     },
     KuMilk_Coupon: {
         stars_use: 2,
-        stock: 150,
+        stock: 120,
         display: {
             name: "บัตรกำนัล",
             from: "จาก KU Milk",
