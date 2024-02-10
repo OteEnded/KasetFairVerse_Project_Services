@@ -22,7 +22,7 @@ const reward_config = {
     },
     KuMilk_Coupon: {
         stars_use: 2,
-        stock: 100,
+        stock: 150,
         display: {
             name: "บัตรกำนัล",
             from: "จาก KU Milk",
@@ -49,7 +49,7 @@ const reward_config = {
     },
     SevenEleven_folder: {
         stars_use: 4,
-        stock: 18,
+        stock: 25,
         display: {
             name: "แฟ้มที่ระลึก",
             from: "จาก 7-11",
