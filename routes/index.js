@@ -31,7 +31,7 @@ router.get('/my_coupon', user_pages_controller.my_coupon);
 router.get('/login', user_pages_controller.login);
 router.post('/login', user_pages_controller.login_submit);
 router.get('/game_middleware', user_pages_controller.game_middleware);
-
+router.get('/my_star', user_pages_controller.my_star);
 
 
 

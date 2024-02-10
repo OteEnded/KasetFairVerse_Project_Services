@@ -4,7 +4,7 @@ const putil = require('../utilities/projectutility')
 const reward_config = {
     EstCola_Oishi_drinks: {
         stars_use: 1,
-        stock: 77,
+        stock: 0,
         display: {
             name: "เครื่องดื่ม",
             from: "จาก Est Cola และ Oishi",
@@ -13,7 +13,7 @@ const reward_config = {
     },
     DoiKham_gift_set: {
         stars_use: 2,
-        stock: 120,
+        stock: 0,
         display: {
             name: "ของที่ระลึก",
             from: "จาก ดอยคำ",
@@ -40,7 +40,7 @@ const reward_config = {
     },
     SevenEleven_mug: {
         stars_use: 4,
-        stock: 10,
+        stock: 0,
         display: {
             name: "แก้วที่ระลึก",
             from: "จาก 7-11",
@@ -58,7 +58,7 @@ const reward_config = {
     },
     InfinitM_keychain_2: {
         stars_use: 4,
-        stock: 40,
+        stock: 0,
         display: {
             name: "พวงกุญแจ ตุ๊กตาหมี",
             from: "จาก Infinit M",
@@ -67,7 +67,7 @@ const reward_config = {
     },
     InfinitM_random_plushy: {
         stars_use: 5,
-        stock: 55,
+        stock: 0,
         display: {
             name: "ตุ๊กตาคละแบบ",
             from: "จาก Infinit M",
@@ -76,7 +76,7 @@ const reward_config = {
     },
     NK_dog_food: {
         stars_use: 6,
-        stock: 3,
+        stock: 0,
         display: {
             name: "อาหารสุนัข",
             from: "จาก N&K",
@@ -85,7 +85,7 @@ const reward_config = {
     },
     NK_cat_food: {
         stars_use: 6,
-        stock: 3,
+        stock: 0,
         display: {
             name: "อาหารแมว",
             from: "จาก N&K",
@@ -94,7 +94,7 @@ const reward_config = {
     },
     Oliver_dog_food: {
         stars_use: 6,
-        stock: 6,
+        stock: 0,
         display: {
             name: "อาหารสุนัข",
             from: "จาก Oliver",
@@ -103,7 +103,7 @@ const reward_config = {
     },
     Oliver_cat_food: {
         stars_use: 6,
-        stock: 23,
+        stock: 0,
         display: {
             name: "อาหารแมว",
             from: "จาก Oliver",
@@ -121,7 +121,7 @@ const reward_config = {
     },
     PZCussons_gift_set: {
         stars_use: 7,
-        stock: 12,
+        stock: 0,
         display: {
             name: "ของที่ระลึก",
             from: "จาก PZ Cussons",
@@ -130,7 +130,7 @@ const reward_config = {
     },
     Major_ticket_2: {
         stars_use: -7,
-        stock: 40,
+        stock: 0,
         display: {
             name: "ตั๋วหนัง 2 ใบ",
             from: "จาก Major",

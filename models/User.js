@@ -446,6 +446,15 @@ async function getUserTokenBufferByUserId(user_id) {
     }
 }
 
+async function getUserAmount() {
+    try {
+        const user_amount = await users.count();
+        return user_amount;
+    } catch (error) {
+        throw error;
+    }
+}
+
 // Exporting functions
 module.exports = {
     getAllUsers,
@@ -462,5 +471,6 @@ module.exports = {
     requestUserLoginFromBigBangTheory,
     requestUserFromBigBangTheory,
     userLogin,
-    getDefaultUser
+    getDefaultUser,
+    getUserAmount
 };

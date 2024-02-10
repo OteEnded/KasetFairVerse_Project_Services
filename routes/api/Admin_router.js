@@ -192,11 +192,30 @@ router.post('/ln', apiMiddleware.authenticate, async (req, res) => {
 
 router.post('/sl', apiMiddleware.authenticate, async (req, res) => {
 try {
-        const s = await Star.getStarLeaderboard();
+        const s = await Star.getLeaderBoard();
         putil.log(s);
         res.send(s);
     
 } catch (error) {
+        res.status(500).send('Internal Server Error');
+        throw error;
+    }
+});
+
+router.post('/kp', apiMiddleware.authenticate, async (req, res) => {
+    try {
+        const Stars = require('../../entities/Stars');
+        const sequelize = require('sequelize');
+
+        const leaderboard = await Stars.findAll({
+            attributes: ['user_id', [sequelize.fn('COUNT', '*'), 'number_of_stars']],
+            group: ['user_id'],
+        });
+
+        putil.log(leaderboard);
+        res.send(leaderboard);
+
+    } catch (error) {
         res.status(500).send('Internal Server Error');
         throw error;
     }

@@ -7,6 +7,7 @@ const Coupon = require('../models/Coupon');
 const apirequester = require('../services/apirequester');
 
 const putil = require('../utilities/projectutility')
+const sequelize = require("sequelize");
 
 const star_config = {
     Accessories_ColorMatching: {
@@ -428,17 +429,19 @@ async function getLeaderBoard(limit = 10) {
         });
 
         // Map the result to the desired format { user_id: [star_id, star_id, ...] }
-        const leaderboard_list = result.reduce((acc, row) => {
-            acc[row.user_id] = row.star_ids.split(',').map(Number);
-            return acc;
-        }, {});
+        const leaderboard_list = await Stars.findAll({
+            attributes: ['user_id', [sequelize.fn('COUNT', '*'), 'number_of_stars']],
+            group: ['user_id'],
+        });
+
+        console.log(leaderboard_list)
 
         // [{user_id: x, user_name: y, number_of_star: z}, ...]
         const leaderboard = []
         for (let i in leaderboard_list){
             leaderboard.push({
-                user_id: i,
-                number_of_star: leaderboard_list[i].length
+                user_id: leaderboard_list[i].dataValues.user_id,
+                number_of_star: leaderboard_list[i].dataValues.number_of_stars
             })
         }
 
@@ -461,6 +464,19 @@ async function getLeaderBoard(limit = 10) {
         throw error;
     }
 }
+async function getTotalStarByUserId(user_id) {
+    try {
+        const total_star = await Stars.count({
+            where: {
+                user_id: user_id
+            }
+        });
+        return total_star;
+    }
+    catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
     getAllStars,
@@ -478,5 +494,6 @@ module.exports = {
     findStarToUse,
     // sendStarToBBT,
     // fetchUpStarToBBT,
-    getLeaderBoard
+    getLeaderBoard,
+    getTotalStarByUserId
 }
