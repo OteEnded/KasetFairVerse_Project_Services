@@ -1,115 +1,67 @@
-# KasetFairVerse Project - Services
-## Extended from KasetFairVerse Project - Database/BackEnd/API
+# KasetFairVerse Project Services
 
-This project is originally made to be an API (Backend, Database) for KasetFairVerse activity.
+Extended from KasetFairVerse Project - Database/BackEnd/API
 
-ExpressJS is just a name, but this project doesn't strictly follow the framework format. This might cause confusion for those who are new to the project, including the developers working on it.
+## Overview
 
-The project doesn't include a config file on GitHub (I use config instead of .env). However, there is a config-example file that demonstrates the structure. If you need the actual config file, I will provide it to you via Discord (if I haven't forgotten).
+KasetFairVerse Project Services is the backbone service for the KasetFairVerse Event, handling APIs for minigames in each virtual zone. It also includes a full-stack webpage that allows users (event attendants) to easily access the minigames and use collected points to trade for various gifts.
 
-Big Bang Theory Staff request for node major version 18.x.x
+Originally, this project was designed to be an API (Backend, Database) for KasetFairVerse activities. Below, you will find more details about the project's transformation.
 
-## To run the project
+## Project Structure
 
-1. Clone the project
-2. Run `npm install` to install all dependencies
-3. Run `npm start` to start the project
-4. (Optional; For Tailwind UI to work) Run `npm run build`
-5. (Optional; For Tailwind UI to do live reload) Open new terminal and run `npm run tw`
+This project is written in a unique style, referred to as "ExpressJS is just a name." It does not strictly follow the framework format, which might cause confusion for those who strictly adhere to framework conventions. However, it is organized and straightforward for developers.
+
+The project does not include a config file on GitHub (using `config.json` instead of `.env`). However, there is a `config-example.json` file that demonstrates the structure. Collaborators needing the actual config file will receive it via private message.
+
+## Requirements
+
+- Node.js major version 18.x.x (as requested by Big Bang Theory Staff)
+
+## Getting Started
+
+1. Clone the project.
+2. Run `npm install` to install all dependencies.
+3. Run `npm start` to start the project.
+4. (Optional) For Tailwind UI to work, run `npm run build`.
+5. (Optional) For Tailwind UI live reload, open a new terminal and run `npm run tw`.
 
 ## Game API Routes
 
-This document outlines the API routes and their usage for interacting with game-related functionalities.
+API route documentation has been moved to a separate document. More detailed API interface information can be found [here](doc/api.md).
 
-### API Routes Structure
+## Collaborators
 
-The API routes follow the structure:
-{protocol_name}://{host_name}:{optional_port_number}/{zone_name}/{game_name}/{function_name}/{filter}/{value}
+- [OteEnded](https://github.com/OteEnded) - project lead, backend
+- [xMickeyS](https://github.com/xMickeyS) - frontend
+- [SoraNual](https://github.com/SoraNual) - sql audit
 
+## Project Evolution
 
-- `{protocol_name}`: The protocol used (e.g., `http`, `https`).
-- `{host_name}`: The host name or IP address of the server.
-- `{optional_port_number}`: The optional port number (default: `80`).
-- `{zone_name}`: Name of the zone in the game.
-- `{game_name}`: Name of the game.
-- `{function_name}`: Name of the specific function or action.
-- `{filter}`: Optional filter parameter.
-- `{value}`: Optional value parameter (if no filter specified).
+### What is the KasetFairVerse Project?
 
-### Examples
+KasetFair is a large market and research showcase event organized by Kasetsart University. KasetFairVerse is a Metaverse (virtual world) that captures the look and feel of the KasetFair event, allowing people to participate as virtual characters. The project aims to promote the KasetFair event and showcase Metaverse technology, in collaboration with Kasetsart University and Big Bang Theory (a now-defunct Metaverse platform in Thailand).
 
-#### Get High Score
-- To retrieve the high score of a specific user from a game in a zone:
-    - **HTTP Method:** GET
-    - **Endpoint:** `/{game_name}/{zone_name}/get_high_score/{filter}/{value}`
-    - **Example:**
-      ```http
-      GET http://{host_name}/{game_name}/{zone_name}/get_high_score/user_id/1
-      ```
-    - **Response:**
-      ```json
-      {
-          "is_success": true,
-          "message": "High scores of {game_name}_{zone_name}_PlayRecords with user_id: 1",
-          "status": 200,
-          "content": 1080
-      }
-      ```
+### Project Transformation
 
-#### Get Leaderboard
-- To retrieve the leaderboard of a game in a zone:
-    - **HTTP Method:** GET
-    - **Endpoint:** `/{zone_name}/{game_name}/get_leaderboard`
-    - **Example:**
-      ```http
-      GET http://{host_name}/{zone_name}/{game_name}/get_leaderboard
-      ```
-    - **Response:**
-      ```json
-      {
-          "is_success": true,
-          "message": "{zone_name}_{game_name}_PlayRecords leaderboard",
-          "status": 200,
-          "content": [
-              {
-                  "user_id": 2,
-                  "win_count": 4
-              },
-              {
-                  "user_id": 1,
-                  "win_count": 2
-              }
-          ]
-      }
-      ```
+Initially, the project was designed to be an API for backend database activities. However, we decided to include minigames in each zone, themed according to the products promoted in that zone. The minigames were developed in Unity and deployed as web applications on Firebase. Users could interact with NPCs in the virtual world to access these minigames, which would open in new browser windows.
 
-#### Save Play Record
-- To save a play record in a game within a specific zone:
-    - **HTTP Method:** PUT
-    - **Endpoint:** `/{zone_name}/{game_name}/save`
-    - **Example:**
-      ```http
-      PUT http://{host_name}/{zone_name}/{game_name}/save
-      ```
-    - **Request Body:**
-      ```json
-      {
-          "user_id": 1,
-          "score": 100
-      }
-      ```
-    - **Response:**
-      ```json
-      {
-          "is_success": true,
-          "message": "New {game_name}_{zone_name}_PlayRecord created",
-          "status": 200,
-          "content": {
-              "user_id": 1,
-              "score": 100,
-              "round_id": 1
-          }
-      }
-      ```
+The central API (this project) collects user game progress from each Unity game, processes it, and saves it to the database. The backend server handles most of the logic, ensuring smooth operation.
 
-Modify the placeholders `{protocol_name}`, `{host_name}`, `{zone_name}`, `{game_name}`, `{function_name}`, `{filter}`, and `{value}` in the examples with the appropriate values according to your setup.
+### Challenges and Solutions
+
+As the project evolved, we faced several challenges, particularly with the point trading system. Initially, Big Bang Theory Staff were responsible for this part, but their implementation did not meet our expectations. The website was barely functional, with numerous bugs and an unpolished GUI.
+
+In response, I decided to take over the development of the point trading system. Despite the tight timeline, we managed to deploy a functional system a few days after the event's opening. The backend server and minigames developed by our team were stable, allowing users to collect points seamlessly.
+
+### Final Implementation
+
+After the initial setbacks, I developed the core trading system, including a QR code coupon system and other necessary features. I recruited a frontend developer ([xMickeyS](https://github.com/xMickeyS)) to assist with the implementation. Together, we ensured the system was fully operational and met user expectations.
+
+---
+
+I will provide detailed documentation on how the trading system works in a future...
+
+---
+
+<p style="font-size: 0.8em;">This README was written with the assistance of <a href="https://copilot.github.com/">GitHub Copilot</a>, an AI programming assistant.</p>
