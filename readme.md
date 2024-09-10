@@ -2,7 +2,10 @@
 
 Extended from KasetFairVerse Project - Database/BackEnd/API
 
-## Overview
+* Database/BackEnd/API For KasetFairVerse Project.
+* (Unintentionally) User interface for reward system
+
+### Overview
 
 KasetFairVerse Project Services is the backbone service for the KasetFairVerse Event, handling APIs for minigames in each virtual zone. It also includes a full-stack webpage that allows users (event attendants) to easily access the minigames and use collected points to trade for various gifts.
 
@@ -27,14 +30,15 @@ The project does not include a config file on GitHub (using `config.json` instea
 5. (Optional) For Tailwind UI live reload, open a new terminal and run `npm run tw`.
 
 ## Game API Routes
+### For Game Developing teams
 
 API route documentation has been moved to a separate document. More detailed API interface information can be found [here](doc/api.md).
 
 ## Collaborators
 
-- [OteEnded](https://github.com/OteEnded) - project lead, backend
-- [xMickeyS](https://github.com/xMickeyS) - frontend
-- [SoraNual](https://github.com/SoraNual) - sql audit
+- [OteEnded](https://github.com/OteEnded) - Project Lead, Backend
+- [xMickeyS](https://github.com/xMickeyS) - Frontend
+- [SoraNual](https://github.com/SoraNual) - SQL (MySQL) Audit
 
 ## Project Evolution
 
@@ -58,9 +62,22 @@ In response, I decided to take over the development of the point trading system.
 
 After the initial setbacks, I developed the core trading system, including a QR code coupon system and other necessary features. I recruited a frontend developer ([xMickeyS](https://github.com/xMickeyS)) to assist with the implementation. Together, we ensured the system was fully operational and met user expectations.
 
----
 
-I will provide detailed documentation on how the trading system works in a future...
+## User's Point/Reward Trading System
+
+Since we made the system for users to trade game points for rewards, users will open our website and log in with the same credentials as the Metaverse platform (BigBangTheory). The system sends the login request to BigBang's auth API to authenticate the user. Once authenticated, the user's data will be displayed, including username, user's points grouped by game, a list of rewards that the user can trade for, and even the user game point leaderboard. Thanks to [xMickeyS](https://github.com/xMickeyS) for making the user dashboard look so appealing.
+
+To trade for a reward, users will navigate to the trading page where more details and a menu about trading rewards will be shown. Users will select an available reward that they have enough points to trade for and confirm the trade. The system will generate a coupon for that reward item and mark it as reserved in our reward stock. The system also generates a QR code from the coupon UUID that users can show to our staff when claiming the reward.
+
+Meanwhile, we also created a system for staff to manage rewards accurately, such as a QR code scanner that verifies the user's coupon validity and the reward being claimed. Staff will see which reward to grab, and after giving out the reward, they will sign their name to confirm the transaction. The system logs the transaction and deducts the item from the reward stock. The reward stock updates in real-time and affects the list of rewards that users can trade for, preventing over-demand at the reward booth.
+
+## My Word for This Project
+
+This project has been a really good experience for me. I have learned to do many things to make this work great. I have dealt with many aspects during the project period, including teamwork, system analysis, database management, API development, problem-solving, and more. It wasn't just about writing code; I also had to design endpoints for the game dev team, who at that moment had no experience with APIs. I found many workarounds to get past the limited Metaverse platform resources and functions.
+
+I want to say thanks to everyone in the project who worked so hard in the hope of our success: the game dev team, BigBang team, 3D model team, architecture team, business team, and more. Special thanks to the project's professors, including Pakaket Wattuya, Pisut Wisessing, Somchoke Rueng-ittinun, and others I haven't mentioned. Also, thanks to my friend who significantly contributed to this repo, [xMickeyS](https://github.com/xMickeyS), who really helped with the UI frontend, and [SoraNual](https://github.com/SoraNual), who was always enthusiastic about the project and really helped with MySQL.
+
+Thank you, everyone.
 
 ---
 
